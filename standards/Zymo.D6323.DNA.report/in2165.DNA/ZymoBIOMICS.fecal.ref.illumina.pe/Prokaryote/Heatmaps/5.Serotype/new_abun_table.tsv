@@ -1,0 +1,242 @@
+Taxon	DNA.profile
+g__Methanobrevibacter;s__Methanobrevibacter smithii	0.002783
+g__Actinomyces	0.000141
+g__Adlercreutzia;s__Adlercreutzia equolifaciens	0.000891
+g__Asaccharobacter;s__Asaccharobacter celatus	0.001609
+g__Bifidobacterium;s__Bifidobacterium bifidum	0.001923
+g__Bifidobacterium;s__Bifidobacterium longum	0.001512
+g__Bifidobacterium;s__Bifidobacterium pseudocatenulatum	0.002291
+g__Collinsella;s__Collinsella intestinalis	0.000371
+g__Collinsella;s__uncultured Collinsella sp.	0.003373
+g__Collinsella	0.003499
+g__Cryptobacterium	0.000113
+g__Eggerthella;s__Eggerthella lenta	0.000537
+g__Eggerthella;s__uncultured Eggerthella sp.	0.000266
+g__Eggerthella	0.000620
+g__Enorma;s__Enorma massiliensis	0.000387
+g__Gordonibacter;s__Gordonibacter pamelaeae	0.000274
+p__Actinobacteria;s__Coriobacteriia bacterium	0.000241
+p__Actinobacteria;s__uncultured Coriobacteriaceae bacterium	0.000490
+g__Alistipes;s__Alistipes communis	0.001568
+g__Alistipes;s__Alistipes finegoldii	0.001281
+g__Alistipes;s__Alistipes ihumii	0.001075
+g__Alistipes;s__Alistipes indistinctus	0.000122
+x__Alistipes onderdonkii subsp. vulgaris	0.002593
+g__Alistipes;s__Alistipes onderdonkii	0.001246
+g__Alistipes;s__Alistipes putredinis	0.007202
+g__Alistipes;s__Alistipes shahii	0.008369
+g__Alistipes;s__Alistipes timonensis	0.000325
+g__Alistipes;s__uncultured Alistipes sp.	0.000834
+g__Bacteroides;s__Bacteroides caccae CAG:21	0.001710
+g__Bacteroides;s__Bacteroides cellulosilyticus CAG:158	0.003885
+g__Bacteroides;s__Bacteroides cellulosilyticus	0.006696
+g__Bacteroides;s__Bacteroides dorei CAG:222	0.002294
+g__Bacteroides;s__Bacteroides dorei	0.010109
+g__Bacteroides;s__Bacteroides eggerthii	0.000205
+g__Bacteroides;s__Bacteroides faecis	0.005998
+g__Bacteroides;s__Bacteroides finegoldii CAG:203	0.001229
+g__Bacteroides;s__Bacteroides finegoldii	0.001576
+g__Bacteroides;s__Bacteroides fragilis	0.001035
+g__Bacteroides;s__Bacteroides massiliensis	0.007019
+g__Bacteroides;s__Bacteroides ovatus	0.013779
+g__Bacteroides;s__Bacteroides salyersiae	0.004527
+g__Bacteroides;s__Bacteroides stercoris	0.006483
+g__Bacteroides;s__Bacteroides thetaiotaomicron	0.008322
+g__Bacteroides;s__Bacteroides timonensis	0.001252
+g__Bacteroides;s__Bacteroides uniformis	0.023876
+g__Bacteroides;s__Bacteroides vulgatus	0.071930
+g__Bacteroides;s__Bacteroides xylanisolvens	0.003635
+g__Bacteroides;s__uncultured Bacteroides sp.	0.005579
+g__Bacteroides	0.003584
+g__Barnesiella;s__Barnesiella intestinihominis	0.002615
+g__Butyricimonas;s__Butyricimonas faecalis	0.001322
+g__Butyricimonas;s__Butyricimonas virosa	0.000572
+g__Gabonia;s__Gabonia massiliensis	0.000112
+g__Odoribacter;s__Odoribacter laneus	0.000962
+g__Odoribacter;s__Odoribacter splanchnicus	0.003429
+g__Odoribacter;s__uncultured Odoribacter sp.	0.000089
+g__Parabacteroides;s__Parabacteroides distasonis	0.012041
+g__Parabacteroides;s__Parabacteroides goldsteinii	0.000869
+g__Parabacteroides;s__Parabacteroides johnsonii	0.002341
+g__Parabacteroides;s__Parabacteroides merdae	0.002247
+g__Tidjanibacter;s__Tidjanibacter massiliensis	0.000250
+p__Candidatus Melainabacteria;s__Candidatus Gastranaerophilales bacterium	0.003704
+g__Agathobaculum;s__Agathobaculum butyriciproducens	0.004293
+g__Anaerobutyricum;s__Anaerobutyricum hallii	0.005103
+g__Anaerobutyricum;s__Anaerobutyricum soehngenii	0.001032
+g__Anaeromassilibacillus	0.001727
+g__Anaerostipes;s__Anaerostipes hadrus	0.010318
+g__Anaerotignum;s__Anaerotignum faecicola	0.000729
+g__Anaerotruncus;s__Anaerotruncus colihominis	0.000263
+g__Anaerotruncus;s__Anaerotruncus massiliensis	0.000558
+g__Bittarella;s__Bittarella massiliensis	0.000215
+g__Blautia;s__Blautia hansenii	0.000255
+g__Blautia;s__Blautia massiliensis	0.004892
+g__Blautia;s__Blautia obeum	0.018890
+g__Blautia;s__Blautia wexlerae	0.015908
+g__Blautia;s__[Ruminococcus] gnavus	0.002529
+g__Blautia;s__[Ruminococcus] torques	0.002915
+g__Blautia;s__uncultured Blautia sp.	0.006581
+g__Blautia	0.009828
+g__Butyricicoccus	0.000204
+g__Candidatus Cibiobacter;s__Candidatus Cibiobacter qucibialis	0.003793
+g__Candidatus Stoquefichus	0.000106
+g__Catabacter	0.000227
+g__Clostridium;s__Clostridium disporicum	0.000236
+g__Clostridium;s__Clostridium phoceensis	0.000960
+g__Clostridium;s__Clostridium sporogenes	0.001972
+g__Clostridium;s__uncultured Clostridium sp.	0.009569
+g__Clostridium	0.037113
+g__Coprococcus;s__Coprococcus catus	0.001279
+g__Coprococcus;s__Coprococcus comes	0.003902
+g__Coprococcus;s__Coprococcus eutactus	0.001087
+g__Coprococcus;s__Coprococcus phoceensis	0.001936
+g__Dialister;s__Dialister invisus	0.000377
+g__Dialister;s__uncultured Dialister sp.	0.001054
+g__Dorea;s__Dorea formicigenerans	0.003280
+g__Dorea;s__Dorea longicatena	0.007564
+g__Dorea;s__uncultured Dorea sp.	0.000345
+g__Dorea	0.001059
+g__Dysosmobacter;s__Dysosmobacter welbionis	0.002246
+g__Eisenbergiella;s__Eisenbergiella massiliensis	0.001057
+g__Eisenbergiella;s__Eisenbergiella tayi	0.000350
+g__Erysipelatoclostridium;s__[Clostridium] innocuum	0.000139
+g__Erysipelatoclostridium;s__[Clostridium] spiroforme	0.000135
+g__Eubacterium;s__Eubacterium ramulus	0.002775
+g__Eubacterium;s__[Eubacterium] eligens	0.011850
+g__Eubacterium;s__uncultured Eubacterium sp.	0.006524
+g__Eubacterium	0.004971
+g__Evtepia;s__Evtepia gabavorous	0.000692
+g__Faecalibacterium;s__Faecalibacterium prausnitzii	0.062841
+g__Faecalibacterium;s__uncultured Faecalibacterium sp.	0.018161
+g__Faecalicatena;s__Faecalicatena contorta	0.000221
+g__Flavonifractor;s__uncultured Flavonifractor sp.	0.000537
+g__Flavonifractor	0.000186
+g__Frisingicoccus;s__Frisingicoccus caecimuris	0.000297
+g__Fusicatenibacter;s__Fusicatenibacter saccharivorans	0.026756
+g__Gemmiger;s__Gemmiger formicilis	0.007244
+g__Holdemania;s__Holdemania filiformis	0.000491
+g__Hungatella;s__Hungatella hathewayi	0.000119
+g__Intestinimonas;s__Intestinimonas butyriciproducens	0.000189
+g__Intestinimonas;s__Intestinimonas massiliensis	0.000582
+g__Lachnobacterium;s__uncultured Lachnobacterium sp.	0.006613
+g__Lachnoclostridium;s__[Clostridium] bolteae	0.000469
+g__Lachnoclostridium;s__[Clostridium] citroniae	0.000149
+g__Lachnoclostridium;s__[Clostridium] clostridioforme	0.000168
+g__Lachnoclostridium;s__[Clostridium] lavalense	0.000356
+g__Lachnoclostridium;s__[Clostridium] symbiosum	0.000304
+g__Lachnoclostridium	0.003037
+g__Lachnotalea	0.000208
+g__Lactobacillus;s__Lactobacillus paracasei	0.000070
+g__Lactobacillus;s__Lactobacillus rogosae	0.001053
+x__Lactococcus lactis subsp. lactis	0.000225
+g__Lawsonibacter;s__Lawsonibacter asaccharolyticus	0.001644
+g__Longibaculum;s__Longibaculum muris	0.000105
+g__Marvinbryantia;s__Marvinbryantia formatexigens	0.000166
+g__Marvinbryantia;s__uncultured Marvinbryantia sp.	0.001190
+g__Massilioclostridium;s__Massilioclostridium coli	0.000125
+g__Mediterraneibacter;s__Mediterraneibacter butyricigenes	0.000394
+g__Mediterraneibacter;s__Mediterraneibacter massiliensis	0.000169
+g__Megamonas;s__Megamonas funiformis	0.005324
+g__Megamonas;s__Megamonas rupellensis	0.001099
+g__Merdibacter;s__Merdibacter massiliensis	0.000223
+g__Monoglobus;s__Monoglobus pectinilyticus	0.001432
+g__Mordavella	0.000178
+g__Negativibacillus;s__Negativibacillus massiliensis	0.000733
+g__Neglecta;s__Neglecta timonensis	0.000692
+g__Oscillibacter;s__Oscillibacter sp.	0.002844
+g__Oscillibacter;s__uncultured Oscillibacter sp.	0.003264
+g__Oscillibacter	0.007057
+g__Phascolarctobacterium;s__Phascolarctobacterium faecium	0.001271
+g__Phascolarctobacterium;s__Phascolarctobacterium succinatutens	0.001591
+g__Phocea;s__Phocea massiliensis	0.000104
+g__Pseudoflavonifractor;s__Pseudoflavonifractor capillosus	0.000454
+g__Pseudoflavonifractor	0.000364
+g__Pseudoruminoccoccus;s__Pseudoruminoccoccus massiliensis	0.006145
+g__Romboutsia;s__Romboutsia timonensis	0.000625
+g__Roseburia;s__Roseburia faecis	0.011740
+g__Roseburia;s__Roseburia hominis	0.005229
+g__Roseburia;s__Roseburia intestinalis	0.006576
+g__Roseburia;s__Roseburia inulinivorans	0.001590
+g__Roseburia;s__uncultured Roseburia sp.	0.005001
+g__Roseburia	0.004321
+g__Ruminococcus;s__Ruminococcus bicirculans	0.010219
+g__Ruminococcus;s__Ruminococcus bromii	0.031310
+g__Ruminococcus;s__Ruminococcus faecis	0.004150
+g__Ruminococcus;s__Ruminococcus lactaris	0.000662
+g__Ruminococcus;s__uncultured Ruminococcus sp.	0.017325
+g__Ruminococcus	0.029196
+g__Ruthenibacterium;s__Ruthenibacterium lactatiformans	0.001820
+g__Solobacterium;s__uncultured Solobacterium sp.	0.001013
+g__Staphylococcus	0.000076
+g__Streptococcus;s__Streptococcus thermophilus	0.000368
+g__Subdoligranulum;s__Subdoligranulum variabile	0.000635
+g__Subdoligranulum	0.025607
+g__Turicibacter;s__Turicibacter sanguinis	0.000163
+g__Tyzzerella;s__Tyzzerella nexilis	0.001916
+p__Firmicutes;s__Clostridia bacterium UC5.1-1D4	0.000312
+p__Firmicutes;s__Clostridia bacterium UC5.1-1E11	0.000127
+p__Firmicutes;s__Clostridiaceae bacterium AM27-36LB	0.001024
+p__Firmicutes;s__Clostridiaceae bacterium OM08-6BH	0.000941
+p__Firmicutes;s__Clostridiales bacterium CCNA10	0.001078
+p__Firmicutes;s__Clostridiales bacterium UBA1390	0.000199
+p__Firmicutes;s__Clostridiales bacterium UBA4696	0.001200
+p__Firmicutes;s__Clostridiales bacterium VE202-03	0.001467
+p__Firmicutes;s__Clostridiales bacterium	0.007985
+p__Firmicutes;s__Firmicutes bacterium AF25-13AC	0.013339
+p__Firmicutes;s__Firmicutes bacterium AM31-12AC	0.000307
+p__Firmicutes;s__Firmicutes bacterium AM55-24TS	0.009446
+p__Firmicutes;s__Firmicutes bacterium CAG:103	0.000787
+p__Firmicutes;s__Firmicutes bacterium CAG:124	0.006931
+p__Firmicutes;s__Firmicutes bacterium CAG:170	0.000296
+p__Firmicutes;s__Firmicutes bacterium CAG:176	0.000632
+p__Firmicutes;s__Firmicutes bacterium CAG:194	0.007427
+p__Firmicutes;s__Firmicutes bacterium CAG:24053_14	0.000281
+p__Firmicutes;s__Firmicutes bacterium CAG:424	0.000194
+p__Firmicutes;s__Firmicutes bacterium CAG:83	0.001984
+p__Firmicutes;s__Firmicutes bacterium CAG:94	0.000254
+p__Firmicutes;s__Firmicutes bacterium CAG:95	0.000160
+p__Firmicutes;s__Firmicutes bacterium OM08-11AC	0.001362
+p__Firmicutes;s__Firmicutes bacterium TM09-10	0.003932
+p__Firmicutes;s__Lachnospiraceae bacterium AM48-27BH	0.001887
+p__Firmicutes;s__Lachnospiraceae bacterium GAM79	0.004687
+p__Firmicutes;s__Lachnospiraceae bacterium OF09-33XD	0.000200
+p__Firmicutes;s__Lachnospiraceae bacterium OM04-12BH	0.000891
+p__Firmicutes;s__Lachnospiraceae bacterium UBA7598	0.000367
+p__Firmicutes;s__Lachnospiraceae bacterium	0.003145
+p__Firmicutes;s__Ruminococcaceae bacterium AM07-15	0.000424
+p__Firmicutes;s__Ruminococcaceae bacterium D16	0.000368
+p__Firmicutes;s__Ruminococcaceae bacterium D5	0.000106
+p__Firmicutes;s__Ruminococcaceae bacterium	0.004350
+p__Firmicutes;s__[Bacteroides] pectinophilus	0.000255
+p__Firmicutes;s__[Clostridium] leptum	0.000819
+p__Firmicutes;s__[Eubacterium] rectale	0.021108
+p__Firmicutes;s__[Eubacterium] siraeum	0.043136
+p__Firmicutes;s__uncultured Clostridiales bacterium	0.032833
+p__Firmicutes;s__uncultured Erysipelotrichaceae bacterium	0.001755
+p__Firmicutes;s__uncultured Lachnospiraceae bacterium	0.006294
+p__Firmicutes;s__uncultured Ruminococcaceae bacterium	0.008349
+p__Lentisphaerae;s__Lentisphaeria bacterium	0.000275
+p__Lentisphaerae;s__Victivallales bacterium CCUG 44730	0.000296
+g__Acetobacter	0.001519
+g__Acinetobacter	0.000589
+g__Bilophila;s__Bilophila wadsworthia	0.001314
+g__Desulfovibrio;s__Desulfovibrio desulfuricans	0.000210
+g__Desulfovibrio;s__Desulfovibrio fairfieldensis	0.000126
+g__Desulfovibrio;s__uncultured Desulfovibrio sp.	0.000274
+g__Escherichia;s__Escherichia coli	0.000556
+g__Klebsiella;s__Klebsiella oxytoca	0.000213
+g__Oxalobacter;s__Oxalobacter formigenes	0.000133
+g__Parasutterella;s__Parasutterella excrementihominis	0.001252
+g__Sutterella;s__Sutterella wadsworthensis	0.001273
+g__Sutterella;s__uncultured Sutterella sp.	0.001354
+p__Proteobacteria;s__Proteobacteria bacterium CAG:495	0.000224
+p__Proteobacteria;s__uncultured Rhodospirillaceae bacterium	0.000358
+g__Mycoplasma	0.000172
+p__Tenericutes;s__Acholeplasmatales bacterium	0.001163
+p__Tenericutes;s__uncultured Mollicutes bacterium	0.000150
+p__Tenericutes;s__uncultured Tenericutes bacterium	0.000131
+g__Akkermansia;s__Akkermansia muciniphila	0.011188
+k__Bacteria;s__bacterium LF-3	0.002070
+k__Bacteria;s__bacterium	0.000884
+k__Bacteria;s__uncultured bacterium	0.001190

@@ -1,0 +1,257 @@
+tax_id	abundance	species	genus	family	order	class	phylum	clade	superkingdom	subspecies	species subgroup	species group	estimated counts
+1796618	0.016756784257725716	Cuneatibacter caecimuris	Cuneatibacter	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				4852.647423547563
+1912855	0.005652251438916395	Faecalimonas umbilicata	Faecalimonas	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1636.8524509501156
+253257	0.004687801123220765	Lacrimispora amygdalina	Lacrimispora	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1357.554390676871
+33038	0.008596124697809012	[Ruminococcus] gnavus	Mediterraneibacter	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				2489.3775396126052
+39482	0.0014302952235342814	Faecalicatena contorta	Faecalicatena	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				414.20348466896314
+290055	0.004275267202977036	Faecalicatena fissicatena	Faecalicatena	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1238.0874551117288
+1732	0.0007972339294130589	Eubacterium oxidoreducens	Eubacterium	Eubacteriaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				230.87336532051597
+29364	0.0010896529139155242	[Clostridium] polysaccharolyticum	Lachnoclostridium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				315.5558562995384
+915180	0.00021938599867547131	Caecibacterium sporoformans	Caecibacterium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				63.53264951442576
+745368	0.042536091088910176	Gemmiger formicilis	Gemmiger	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				12318.154226710765
+214851	0.0032087886371491682	Subdoligranulum variabile	Subdoligranulum	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				929.2427277979391
+39491	0.04716964105650143	[Eubacterium] rectale		Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				13659.997862475419
+706562	0.0017731745200882374	Lactobacillus rogosae	Lactobacillus	Lactobacillaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				513.4989287959129
+853	0.11711286532158055	Faecalibacterium prausnitzii	Faecalibacterium	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				33915.06600707248
+1628085	0.005908669743942028	Agathobaculum butyriciproducens	Agathobaculum	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1711.1093971574037
+1712515	0.0013235556633280194	Butyricicoccus faecihominis	Butyricicoccus	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				383.2924552101511
+39492	0.04059389725182267	[Eubacterium] siraeum		Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				11755.708486847083
+33039	0.0021500670849949	[Ruminococcus] torques	Mediterraneibacter	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				622.644377344928
+39497	0.008109021598774519	Eubacterium xylanophilum	Eubacterium	Eubacteriaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				2348.3158918539093
+69825	0.0009704904099312225	Lacrimispora indolis	Lacrimispora	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				281.0472292832125
+29375	0.0009228470811496076	Lacrimispora xylanolytica	Lacrimispora	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				267.2500547713583
+36832	0.000143774202651631	Lacrimispora aerotolerans	Lacrimispora	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				41.63600266849378
+84030	0.003073888411173597	Lacrimispora saccharolytica	Lacrimispora	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				890.1765666569954
+29370	0.0005176321833026458	Lacrimispora sphenoides	Lacrimispora	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				149.9026568591631
+154046	0.0032529717569022075	Hungatella hathewayi	Hungatella	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				942.0378499965809
+384636	0.0005420527403214583	Hungatella xylanolytica	Hungatella	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				156.97467922791208
+2109691	0.015761074304888094	Lachnospiraceae bacterium GAM79		Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				4564.296791175458
+1469948	0.0010854744192975811	Kineothrix alysoides	Kineothrix	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				314.34579350764443
+88431	0.013561766431521249	Dorea longicatena	Dorea	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				3927.392626203533
+166486	0.00877018113359585	Roseburia intestinalis	Roseburia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				2539.7830650214228
+418240	0.03362300824302661	Blautia wexlerae	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				9736.987826122804
+89014	0.02287033372209584	Blautia luti	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				6623.088553582901
+2479767	0.01935119938735737	Blautia sp. SC05B48	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				5603.971884182984
+592978	0.030543657926881625	[Ruminococcus] faecis	Mediterraneibacter	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				8845.229530019431
+433286	0.0005372152716407746	Anaerocolumna cellulosilytica	Anaerocolumna	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				155.57378216026683
+301302	0.01724526991216982	Roseburia faecis	Roseburia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				4994.109449674995
+1981510	0.015419100681423764	Monoglobus pectinilyticus	Monoglobus		Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				4465.263623635552
+253314	0.0007334612964141258	Hungateiclostridium straminisolvens	Hungateiclostridium	Hungateiclostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				212.40525721245592
+288965	0.0017618135063706382	Hungateiclostridium clariflavum	Hungateiclostridium	Hungateiclostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				510.2088587503922
+246787	0.0015414839582450586	Bacteroides cellulosilyticus	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				446.40296392006127
+1432052	0.00295336448795866	Eisenbergiella tayi	Eisenbergiella	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				855.2736821614122
+1720294	0.00030046592278965256	Eisenbergiella massiliensis	Eisenbergiella	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				87.01282797842386
+208479	0.005947632965375733	Enterocloster bolteae	Enterocloster	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1722.3928733420546
+1834196	0.00046043785790072535	Lachnoclostridium sp. YL32	Lachnoclostridium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				133.33958058304475
+1337051	0.001453861619176035	Murimonas intestini	Murimonas	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				421.0281478820455
+2109690	0.0005101894600358605	Lachnospiraceae bacterium Choco86		Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				147.74729630016495
+301301	0.011970148263449816	Roseburia hominis	Roseburia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				3466.4711460572225
+1544	0.001310607296580094	Faecalicatena orotica	Faecalicatena	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				379.54269883851913
+1150298	0.04053714332370001	Fusicatenibacter saccharivorans	Fusicatenibacter	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				11739.272946540257
+1852381	0.00027359781121751026	Duodenibacillus massiliensis	Duodenibacillus	Sutterellaceae	Burkholderiales	Betaproteobacteria	Proteobacteria		Bacteria				79.23201094391244
+40518	0.034108485079188414	Ruminococcus bromii	Ruminococcus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				9877.57851953741
+821	0.014735901573822463	Phocaeicola vulgatus	Phocaeicola		Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				4267.413944467969
+491921	0.004570075444985257	Megamonas rupellensis	Megamonas	Selenomonadaceae	Selenomonadales	Negativicutes	Firmicutes	Terrabacteria group	Bacteria				1323.4618583396154
+437897	0.006968975930350359	Megamonas funiformis	Megamonas	Selenomonadaceae	Selenomonadales	Negativicutes	Firmicutes	Terrabacteria group	Bacteria				2018.1666465979515
+328814	0.0009383029250829224	Alistipes shahii	Alistipes	Rikenellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				271.72595898353876
+871665	0.02458403649703585	Blautia faecis	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				7119.364881286103
+536633	0.003690313058132743	Blautia glucerasea	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1068.6888294438354
+820	0.0032470925861042637	Bacteroides uniformis	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				940.335283287692
+39485	0.02434419230600807	Lachnospira eligens	Lachnospira	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				7049.907682473795
+28051	0.0008129334494906588	Lachnospira multipara	Lachnospira	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				235.41983643834837
+33043	0.0018718374311023373	Coprococcus eutactus	Coprococcus	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				542.0710171852191
+342942	0.0004311966391139612	Mediterraneibacter glycyrrhizinilyticus	Mediterraneibacter	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				124.87152831092936
+185007	0.00046605672625236446	Pseudobutyrivibrio xylanivorans	Pseudobutyrivibrio	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				134.96676552560098
+39496	0.0014788619960209224	Eubacterium ventriosum	Eubacterium	Eubacteriaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				428.268082013687
+351091	0.008708268572250924	Oscillibacter valericigenes	Oscillibacter	Oscillospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				2521.8536206438616
+2093857	0.009973672901153405	Dysosmobacter welbionis	Dysosmobacter	Oscillospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				2888.305856463718
+1263547	0.0033356166989626326	Oscillibacter ruminantium	Oscillibacter	Oscillospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				965.9712467026857
+2109687	0.00011477549285730801	Oscillibacter sp. PEA192	Oscillibacter	Oscillospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				33.2381793030264
+39495	0.0001626013791291977	Eubacterium uniforme	Eubacterium	Eubacteriaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				47.088221186161746
+2025493	0.000290295529769284	Blautia hominis	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				84.06755335247625
+433279	0.001076530140114457	Falcatimonas natans	Falcatimonas	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				311.75559286616596
+1322	0.00011764952999953423	Blautia hansenii	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				34.07048034115512
+438033	0.0001197530069524685	Ruminococcus gauvreauii	Ruminococcus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				34.67963254238621
+871664	0.007196511712344044	Blautia stercoris	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				2084.059416312849
+33035	0.004285327726343861	Blautia producta	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1241.0009122550978
+180332	0.00038733856715793936	Robinsoniella peoriensis	Robinsoniella	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				112.17053767896913
+53443	0.0001486018381560614	Blautia hydrogenotrophica	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				43.03405211712829
+410072	0.005764235076771262	Coprococcus comes	Coprococcus	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1669.28212858742
+649756	0.0269473427225294	Anaerostipes hadrus	Anaerostipes	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				7803.761821045457
+44749	0.002267521995894552	Sporobacter termitidis	Sporobacter	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				656.6584973570909
+100176	0.0023226674890858725	Papillibacter cinnamivorans	Papillibacter	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				672.6282461668451
+2610895	0.0027241093303317673	Flintibacter sp. KGMB00164	Flintibacter		Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				788.8829932987675
+35830	0.0007994392501580485	Hungateiclostridium cellulolyticum	Hungateiclostridium	Hungateiclostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				231.51201077101973
+1515	0.00032923680578854966	Hungateiclostridium thermocellum	Hungateiclostridium	Hungateiclostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				95.34467429872346
+29353	0.0027084545988918626	Hungateiclostridium aldrichii	Hungateiclostridium	Hungateiclostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				784.3494926568911
+84032	0.004230901512294133	Pseudoclostridium thermosuccinogenes	Pseudoclostridium	Hungateiclostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1225.2394616497947
+755731	0.0003008922482605782	Clostridium sp. BNL1100	Clostridium	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				87.13628885052562
+1337094	0.0001441423427484222	Ercella succinigenes	Ercella	Hungateiclostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				41.742613463543826
+1499	0.000516605344557027	Ruminiclostridium josui	Ruminiclostridium	Hungateiclostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				149.6052915463031
+28026	0.003256320345037385	Bifidobacterium pseudocatenulatum	Bifidobacterium	Bifidobacteriaceae	Bifidobacteriales	Actinobacteria	Actinobacteria	Terrabacteria group	Bacteria				943.0075776804115
+1160721	0.015989706448554984	Ruminococcus bicirculans	Ruminococcus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				4630.507059556384
+360807	0.008984203341446064	Roseburia inulinivorans	Roseburia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				2601.76239825939
+290052	0.00022453069159508173	Acetivibrio ethanolgignens	Acetivibrio	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				65.0225165710945
+180311	0.00013688165582715045	Hespellia stercorisuis	Hespellia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				39.639969355951976
+2109692	0.001324822755414386	Erysipelotrichaceae bacterium GAM147		Erysipelotrichaceae	Erysipelotrichales	Erysipelotrichia	Firmicutes	Terrabacteria group	Bacteria				383.6593962087183
+2584943	0.0005657303287346128	Longibaculum sp. KGMB06250	Longibaculum	Erysipelotrichaceae	Erysipelotrichales	Erysipelotrichia	Firmicutes	Terrabacteria group	Bacteria				163.83154308924273
+1509	0.0006341565063891925	Clostridium sporogenes	Clostridium	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				183.64728515476543
+239935	0.0024902378320034247	Akkermansia muciniphila	Akkermansia	Akkermansiaceae	Verrucomicrobiales	Verrucomicrobiae	Verrucomicrobia	PVC group	Bacteria				721.1554444833678
+39488	0.015250247562350277	Anaerobutyricum hallii	Anaerobutyricum	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				4416.364942323704
+40520	0.017845780385005238	Blautia obeum	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				5168.013079034822
+357276	0.008137114686604807	Phocaeicola dorei	Phocaeicola		Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				2356.451453437946
+290054	0.004951446516243563	Eubacterium coprostanoligenes	Eubacterium	Eubacteriaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1433.904250978522
+1759399	0.00022164894829510863	Streptococcus sp. A12	Streptococcus	Streptococcaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				64.18798388362539
+1796636	0.003340928145081249	Frisingicoccus caecimuris	Frisingicoccus	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				967.5094043185142
+1161942	0.013384967695561484	Ruminococcus champanellensis	Ruminococcus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				3876.192949860737
+180164	0.0006940163011817162	Blautia schinkii	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				200.98226270811674
+1805714	0.004767394832811814	Christensenella massiliensis	Christensenella	Christensenellaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1380.6041718184715
+626937	0.0014649143217059764	Christensenella minuta	Christensenella	Christensenellaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				424.2289331657988
+1816678	0.0004383997029440803	Christensenella timonensis	Christensenella	Christensenellaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				126.95748517468505
+1917870	0.000149370534537862	Lachnoclostridium pacaense	Lachnoclostridium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				43.25666120842307
+29361	0.003970276550563399	Tyzzerella nexilis	Tyzzerella	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1149.7642971073062
+140626	0.0002221845201718942	Lachnobacterium bovis	Lachnobacterium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				64.34308175013935
+1675854	0.00014798291079744003	Abyssivirga alkaniphila	Abyssivirga	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				42.85481508656305
+45851	0.0007716325093431324	Butyrivibrio crossotus	Butyrivibrio	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				223.45937327820573
+1912897	0.00012618851924580556	Blautia sp. N6H1-15	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				36.54331185395057
+1796616	0.00013592216856889725	Blautia sp. YL58	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				39.36210856237266
+39490	0.003870613010990354	Eubacterium ramulus	Eubacterium	Eubacteriaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1120.9024336917296
+1673717	0.006709195511713547	Anaeromassilibacillus senegalensis	Anaeromassilibacillus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1942.9360558236613
+1535	0.0012870997942831337	[Clostridium] leptum		Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				372.73509072583556
+1185412	0.00028192701286077577	Vallitalea guaymasensis	Vallitalea	Vallitaleaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				81.64408943539064
+1265	0.0006063760307618435	Ruminococcus flavefaciens	Ruminococcus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				175.60225387641455
+40519	0.0006178331912284877	Ruminococcus callidus	Ruminococcus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				178.92016734743143
+1308	0.00014622573981472423	Streptococcus thermophilus	Streptococcus	Streptococcaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				42.345950670165436
+1304	0.0005814620029039869	Streptococcus salivarius	Streptococcus	Streptococcaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				168.38732580697427
+1335	0.00010289756824437525	Streptococcus equinus	Streptococcus	Streptococcaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				29.798415480593363
+46228	0.0005625805368871318	[Ruminococcus] lactaris	Mediterraneibacter	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				162.91938541875516
+74426	0.0021367644681597507	Collinsella aerofaciens	Collinsella	Coriobacteriaceae	Coriobacteriales	Coriobacteriia	Actinobacteria	Terrabacteria group	Bacteria				618.7920326277867
+371601	0.0009475942856094335	Bacteroides xylanisolvens	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				274.41667195249266
+28116	0.0007587795106018436	Bacteroides ovatus	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				219.73723481371968
+2109688	0.00036071315583109014	Clostridiales bacterium CCNA10			Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				104.46000493659288
+1650663	0.0002124567661458244	Fournierella massiliensis	Fournierella	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				61.525992278467726
+1550024	0.0006347125840113409	Ruthenibacterium lactatiformans	Ruthenibacterium	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				183.80832134159624
+47678	0.0002889538098013143	Bacteroides caccae	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				83.67900064179202
+1776382	0.002832408610471322	Neglecta timonensis	Neglecta	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				820.2457067322216
+1297617	0.002940246731343554	Intestinimonas butyriciproducens	Intestinimonas		Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				851.4748716699738
+1898207	0.0001496370669143935	Clostridiales bacterium			Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				43.33384711893996
+106588	0.0003610464601211038	Pseudoflavonifractor capillosus	Pseudoflavonifractor	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				104.55652752585081
+292800	0.0018112567956154134	Flavonifractor plautii	Flavonifractor	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				524.5272892126544
+47246	0.0001448985859727384	[Clostridium] viride		Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				41.96161620760323
+1712675	0.000169699891289177	Turicibacter sp. H121	Turicibacter	Erysipelotrichaceae	Erysipelotrichales	Erysipelotrichia	Firmicutes	Terrabacteria group	Bacteria				49.143900618106635
+270498	0.0013329700764145086	Catabacter hongkongensis	Catabacter	Catabacteriaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				386.0188033391068
+28117	0.0012329521547195465	Alistipes putredinis	Alistipes	Rikenellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				357.0543133416976
+2086585	0.0049372392639917126	Christensenella sp. Marseille-P3954	Christensenella	Christensenellaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1429.789930177152
+626933	0.001229458568069037	Odoribacter laneus	Odoribacter	Odoribacteraceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				356.0425951028166
+1870988	0.0008498642721446703	Pseudoflavonifractor phocaeensis	Pseudoflavonifractor	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				246.1147441631915
+28052	0.000722687539562412	Lachnospira pectinoschiza	Lachnospira	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				209.28525264449758
+89152	0.001240726032499528	Peptacetobacter hiranonis	Peptacetobacter	Peptostreptococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				359.3055739296358
+51515	0.00013951449506864074	Dehalobacterium formicoaceticum	Dehalobacterium	Peptococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				40.40242117041288
+2507162	0.0018665797096831674	Caproiciproducens sp. NJN-50	Caproiciproducens	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				540.5484178662775
+642589	0.001121640065015205	Caproiciproducens galactitolivorans	Caproiciproducens	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				324.81911134794825
+109327	0.00023053063385100728	Anaerovorax odorimutans	Anaerovorax	Clostridiales Family XIII. Incertae Sedis	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				66.76005784881475
+1852367	0.0008461523600386738	Ihubacter massiliensis	Ihubacter	Clostridiales Family XIII. Incertae Sedis	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				245.03980040067964
+35517	0.00010740439341549327	[Eubacterium] brachy		Clostridiales Family XIII. Incertae Sedis	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				31.103560502372943
+433293	0.0003522263773821114	Anaerotaenia torta	Anaerotaenia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				102.00229330521779
+1841867	0.0006526246872188628	Phocea massiliensis	Phocea	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				188.99554104577214
+1849041	0.0003397898584422206	Harryflintia acetispora	Harryflintia	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				98.40076447585798
+474960	0.00031177022164360327	Hydrogenoanaerobacterium saccharovorans	Hydrogenoanaerobacterium	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				90.286473796436
+84026	0.0003017528673518325	[Clostridium] methylpentosum		Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				87.38551811501924
+204516	0.002168410895860676	Phocaeicola massiliensis	Phocaeicola		Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				627.9566165649808
+216816	0.0008742726824212347	Bifidobacterium longum	Bifidobacterium	Bifidobacteriaceae	Bifidobacteriales	Actinobacteria	Actinobacteria	Terrabacteria group	Bacteria				253.1832489204126
+46506	0.0014113080836772821	Bacteroides stercoris	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				408.7049418763552
+338188	0.0004948286550513106	Bacteroides finegoldii	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				143.2989147022742
+1776391	0.0039566262225249095	Romboutsia timonensis	Romboutsia	Peptostreptococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1145.8112576596561
+33025	0.0052896748591093985	Phascolarctobacterium faecium	Phascolarctobacterium	Acidaminococcaceae	Acidaminococcales	Negativicutes	Firmicutes	Terrabacteria group	Bacteria				1531.852811474068
+626940	0.0002571194699358015	Phascolarctobacterium succinatutens	Phascolarctobacterium	Acidaminococcaceae	Acidaminococcales	Negativicutes	Firmicutes	Terrabacteria group	Bacteria				74.45999865711858
+387661	0.0006443302675547596	Parabacteroides johnsonii	Parabacteroides	Tannerellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				186.5935351719855
+46503	0.0005363815114376568	Parabacteroides merdae	Parabacteroides	Tannerellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				155.33233104176534
+1462919	0.00019859728094713503	Mobilitalea sibirica	Mobilitalea	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				57.512382381323675
+1681	0.001314301780902441	Bifidobacterium bifidum	Bifidobacterium	Bifidobacteriaceae	Bifidobacteriales	Actinobacteria	Actinobacteria	Terrabacteria group	Bacteria				380.6125956368806
+39486	0.00513334009962589	Dorea formicigenerans	Dorea	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				1486.5793594709603
+2025876	0.0015895725458378452	Parabacteroides sp. CT06	Parabacteroides	Tannerellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				460.3290822668191
+823	0.0015272834457689796	Parabacteroides distasonis	Parabacteroides	Tannerellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				442.2905949105761
+169435	0.00047443069905627947	Anaerotruncus colihominis	Anaerotruncus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				137.39180943180514
+29343	0.0001647284644301214	[Clostridium] cellulosi		Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				47.70421019971214
+2038680	0.0002779762283450344	Paludicola psychrotolerans	Paludicola	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				80.49996989512354
+1871035	0.0014998110870623228	Negativibacillus massiliensis	Negativibacillus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				434.33479213563925
+1745713	0.00034447055391510534	Bariatricus massiliensis	Bariatricus	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				99.7562611199371
+817	0.0005250732690839556	Bacteroides fragilis	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				152.05754321382994
+1096246	0.0002692647468918833	Hungatella effluvii	Hungatella	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				77.97718584666117
+358743	0.00038747508078081257	Enterocloster citroniae	Enterocloster	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				112.21007106855785
+2358141	0.0009086938165515807	Anaerotignum faecicola	Anaerotignum	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				263.1513684166219
+1414720	0.0026061162207071755	Clostridium saudiense	Clostridium	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				754.7130147032531
+84024	0.00016112802114314154	Clostridium disporicum	Clostridium	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				46.66154702690579
+818	0.0004419783954523949	Bacteroides thetaiotaomicron	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				127.9938494742454
+674529	0.0019518628258685668	Bacteroides faecis	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				565.2458113317559
+291644	0.0007837203931910774	Bacteroides salyersiae	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				226.95993982538366
+758823	0.0022130225685298172	Vampirovibrio chlorellavorus	Vampirovibrio		Vampirovibrionales		Candidatus Melainabacteria	Terrabacteria group	Bacteria				640.8758446882554
+1870986	0.00126324372015986	Colidextribacter massiliensis	Colidextribacter		Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				365.8265386522543
+261299	0.00040159827467468916	Intestinibacter bartlettii	Intestinibacter	Peptostreptococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				116.30004915786726
+1796615	0.00014128778910123615	Blautia caecimuris	Blautia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				40.91595470919428
+487174	0.0005402690970704415	Barnesiella intestinihominis	Barnesiella	Barnesiellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				156.45814862792037
+29466	0.0012599384577079197	Veillonella parvula	Veillonella	Veillonellaceae	Veillonellales	Negativicutes	Firmicutes	Terrabacteria group	Bacteria				364.8693577830096
+39778	0.00025578969399718093	Veillonella dispar	Veillonella	Veillonellaceae	Veillonellales	Negativicutes	Firmicutes	Terrabacteria group	Bacteria				74.07490485372561
+1423	0.0008247961651406453	Bacillus subtilis	Bacillus	Bacillaceae	Bacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria			Bacillus subtilis group	238.8551958515749
+2086584	0.00022121603000937846	Massilistercora timonensis	Massilistercora		Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				64.06261377850593
+1496	0.00024722304644971465	Clostridioides difficile	Clostridioides	Peptostreptococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				71.59406369051221
+28118	0.0005852914708926767	Odoribacter splanchnicus	Odoribacter	Odoribacteraceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				169.49631293022293
+1776384	0.000738386032418841	Emergencia timonensis	Emergencia	Clostridiales Family XIII. Incertae Sedis	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				213.83142628626942
+433296	0.00024264455465128462	Aminipila butyrica	Aminipila	Clostridiales Family XIII. Incertae Sedis	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				70.26816451512947
+1512	0.00017098941325810344	[Clostridium] symbiosum	Lachnoclostridium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				49.51733715365395
+37658	0.0012753022334885187	[Clostridium] populeti	Lachnoclostridium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				369.3185997026406
+1907662	0.0009150887989528078	Raoultibacter timonensis	Raoultibacter	Eggerthellaceae	Eggerthellales	Coriobacteriia	Actinobacteria	Terrabacteria group	Bacteria				265.00331055514044
+1958780	0.0003198303048695546	Clostridium merdae	Clostridium	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				92.62061747808892
+1796620	0.0001203960621289868	Acutalibacter muris	Acutalibacter	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				34.865856820119674
+1572656	0.00023570542813066152	Ruminococcaceae bacterium CPB6		Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				68.25864204864266
+501571	0.00013476946407007856	Butyricicoccus pullicaecorum	Butyricicoccus	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				39.02829340844626
+1619234	0.00042963469551629606	Anaerobium acetethylicum	Anaerobium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				124.41920037865073
+89153	0.00016701883554085176	[Clostridium] hylemonae	Lachnoclostridium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				48.36748564078189
+99656	0.00010596330048499544	[Clostridium] fimetarium	Lachnoclostridium	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				30.686230077351283
+1531	0.00029686690407618513	Enterocloster clostridioformis	Enterocloster	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				85.97057735213468
+1938558	0.0002700910042313689	Kiloniella majae	Kiloniella	Kiloniellaceae	Kiloniellales	Alphaproteobacteria	Proteobacteria		Bacteria				78.21646418837481
+192	0.00018013324207592646	Azospirillum brasilense	Azospirillum	Rhodospirillaceae	Rhodospirillales	Alphaproteobacteria	Proteobacteria		Bacteria				52.16532597249377
+328813	0.00039159023648235495	Alistipes onderdonkii	Alistipes	Rikenellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				113.40179135363462
+1712665	0.00011103594373765799	Agathobacter ruminis	Agathobacter	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				32.15523205481959
+1613	0.0004592183290890716	Limosilactobacillus fermentum	Limosilactobacillus	Lactobacillaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				132.9864135758915
+29389	0.0009662423814647215	Streptococcus alactolyticus	Streptococcus	Streptococcaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				279.8170299755131
+1720200	0.00052499878826565	Anaerotruncus rubiinfantis	Anaerotruncus	Ruminococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				152.03597409021438
+1541	0.0004911104794054395	Terrisporobacter mayombei	Terrisporobacter	Peptostreptococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				142.22215706245944
+160404	0.0001956727220581751	Anaerotignum lactatifermentans	Anaerotignum	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				56.665450598993104
+147207	0.00022864296188023902	Collinsella intestinalis	Collinsella	Coriobacteriaceae	Coriobacteriales	Coriobacteriia	Actinobacteria	Terrabacteria group	Bacteria				66.21340125978406
+1871029	0.00013417157473773417	Intestinibacillus massiliensis	Intestinibacillus	Eubacteriaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				38.85514884302465
+876	0.00021125906942111552	Desulfovibrio desulfuricans	Desulfovibrio	Desulfovibrionaceae	Desulfovibrionales	Deltaproteobacteria	Proteobacteria		Bacteria				61.17914769086911
+218538	0.0011856993087138025	Dialister invisus	Dialister	Veillonellaceae	Veillonellales	Negativicutes	Firmicutes	Terrabacteria group	Bacteria				343.3702199083562
+288966	0.0003850902909317432	Lutispora thermophila	Lutispora	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				111.5194526217963
+185693	0.00035019241083651366	Alkaliphilus crotonatoxidans	Alkaliphilus	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				101.4132708313785
+2528203	0.0006344014531063928	Bacteroides sp. A1C1	Bacteroides	Bacteroidaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				183.71822000943962
+2741	0.00026708221906939644	Peptococcus niger	Peptococcus	Peptococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				77.34514106696372
+1680	0.0001779420536952569	Bifidobacterium adolescentis	Bifidobacterium	Bifidobacteriaceae	Bifidobacteriales	Actinobacteria	Actinobacteria	Terrabacteria group	Bacteria				51.53077315577053
+2094242	0.00032208349928137284	Victivallales bacterium CCUG 44730			Victivallales	Lentisphaeria	Lentisphaerae	PVC group	Bacteria				93.27312680739061
+562	0.0007513505617506654	Escherichia coli	Escherichia	Enterobacteriaceae	Enterobacterales	Gammaproteobacteria	Proteobacteria		Bacteria				217.58586322906046
+31971	0.0002206648293817222	Amedibacillus dolichus	Amedibacillus	Erysipelotrichaceae	Erysipelotrichales	Erysipelotrichia	Firmicutes	Terrabacteria group	Bacteria				63.90298993514108
+1639	0.0002735978243691346	Listeria monocytogenes	Listeria	Listeriaceae	Bacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				79.23201475253079
+116085	0.0016062701858297398	Coprococcus catus	Coprococcus	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				465.1646019249918
+29356	0.00042588464461860374	Clostridium chartatabidum	Clostridium	Clostridiaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				123.33321188903531
+28128	0.00016970188951991434	Prevotella corporis	Prevotella	Prevotellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				49.14447929174055
+433287	0.0001869626952237522	Anaerotignum aminivorans	Anaerotignum	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				54.14308779793207
+760261	0.00013553110475800835	Lactivibrio alcoholicus	Lactivibrio	Synergistaceae	Synergistales	Synergistia	Synergistetes		Bacteria				39.24885922018591
+40545	0.000419054875409098	Sutterella wadsworthensis	Sutterella	Sutterellaceae	Burkholderiales	Betaproteobacteria	Proteobacteria		Bacteria				121.35535853434692
+1358	0.00012814074702592251	Lactococcus lactis	Lactococcus	Streptococcaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				37.10866335347798
+1280	0.0003877662075757631	Staphylococcus aureus	Staphylococcus	Staphylococcaceae	Bacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				112.29437935048797
+83661	0.0001606453072668707	Desulfonispora thiosulfatigenes	Desulfonispora	Peptococcaceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				46.52175646733489
+168384	0.00045263144362017667	Marvinbryantia formatexigens	Marvinbryantia	Lachnospiraceae	Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				131.07889765229783
+1351	0.0003815657356209773	Enterococcus faecalis	Enterococcus	Enterococcaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				110.49876607568568
+37482	0.0009504148568334794	Laceyella sacchari	Laceyella	Thermoactinomycetaceae	Bacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				275.2334896349778
+28901	0.00020451923259203888	Salmonella enterica	Salmonella	Enterobacteriaceae	Enterobacterales	Gammaproteobacteria	Proteobacteria		Bacteria				59.22733812402631
+446660	0.0002251127481531773	Adlercreutzia equolifaciens	Adlercreutzia	Eggerthellaceae	Eggerthellales	Coriobacteriia	Actinobacteria	Terrabacteria group	Bacteria				65.19107607592306
+915173	0.0001256615139362209	Faecalicoccus acidiformans	Faecalicoccus	Erysipelotrichaceae	Erysipelotrichales	Erysipelotrichia	Firmicutes	Terrabacteria group	Bacteria				36.39069480533202
+487175	0.0004710038269060936	Parasutterella excrementihominis	Parasutterella	Sutterellaceae	Burkholderiales	Betaproteobacteria	Proteobacteria		Bacteria				136.39941124521638
+1417852	0.00013201554234676751	Flintibacter butyricus	Flintibacter		Clostridiales	Clostridia	Firmicutes	Terrabacteria group	Bacteria				38.23077695482745
+2093856	0.00017316317165665205	Butyricimonas faecalis	Butyricimonas	Odoribacteraceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				50.14684236956484
+1470347	0.00011082442986025732	Alistipes ihumii	Alistipes	Rikenellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				32.093979116521496
+2585118	0.00013853053732532165	Alistipes communis	Alistipes	Rikenellaceae	Bacteroidales	Bacteroidia	Bacteroidetes	FCB group	Bacteria				40.11747389565187
+847	0.00016969990822351903	Oxalobacter formigenes	Oxalobacter	Oxalobacteraceae	Burkholderiales	Betaproteobacteria	Proteobacteria		Bacteria				49.14390552217355
+29552	0.0001870162253891973	Acholeplasma axanthum	Acholeplasma	Acholeplasmataceae	Acholeplasmatales	Mollicutes	Tenericutes	Terrabacteria group	Bacteria				54.15858975913381
+1605	0.00011082443074439457	Lactobacillus animalis	Lactobacillus	Lactobacillaceae	Lactobacillales	Bacilli	Firmicutes	Terrabacteria group	Bacteria				32.093979372561456
+unassigned	0.0												164.0

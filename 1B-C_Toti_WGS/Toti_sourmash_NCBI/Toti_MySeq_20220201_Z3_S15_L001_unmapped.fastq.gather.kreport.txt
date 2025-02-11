@@ -1,0 +1,107 @@
+74.84	103347000	0	D		Bacteria
+25.16	34736999	34736999	U		unclassified
+51.05	70488000	0	P		Firmicutes
+15.54	21465000	0	P		Bacteroidetes
+5.42	7485999	0	P		Actinobacteria
+2.41	3331000	0	P		Fusobacteria
+0.42	577000	0	P		Proteobacteria
+45.68	63071000	0	C		Clostridia
+15.54	21465000	0	C		Bacteroidia
+2.41	3331000	0	C		Fusobacteriia
+1.58	2180000	0	C		Erysipelotrichia
+3.73	5149999	0	C		Coriobacteriia
+1.69	2336000	0	C		Actinomycetia
+0.19	260000	0	C		Betaproteobacteria
+0.16	218000	0	C		Negativicutes
+0.17	234000	0	C		Epsilonproteobacteria
+0.06	83000	0	C		Gammaproteobacteria
+45.68	63071000	0	O		Eubacteriales
+15.54	21465000	0	O		Bacteroidales
+2.41	3331000	0	O		Fusobacteriales
+1.58	2180000	0	O		Erysipelotrichales
+3.73	5149999	0	O		Coriobacteriales
+1.69	2336000	0	O		Bifidobacteriales
+0.19	260000	0	O		Burkholderiales
+0.16	218000	0	O		Selenomonadales
+0.17	234000	0	O		Campylobacterales
+0.06	83000	0	O		Enterobacterales
+30.42	42005999	0	F		Lachnospiraceae
+15.54	21465000	0	F		Bacteroidaceae
+6.26	8647000	0	F		Clostridiaceae
+5.70	7876999	0	F		Oscillospiraceae
+2.41	3331000	0	F		Fusobacteriaceae
+3.73	5149999	0	F		Coriobacteriaceae
+1.69	2336000	0	F		Bifidobacteriaceae
+0.92	1276000	0	F		Peptostreptococcaceae
+1.04	1431000	0	F		Coprobacillaceae
+0.54	749000	0	F		Erysipelotrichaceae
+0.41	573000	0	F		Eubacteriaceae
+0.19	260000	0	F		Sutterellaceae
+0.16	218000	0	F		Selenomonadaceae
+0.12	160000	0	F		Helicobacteraceae
+0.05	74000	0	F		Campylobacteraceae
+0.06	83000	0	F		Enterobacteriaceae
+14.94	20627000	0	G		Phocaeicola
+12.09	16699000	0	G		Blautia
+14.97	20672000	0	G		Mediterraneibacter
+4.73	6525000	0	G		Faecalibacterium
+2.41	3331000	0	G		Fusobacterium
+3.73	5149999	0	G		Collinsella
+1.69	2336000	0	G		Bifidobacterium
+0.80	1105000	0	G		Clostridium
+1.04	1431000	0	G		Catenibacterium
+0.64	884000	0	G		Peptacetobacter
+0.61	838000	0	G		Bacteroides
+0.41	573000	0	G		Eubacterium
+0.98	1352000	0	G		Ruminococcus
+0.25	351000	0	G		Amedibacterium
+0.45	622000	0	G		Tyzzerella
+0.19	260000	0	G		Sutterella
+0.16	218000	0	G		Megamonas
+0.10	144000	0	G		Erysipelatoclostridium
+0.12	160000	0	G		Helicobacter
+0.09	126000	0	G		Amedibacillus
+0.09	128000	0	G		Allobaculum
+0.05	74000	0	G		Campylobacter
+0.07	103000	0	G		Faecalimonas
+0.06	83000	0	G		Escherichia
+14.94	20627000	20627000	S		Phocaeicola vulgatus
+14.97	20672000	20672000	S		[Ruminococcus] gnavus
+6.04	8339000	8339000	S		Blautia hansenii
+6.05	8360000	8360000	S		uncultured Blautia sp.
+3.12	4304000	4304000	S		Firmicutes bacterium
+5.46	7541999	7541999	S		uncultured Clostridiaceae bacterium
+4.73	6525000	6525000	S		uncultured Faecalibacterium sp.
+2.27	3140999	3140999	S		uncultured Fusobacterium sp.
+1.95	2692000	2692000	S		Clostridiales bacterium
+3.73	5149999	5149999	S		Collinsella intestinalis
+1.69	2336000	2336000	S		Bifidobacterium pseudolongum
+1.50	2067999	2067999	S		Lachnospiraceae bacterium
+0.74	1026000	1026000	S		Clostridium sp. CAG:299
+0.97	1337000	1337000	S		Catenibacterium sp. BIOML-A1
+0.79	1091000	1091000	S		Lachnospiraceae bacterium AM25-17
+0.64	884000	884000	S		Peptacetobacter hiranonis
+0.61	838000	838000	S		uncultured Bacteroides sp.
+0.52	715000	715000	S		uncultured Firmicutes bacterium
+0.98	1352000	1352000	S		uncultured Ruminococcus sp.
+0.28	392000	392000	S		Eubacterium sp.
+0.28	392000	392000	S		Peptostreptococcaceae bacterium
+0.25	351000	351000	S		Amedibacterium intestinale
+0.45	622000	622000	S		Tyzzerella nexilis
+0.19	260000	260000	S		uncultured Sutterella sp.
+0.16	218000	218000	S		Megamonas funiformis
+0.13	181000	181000	S		uncultured Eubacterium sp.
+0.10	144000	144000	S		[Clostridium] spiroforme
+0.12	160000	160000	S		Helicobacter canis
+0.20	282000	282000	S		Lachnospiraceae bacterium 6_1_63FAA
+0.09	126000	126000	S		Lachnospiraceae bacterium 9_1_43BFAA
+0.09	126000	126000	S		Amedibacillus dolichus
+0.09	128000	128000	S		Allobaculum stercoricanis
+0.14	190000	190000	S		Fusobacterium sp.
+0.15	202000	202000	S		uncultured Lachnospiraceae bacterium
+0.05	74000	74000	S		Campylobacter upsaliensis
+0.07	94000	94000	S		Catenibacterium sp. co_0103
+0.07	103000	103000	S		Faecalimonas umbilicata
+0.10	141000	141000	S		Lachnospiraceae bacterium AM25-22
+0.06	79000	79000	S		Clostridium sp.
+0.06	83000	83000	S		Escherichia coli

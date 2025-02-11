@@ -1,0 +1,22 @@
+Species	Species_alternative_name	Genomic DNA	16S Only	16S & 18S	Genome Copy	Cell Number	Gram Stain
+Faecalibacterium prausnitzii	Faecalibacterium sp. AF28-13AC?	14	17.63	15.96	14.77	14.82	+
+Veillonella rogosae	Veillonella rogosae 	14	15.87	14.37	19.94	20.01	-
+Roseburia hominis	Roseburia hominis 	14	9.89	8.95	12.43	12.47	+/-
+Bacteroides fragilis	Bacteroides fragilis 	14	9.94	9	8.33	8.36	-
+Prevotella corporis	Prevotella corporis 	6	4.98	4.51	6.26	6.28	-
+Bifidobacterium adolescentis	Bifidobacterium adolescentis 	6	8.78	7.95	8.83	8.86	-
+Fusobacterium nucleatum	Fusobacterium nucleatum 	6	7.49	6.79	7.53	7.56	-
+Limosilactobacillus fermentum	Lactobacillus fermentum	6	9.63	8.72	9.68	9.71	+
+Clostridioides difficile	Clostridioides difficile 	1.5	2.62	2.37	1.1	1.1	+
+Akkermansia muciniphila	Akkermansia muciniphila 	1.5	0.97	0.87	1.62	1.62	-
+Methanobrevibacter smithii	Methanobrevibacter smithii 	0.1	0.066	0.06	0.17	0.17	+
+Salmonella enterica	Salmonella enterica 	0.01	0.009	0.008	0.007	0.0065	-
+Enterococcus faecalis	Enterococcus faecalis 	0.001	0.0009	0.0008	0.0011	0.0011	+
+Clostridium perfringens	Clostridium perfringens 	0.0001	0.0002	0.0002	0.0001	0.0001	+
+Escherichia coli (JM109)	Escherichia coli (JM109) 	2.8	2.53	2.29	1.82	1.83	-
+Escherichia coli (B-3008)	Escherichia coli (B-3008) 	2.8	2.53	2.29	1.82	1.82	-
+Escherichia coli (B-2207)	Escherichia coli (B-2207) 	2.8	2.29	2.07	1.64	1.65	-
+Escherichia coli (B-766)	Escherichia coli (B-766) 	2.8	2.31	2.09	1.66	1.66	-
+Escherichia coli (B-1109) 	Escherichia coli (B-1109) 	2.8	2.46	2.23	1.77	1.77	-
+Candida albicans	Candida albicans 	1.5	0	3.11	0.31	0.16	Yeast
+Saccharomyces cerevisiae	Saccharomyces cerevisiae	1.4	0	6.35	0.32	0.16	Yeast

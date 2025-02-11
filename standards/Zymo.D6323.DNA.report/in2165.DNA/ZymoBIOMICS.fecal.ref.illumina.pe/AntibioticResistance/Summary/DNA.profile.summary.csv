@@ -1,0 +1,163 @@
+species,protein,read_counts
+unknown,lincosamide nucleotidyltransferase Lnu(C),3
+unknown,trimethoprim-resistant dihydrofolate reductase DfrF,1
+unknown,23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(B),3
+unknown,ANT(9) family aminoglycoside nucleotidyltransferase,3
+unknown,VanD-type vancomycin resistance DNA-binding response regulator VanR,1
+unknown,VanA-type vancomycin resistance DNA-binding response regulator VanR,1
+unknown,aminoglycoside nucleotidyltransferase ANT(6)-Ib,1
+unknown,tetracycline efflux MFS transporter Tet(40),5
+unknown,tetracycline resistance ribosomal protection protein Tet(W),4
+unknown,ABC-F type ribosomal protection protein Lsa(E),1
+unknown,VanG-type vancomycin resistance DNA-binding response regulator VanR,1
+unknown,tetracycline resistance ribosomal protection protein Tet(Q),2
+unknown,aminoglycoside O-phosphotransferase APH(3')-IIIa,1
+unknown,tetracycline resistance ribosomal protection protein Tet(O),26
+unknown,tetracycline resistance ribosomal protection protein Tet(32),1
+Bacteroides salyersiae,macrolide efflux MFS transporter Mef(En2),10
+Bacteroides salyersiae,23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(F),1
+Bacteroides salyersiae,lincosamide nucleotidyltransferase Lnu(AN2),4
+Bacteroides salyersiae,tetracycline-inactivating monooxygenase Tet(X),4
+Bacteroides salyersiae,tetracycline resistance ribosomal protection protein Tet(Q),7
+[Eubacterium] siraeum,tetracycline resistance ribosomal protection protein Tet(W),1
+[Eubacterium] siraeum,VanG-type vancomycin resistance histidine kinase VanS,2
+[Eubacterium] siraeum,VanG-type vancomycin resistance DNA-binding response regulator VanR,2
+[Eubacterium] siraeum,tetracycline resistance ribosomal protection protein Tet(O),3
+[Eubacterium] siraeum,VanD-type vancomycin resistance histidine kinase VanS,5
+[Eubacterium] siraeum,aminoglycoside N-acetyltransferase AAC(6')-Iad,2
+[Eubacterium] siraeum,VanD-type vancomycin resistance DNA-binding response regulator VanR,8
+[Eubacterium] siraeum,glycopeptide resistance accessory protein VanW-G,2
+Bacteroides stercoris,tetracycline resistance ribosomal protection protein Tet(Q),23
+Faecalibacterium prausnitzii,aminoglycoside nucleotidyltransferase ANT(6)-Ib,1
+Faecalibacterium prausnitzii,aminoglycoside 6-adenylyltransferase AadE,1
+Faecalibacterium prausnitzii,tetracycline resistance ribosomal protection protein Tet(W),17
+,VanD-type vancomycin resistance DNA-binding response regulator VanR,1
+,membrane-bound serine racemase VanT-G,1
+,macrolide efflux MFS transporter Mef(En2),4
+,23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(F),1
+,D-alanine--(R)-lactate ligase VanD,1
+,tetracycline resistance ribosomal protection protein Tet(W),6
+,lincosamide nucleotidyltransferase Lnu(AN2),2
+,tetracycline resistance ribosomal protection protein Tet(Q),2
+Bacteroides uniformis,lincosamide nucleotidyltransferase Lnu(AN2),1
+Bacteroides uniformis,CblA family class A beta-lactamase,7
+Bacteroides uniformis,macrolide efflux MFS transporter Mef(En2),3
+Bacteroides uniformis,tetracycline resistance ribosomal protection protein Tet(Q),2
+Bacteroides uniformis,CfxA family class A broad-spectrum beta-lactamase,1
+uncultured Clostridium sp.,tetracycline efflux MFS transporter Tet(40),1
+uncultured Clostridium sp.,tetracycline resistance ribosomal protection protein Tet(O),3
+uncultured Clostridium sp.,tetracycline resistance ribosomal protection protein Tet(W),9
+Firmicutes bacterium AM55-24TS,tetracycline efflux MFS transporter Tet(40),7
+Firmicutes bacterium AM55-24TS,tetracycline resistance ribosomal protection protein Tet(O),4
+Firmicutes bacterium AM55-24TS,23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(B),2
+Bacteroides vulgatus,CfxA family class A broad-spectrum beta-lactamase,8
+Bacteroides vulgatus,tetracycline resistance ribosomal protection protein Tet(Q),4
+Bacteroides vulgatus,macrolide efflux MFS transporter Mef(En2),1
+Bacteroides massiliensis,CfxA family class A broad-spectrum beta-lactamase,4
+Bacteroides massiliensis,tetracycline resistance ribosomal protection protein Tet(Q),7
+Blautia obeum,VanD-type vancomycin resistance DNA-binding response regulator VanR,1
+Blautia obeum,tetracycline resistance ribosomal protection protein Tet(O),9
+Coprococcus comes,VanG-type vancomycin resistance DNA-binding response regulator VanR,1
+Coprococcus comes,tetracycline resistance ribosomal protection protein Tet(W),9
+Gemmiger formicilis,tetracycline resistance ribosomal protection protein Tet(W),10
+Fusicatenibacter saccharivorans,tetracycline resistance ribosomal protection protein Tet(W),5
+Fusicatenibacter saccharivorans,tetracycline resistance ribosomal protection protein Tet(O),5
+Monoglobus pectinilyticus,tetracycline efflux MFS transporter Tet(40),4
+Monoglobus pectinilyticus,tetracycline resistance ribosomal protection protein Tet(O),2
+Monoglobus pectinilyticus,tetracycline resistance ribosomal protection protein Tet(W),3
+Ruminococcus bromii,tetracycline resistance ribosomal protection protein Tet(W),5
+Ruminococcus bromii,VanD-type vancomycin resistance DNA-binding response regulator VanR,1
+Ruminococcus bromii,VanG-type vancomycin resistance histidine kinase VanS,1
+Ruminococcus bromii,VanD-type vancomycin resistance histidine kinase VanS,2
+Roseburia intestinalis,tetracycline resistance ribosomal protection protein Tet(O),7
+Roseburia intestinalis,tetracycline efflux MFS transporter Tet(40),1
+Agathobaculum butyriciproducens,tetracycline resistance ribosomal protection protein Tet(W),8
+Clostridia bacterium UC5.1-1D4,transpeptidase-like D-Ala-D-Ala carboxypeptidase VanY-D,1
+Clostridia bacterium UC5.1-1D4,D-Ala-D-Ala dipeptidase VanX-D,2
+Clostridia bacterium UC5.1-1D4,VanD-type vancomycin resistance histidine kinase VanS,1
+Clostridia bacterium UC5.1-1D4,tetracycline resistance ribosomal protection protein Tet(O),1
+Clostridia bacterium UC5.1-1D4,D-lactate dehydrogenase VanH-D,2
+Clostridia bacterium UC5.1-1D4,D-alanine--(R)-lactate ligase VanD,2
+Bifidobacterium pseudocatenulatum,tetracycline resistance ribosomal protection protein Tet(W),7
+Butyricimonas faecalis,23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(B),1
+Butyricimonas faecalis,tetracycline resistance ribosomal protection protein Tet(Q),4
+Butyricimonas faecalis,CfxA family class A broad-spectrum beta-lactamase,1
+Barnesiella intestinihominis,tetracycline resistance ribosomal protection protein Tet(Q),5
+Bacteroides ovatus,tetracycline resistance ribosomal protection protein Tet(Q),5
+Pseudoruminoccoccus massiliensis,streptogramin A O-acetyltransferase Vat(B),1
+Pseudoruminoccoccus massiliensis,tetracycline resistance ribosomal protection protein Tet(W),4
+Dysosmobacter welbionis,tetracycline resistance ribosomal protection protein Tet(W),5
+uncultured Clostridiales bacterium,D-alanine--D-serine ligase VanG,1
+uncultured Clostridiales bacterium,lincosamide nucleotidyltransferase Lnu(C),1
+uncultured Clostridiales bacterium,tetracycline resistance ribosomal protection protein Tet(W),1
+uncultured Clostridiales bacterium,VanC-type vancomycin resistance DNA-binding response regulator VanR,1
+uncultured Eubacterium sp.,tetracycline resistance ribosomal protection protein Tet(O),4
+Lachnospiraceae bacterium GAM79,tetracycline resistance ribosomal protection protein Tet(W),4
+Dorea longicatena,tetracycline resistance ribosomal protection protein Tet(O),3
+Dorea longicatena,aminoglycoside 6-adenylyltransferase AadE,1
+Bacteroides dorei,tetracycline resistance ribosomal protection protein Tet(Q),1
+Bacteroides dorei,macrolide efflux MFS transporter Mef(A),2
+Bacteroides dorei,23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(T),1
+uncultured Ruminococcus sp.,trimethoprim-resistant dihydrofolate reductase DfrF,3
+Bacteroides faecis,CepA family class A extended-spectrum beta-lactamase,2
+Bacteroides faecis,23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(G),1
+Blautia wexlerae,trimethoprim-resistant dihydrofolate reductase DfrF,1
+Blautia wexlerae,VanD-type vancomycin resistance histidine kinase VanS,1
+Blautia wexlerae,glycopeptide resistance transcriptional regulator VanU,1
+uncultured Blautia sp.,VanD-type vancomycin resistance DNA-binding response regulator VanR,1
+uncultured Blautia sp.,VanD-type vancomycin resistance histidine kinase VanS,1
+uncultured Blautia sp.,tetracycline resistance ribosomal protection protein Tet(O),1
+uncultured Dialister sp.,macrolide efflux MFS transporter Mef(En2),2
+uncultured Dialister sp.,lincosamide nucleotidyltransferase Lnu(AN2),1
+Asaccharobacter celatus,tetracycline resistance ribosomal protection protein Tet(W),2
+Firmicutes bacterium AF25-13AC,23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(B),2
+Dorea formicigenerans,tetracycline resistance ribosomal protection protein Tet(O),2
+Anaerotignum faecicola,tetracycline resistance ribosomal protection protein Tet(O),2
+uncultured Solobacterium sp.,ABC-F type ribosomal protection protein Msr(D),1
+uncultured Solobacterium sp.,macrolide efflux MFS transporter Mef(A),1
+Bacteroides thetaiotaomicron,tetracycline resistance ribosomal protection protein Tet(Q),2
+uncultured Bacteroides sp.,trimethoprim-resistant dihydrofolate reductase DfrF,1
+uncultured Bacteroides sp.,macrolide efflux MFS transporter Mef(En2),1
+Alistipes shahii,tetracycline resistance ribosomal protection protein Tet(Q),2
+[Clostridium] lavalense,tetracycline efflux MFS transporter Tet(40),1
+[Clostridium] lavalense,tetracycline resistance ribosomal protection protein Tet(O),1
+Ruminococcus lactaris,tetracycline resistance ribosomal protection protein Tet(O),1
+Ruminococcus lactaris,VanD-type vancomycin resistance DNA-binding response regulator VanR,1
+[Eubacterium] rectale,VanD-type vancomycin resistance histidine kinase VanS,1
+[Eubacterium] rectale,ABC-F type ribosomal protection protein OptrA,1
+Parabacteroides merdae,tetracycline resistance ribosomal protection protein Tet(Q),2
+Anaerotruncus massiliensis,tetracycline resistance ribosomal protection protein Tet(W),2
+Firmicutes bacterium AM31-12AC,trimethoprim-resistant dihydrofolate reductase DfrF,2
+Bacteroides cellulosilyticus,tetracycline resistance ribosomal protection protein Tet(Q),2
+Firmicutes bacterium TM09-10,tetracycline resistance ribosomal protection protein Tet(O),2
+Enorma massiliensis,tetracycline resistance ribosomal protection protein Tet(W),2
+Coprococcus eutactus,VanD-type vancomycin resistance DNA-binding response regulator VanR,1
+Coprococcus eutactus,tetracycline resistance ribosomal protection protein Tet(O),1
+Ruthenibacterium lactatiformans,tetracycline resistance ribosomal protection protein Tet(W),2
+Bacteroides finegoldii,CepA family class A extended-spectrum beta-lactamase,1
+Bacteroides finegoldii,macrolide efflux MFS transporter Mef(A),1
+Alistipes communis,tetracycline resistance ribosomal protection protein Tet(Q),2
+[Ruminococcus] gnavus,tetracycline resistance ribosomal protection protein Tet(O),1
+Roseburia inulinivorans,aminoglycoside O-phosphotransferase APH(3')-IIIa,1
+[Clostridium] bolteae,tetracycline resistance ribosomal protection protein Tet(O),1
+Firmicutes bacterium CAG:83,VanC-type vancomycin resistance histidine kinase VanS,1
+Lachnospiraceae bacterium,macrolide efflux MFS transporter Mef(A),1
+Anaerobutyricum soehngenii,tetracycline efflux MFS transporter Tet(40),1
+Coprococcus catus,VanD-type vancomycin resistance DNA-binding response regulator VanR,1
+Subdoligranulum variabile,tetracycline resistance ribosomal protection protein Tet(W),1
+Parabacteroides johnsonii,macrolide efflux MFS transporter Mef(En2),1
+Lawsonibacter asaccharolyticus,tetracycline resistance ribosomal protection protein Tet(W),1
+Bittarella massiliensis,tetracycline resistance ribosomal protection protein Tet(W),1
+Alistipes finegoldii,tetracycline resistance ribosomal protection protein Tet(Q),1
+Eisenbergiella tayi,aminoglycoside O-phosphotransferase APH(2'')-IIa,1
+Mediterraneibacter butyricigenes,trimethoprim-resistant dihydrofolate reductase DfrF,1
+Lachnospiraceae bacterium OM04-12BH,23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(B),1
+Ruminococcaceae bacterium AM07-15,lincosamide nucleotidyltransferase Lnu(C),1
+Parabacteroides distasonis,tetracycline resistance ribosomal protection protein Tet(Q),1
+uncultured Flavonifractor sp.,tetracycline resistance ribosomal protection protein Tet(W),1
+Oxalobacter formigenes,tetracycline resistance ribosomal protection protein Tet(W),1
+Neglecta timonensis,tetracycline resistance ribosomal protection protein Tet(W),1
+Clostridiales bacterium CCNA10,tetracycline resistance ribosomal protection protein Tet(W),1
+Clostridium phoceensis,VanD-type vancomycin resistance histidine kinase VanS,1
+Merdibacter massiliensis,tetracycline resistance ribosomal protection protein Tet(W),1
+Pseudoflavonifractor capillosus,ABC-F type ribosomal protection protein Lsa(E),1

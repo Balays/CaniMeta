@@ -1,0 +1,320 @@
+# Constructed from biom file
+#OTU ID	DNA.profile
+k__Archaea;p__Euryarchaeota;g__Methanobrevibacter;s__Methanobrevibacter smithii;x__unknown;y__unknown;z__unknown	0.002779
+k__Bacteria;p__Actinobacteria;g__Actinomyces;s__unknown;x__unknown;y__unknown;z__HMSC035G02	0.000141
+k__Bacteria;p__Actinobacteria;g__Adlercreutzia;s__Adlercreutzia equolifaciens;x__unknown;y__unknown;z__Adlercreutzia equolifaciens DSM 19450	0.000889
+k__Bacteria;p__Actinobacteria;g__Asaccharobacter;s__Asaccharobacter celatus;x__unknown;y__unknown;z__unknown	0.001606
+k__Bacteria;p__Actinobacteria;g__Bifidobacterium;s__Bifidobacterium bifidum;x__unknown;y__unknown;z__Bifidobacterium bifidum ATCC 29521 = JCM 1255 = DSM 20456	0.001452
+k__Bacteria;p__Actinobacteria;g__Bifidobacterium;s__Bifidobacterium bifidum;x__unknown;y__unknown;z__Bifidobacterium bifidum PRL2010	0.000468
+k__Bacteria;p__Actinobacteria;g__Bifidobacterium;s__Bifidobacterium longum;x__unknown;y__unknown;z__unknown	0.001510
+k__Bacteria;p__Actinobacteria;g__Bifidobacterium;s__Bifidobacterium pseudocatenulatum;x__unknown;y__unknown;z__Bifidobacterium pseudocatenulatum DSM 20438 = JCM 1200 = LMG 10505	0.002287
+k__Bacteria;p__Actinobacteria;g__Collinsella;s__Collinsella intestinalis;x__unknown;y__unknown;z__Collinsella intestinalis DSM 13280	0.000370
+k__Bacteria;p__Actinobacteria;g__Collinsella;s__uncultured Collinsella sp.;x__unknown;y__unknown;z__unknown	0.003368
+k__Bacteria;p__Actinobacteria;g__Collinsella;s__unknown;x__unknown;y__unknown;z__AM34-10	0.001735
+k__Bacteria;p__Actinobacteria;g__Collinsella;s__unknown;x__unknown;y__unknown;z__TF05-9AC	0.001759
+k__Bacteria;p__Actinobacteria;g__Cryptobacterium;s__unknown;x__unknown;y__unknown;z__CAG:338	0.000113
+k__Bacteria;p__Actinobacteria;g__Eggerthella;s__Eggerthella lenta;x__unknown;y__unknown;z__Eggerthella lenta DSM 2243	0.000536
+k__Bacteria;p__Actinobacteria;g__Eggerthella;s__uncultured Eggerthella sp.;x__unknown;y__unknown;z__unknown	0.000266
+k__Bacteria;p__Actinobacteria;g__Eggerthella;s__unknown;x__unknown;y__unknown;z__CAG:298	0.000619
+k__Bacteria;p__Actinobacteria;g__Enorma;s__Enorma massiliensis;x__unknown;y__unknown;z__Enorma massiliensis phI	0.000387
+k__Bacteria;p__Actinobacteria;g__Gordonibacter;s__Gordonibacter pamelaeae;x__unknown;y__unknown;z__Gordonibacter pamelaeae 7-10-1-b	0.000274
+k__Bacteria;p__Actinobacteria;g__unknown;s__Coriobacteriia bacterium;x__unknown;y__unknown;z__unknown	0.000241
+k__Bacteria;p__Actinobacteria;g__unknown;s__uncultured Coriobacteriaceae bacterium;x__unknown;y__unknown;z__unknown	0.000489
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes communis;x__unknown;y__unknown;z__unknown	0.001565
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes finegoldii;x__unknown;y__unknown;z__Alistipes finegoldii DSM 17242	0.001279
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes ihumii;x__unknown;y__unknown;z__Alistipes ihumii AP11	0.001073
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes indistinctus;x__unknown;y__unknown;z__Alistipes indistinctus YIT 12060	0.000122
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes onderdonkii;x__Alistipes onderdonkii subsp. vulgaris;y__unknown;z__unknown	0.002589
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes onderdonkii;x__unknown;y__unknown;z__Alistipes onderdonkii WAL 8169 = DSM 19147	0.001244
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes putredinis;x__unknown;y__unknown;z__Alistipes putredinis DSM 17216	0.007192
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes shahii;x__unknown;y__unknown;z__Alistipes shahii WAL 8301	0.008357
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes timonensis;x__unknown;y__unknown;z__Alistipes timonensis JC136	0.000324
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__uncultured Alistipes sp.;x__unknown;y__unknown;z__unknown	0.000833
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides caccae CAG:21;x__unknown;y__unknown;z__unknown	0.001708
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides cellulosilyticus CAG:158;x__unknown;y__unknown;z__unknown	0.003879
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides cellulosilyticus;x__unknown;y__unknown;z__Bacteroides cellulosilyticus DSM 14838	0.003824
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides cellulosilyticus;x__unknown;y__unknown;z__unknown	0.002862
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides dorei CAG:222;x__unknown;y__unknown;z__unknown	0.002291
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides dorei;x__unknown;y__unknown;z__Bacteroides dorei DSM 17855	0.006924
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides dorei;x__unknown;y__unknown;z__unknown	0.003170
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides eggerthii;x__unknown;y__unknown;z__Bacteroides eggerthii DSM 20697	0.000205
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides faecis;x__unknown;y__unknown;z__Bacteroides faecis MAJ27	0.005989
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides finegoldii CAG:203;x__unknown;y__unknown;z__unknown	0.001227
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides finegoldii;x__unknown;y__unknown;z__Bacteroides finegoldii DSM 17565	0.001574
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides fragilis;x__unknown;y__unknown;z__unknown	0.001033
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides massiliensis;x__unknown;y__unknown;z__Bacteroides massiliensis B84634 = Timone 84634 = DSM 17679 = JCM 13223	0.007008
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides ovatus;x__unknown;y__unknown;z__unknown	0.013759
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides salyersiae;x__unknown;y__unknown;z__Bacteroides salyersiae WAL 10018 = DSM 18765 = JCM 12988	0.004521
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides stercoris;x__unknown;y__unknown;z__Bacteroides stercoris ATCC 43183	0.006473
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides thetaiotaomicron;x__unknown;y__unknown;z__unknown	0.008310
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides timonensis;x__unknown;y__unknown;z__unknown	0.001250
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides uniformis;x__unknown;y__unknown;z__unknown	0.023841
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides vulgatus;x__unknown;y__unknown;z__Bacteroides vulgatus ATCC 8482	0.007500
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides vulgatus;x__unknown;y__unknown;z__unknown	0.064324
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides xylanisolvens;x__unknown;y__unknown;z__Bacteroides xylanisolvens XB1A	0.002160
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides xylanisolvens;x__unknown;y__unknown;z__unknown	0.001469
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__uncultured Bacteroides sp.;x__unknown;y__unknown;z__unknown	0.005571
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__unknown;x__unknown;y__unknown;z__43_108	0.001000
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__unknown;x__unknown;y__unknown;z__CAG:144	0.000195
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__unknown;x__unknown;y__unknown;z__HF-5092	0.000876
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__unknown;x__unknown;y__unknown;z__OF02-3LB	0.001508
+k__Bacteria;p__Bacteroidetes;g__Barnesiella;s__Barnesiella intestinihominis;x__unknown;y__unknown;z__Barnesiella intestinihominis YIT 11860	0.002612
+k__Bacteria;p__Bacteroidetes;g__Butyricimonas;s__Butyricimonas faecalis;x__unknown;y__unknown;z__unknown	0.001320
+k__Bacteria;p__Bacteroidetes;g__Butyricimonas;s__Butyricimonas virosa;x__unknown;y__unknown;z__Butyricimonas virosa DSM 23226	0.000571
+k__Bacteria;p__Bacteroidetes;g__Gabonia;s__Gabonia massiliensis;x__unknown;y__unknown;z__unknown	0.000112
+k__Bacteria;p__Bacteroidetes;g__Odoribacter;s__Odoribacter laneus;x__unknown;y__unknown;z__Odoribacter laneus YIT 12061	0.000960
+k__Bacteria;p__Bacteroidetes;g__Odoribacter;s__Odoribacter splanchnicus;x__unknown;y__unknown;z__unknown	0.003424
+k__Bacteria;p__Bacteroidetes;g__Odoribacter;s__uncultured Odoribacter sp.;x__unknown;y__unknown;z__unknown	0.000088
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides distasonis;x__unknown;y__unknown;z__Parabacteroides distasonis ATCC 8503	0.010805
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides distasonis;x__unknown;y__unknown;z__unknown	0.001219
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides goldsteinii;x__unknown;y__unknown;z__Parabacteroides goldsteinii CL02T12C30	0.000868
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides johnsonii;x__unknown;y__unknown;z__Parabacteroides johnsonii CL02T12C29	0.000776
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides johnsonii;x__unknown;y__unknown;z__Parabacteroides johnsonii DSM 18315	0.001562
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides merdae;x__unknown;y__unknown;z__Parabacteroides merdae ATCC 43184	0.002243
+k__Bacteria;p__Bacteroidetes;g__Tidjanibacter;s__Tidjanibacter massiliensis;x__unknown;y__unknown;z__unknown	0.000249
+k__Bacteria;p__Candidatus Melainabacteria;g__unknown;s__Candidatus Gastranaerophilales bacterium;x__unknown;y__unknown;z__unknown	0.003698
+k__Bacteria;p__Firmicutes;g__Agathobaculum;s__Agathobaculum butyriciproducens;x__unknown;y__unknown;z__unknown	0.004286
+k__Bacteria;p__Firmicutes;g__Anaerobutyricum;s__Anaerobutyricum hallii;x__unknown;y__unknown;z__Anaerobutyricum hallii DSM 3353	0.002722
+k__Bacteria;p__Firmicutes;g__Anaerobutyricum;s__Anaerobutyricum hallii;x__unknown;y__unknown;z__unknown	0.002374
+k__Bacteria;p__Firmicutes;g__Anaerobutyricum;s__Anaerobutyricum soehngenii;x__unknown;y__unknown;z__unknown	0.001030
+k__Bacteria;p__Firmicutes;g__Anaeromassilibacillus;s__unknown;x__unknown;y__unknown;z__An172	0.000241
+k__Bacteria;p__Firmicutes;g__Anaeromassilibacillus;s__unknown;x__unknown;y__unknown;z__An200	0.000313
+k__Bacteria;p__Firmicutes;g__Anaeromassilibacillus;s__unknown;x__unknown;y__unknown;z__An250	0.000836
+k__Bacteria;p__Firmicutes;g__Anaeromassilibacillus;s__unknown;x__unknown;y__unknown;z__Marseille-P4683	0.000335
+k__Bacteria;p__Firmicutes;g__Anaerostipes;s__Anaerostipes hadrus;x__unknown;y__unknown;z__Anaerostipes hadrus DSM 3319	0.002573
+k__Bacteria;p__Firmicutes;g__Anaerostipes;s__Anaerostipes hadrus;x__unknown;y__unknown;z__unknown	0.007730
+k__Bacteria;p__Firmicutes;g__Anaerotignum;s__Anaerotignum faecicola;x__unknown;y__unknown;z__unknown	0.000728
+k__Bacteria;p__Firmicutes;g__Anaerotruncus;s__Anaerotruncus colihominis;x__unknown;y__unknown;z__Anaerotruncus colihominis DSM 17241	0.000263
+k__Bacteria;p__Firmicutes;g__Anaerotruncus;s__Anaerotruncus massiliensis;x__unknown;y__unknown;z__unknown	0.000558
+k__Bacteria;p__Firmicutes;g__Bittarella;s__Bittarella massiliensis;x__unknown;y__unknown;z__unknown	0.000215
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia hansenii;x__unknown;y__unknown;z__unknown	0.000255
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia massiliensis;x__unknown;y__unknown;z__unknown	0.004885
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia obeum;x__unknown;y__unknown;z__Blautia obeum A2-162	0.000621
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia obeum;x__unknown;y__unknown;z__Blautia obeum ATCC 29174	0.010053
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia obeum;x__unknown;y__unknown;z__unknown	0.008188
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia wexlerae;x__unknown;y__unknown;z__Blautia wexlerae AGR2146	0.002458
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia wexlerae;x__unknown;y__unknown;z__Blautia wexlerae DSM 19850	0.013426
+k__Bacteria;p__Firmicutes;g__Blautia;s__[Ruminococcus] gnavus;x__unknown;y__unknown;z__[Ruminococcus] gnavus AGR2154	0.000577
+k__Bacteria;p__Firmicutes;g__Blautia;s__[Ruminococcus] gnavus;x__unknown;y__unknown;z__[Ruminococcus] gnavus ATCC 29149	0.001948
+k__Bacteria;p__Firmicutes;g__Blautia;s__[Ruminococcus] torques;x__unknown;y__unknown;z__[Ruminococcus] torques ATCC 27756	0.000474
+k__Bacteria;p__Firmicutes;g__Blautia;s__[Ruminococcus] torques;x__unknown;y__unknown;z__[Ruminococcus] torques L2-14	0.002436
+k__Bacteria;p__Firmicutes;g__Blautia;s__uncultured Blautia sp.;x__unknown;y__unknown;z__unknown	0.006571
+k__Bacteria;p__Firmicutes;g__Blautia;s__unknown;x__unknown;y__unknown;z__AF19-10LB	0.000881
+k__Bacteria;p__Firmicutes;g__Blautia;s__unknown;x__unknown;y__unknown;z__KGMB01111	0.000912
+k__Bacteria;p__Firmicutes;g__Blautia;s__unknown;x__unknown;y__unknown;z__Marseille-P3087	0.000808
+k__Bacteria;p__Firmicutes;g__Blautia;s__unknown;x__unknown;y__unknown;z__SG-772	0.007213
+k__Bacteria;p__Firmicutes;g__Butyricicoccus;s__unknown;x__unknown;y__unknown;z__OM04-18BH	0.000204
+k__Bacteria;p__Firmicutes;g__Candidatus Cibiobacter;s__Candidatus Cibiobacter qucibialis;x__unknown;y__unknown;z__unknown	0.003788
+k__Bacteria;p__Firmicutes;g__Candidatus Stoquefichus;s__unknown;x__unknown;y__unknown;z__SB1	0.000106
+k__Bacteria;p__Firmicutes;g__Catabacter;s__unknown;x__unknown;y__unknown;z__UBA1685	0.000227
+k__Bacteria;p__Firmicutes;g__Clostridium;s__Clostridium disporicum;x__unknown;y__unknown;z__unknown	0.000236
+k__Bacteria;p__Firmicutes;g__Clostridium;s__Clostridium phoceensis;x__unknown;y__unknown;z__unknown	0.000959
+k__Bacteria;p__Firmicutes;g__Clostridium;s__Clostridium sporogenes;x__unknown;y__unknown;z__unknown	0.001969
+k__Bacteria;p__Firmicutes;g__Clostridium;s__uncultured Clostridium sp.;x__unknown;y__unknown;z__unknown	0.009555
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__26_22	0.001456
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__29_15	0.000157
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__AF27-2AA	0.001389
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__AF37-5	0.003934
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__AM22-11AC	0.001928
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__AM33-3	0.000619
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__AM34-11AC	0.001703
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__AM49-4BH	0.007958
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__AT4	0.000153
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:138	0.004403
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:167	0.003464
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:169	0.000395
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:217	0.004982
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:245	0.000129
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:253	0.000355
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:273	0.000319
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:354_28_25	0.000693
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:433	0.000198
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__CAG:58	0.000963
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__Marseille-P3244	0.000093
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__OF03-18AA	0.001440
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown;x__unknown;y__unknown;z__SN20	0.000327
+k__Bacteria;p__Firmicutes;g__Coprococcus;s__Coprococcus catus;x__unknown;y__unknown;z__Coprococcus catus GD/7	0.001277
+k__Bacteria;p__Firmicutes;g__Coprococcus;s__Coprococcus comes;x__unknown;y__unknown;z__Coprococcus comes ATCC 27758	0.003897
+k__Bacteria;p__Firmicutes;g__Coprococcus;s__Coprococcus eutactus;x__unknown;y__unknown;z__Coprococcus eutactus ATCC 27759	0.001085
+k__Bacteria;p__Firmicutes;g__Coprococcus;s__Coprococcus phoceensis;x__unknown;y__unknown;z__unknown	0.001933
+k__Bacteria;p__Firmicutes;g__Dialister;s__Dialister invisus;x__unknown;y__unknown;z__Dialister invisus DSM 15470	0.000376
+k__Bacteria;p__Firmicutes;g__Dialister;s__uncultured Dialister sp.;x__unknown;y__unknown;z__unknown	0.001052
+k__Bacteria;p__Firmicutes;g__Dorea;s__Dorea formicigenerans;x__unknown;y__unknown;z__Dorea formicigenerans ATCC 27755	0.003275
+k__Bacteria;p__Firmicutes;g__Dorea;s__Dorea longicatena;x__unknown;y__unknown;z__Dorea longicatena DSM 13814	0.006033
+k__Bacteria;p__Firmicutes;g__Dorea;s__Dorea longicatena;x__unknown;y__unknown;z__unknown	0.001521
+k__Bacteria;p__Firmicutes;g__Dorea;s__uncultured Dorea sp.;x__unknown;y__unknown;z__unknown	0.000345
+k__Bacteria;p__Firmicutes;g__Dorea;s__unknown;x__unknown;y__unknown;z__AF36-15AT	0.000837
+k__Bacteria;p__Firmicutes;g__Dorea;s__unknown;x__unknown;y__unknown;z__AM10-31	0.000221
+k__Bacteria;p__Firmicutes;g__Dysosmobacter;s__Dysosmobacter welbionis;x__unknown;y__unknown;z__unknown	0.002243
+k__Bacteria;p__Firmicutes;g__Eisenbergiella;s__Eisenbergiella massiliensis;x__unknown;y__unknown;z__unknown	0.001056
+k__Bacteria;p__Firmicutes;g__Eisenbergiella;s__Eisenbergiella tayi;x__unknown;y__unknown;z__unknown	0.000349
+k__Bacteria;p__Firmicutes;g__Erysipelatoclostridium;s__[Clostridium] innocuum;x__unknown;y__unknown;z__[Clostridium] innocuum 2959	0.000139
+k__Bacteria;p__Firmicutes;g__Erysipelatoclostridium;s__[Clostridium] spiroforme;x__unknown;y__unknown;z__[Clostridium] spiroforme DSM 1552	0.000135
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__Eubacterium ramulus;x__unknown;y__unknown;z__Eubacterium ramulus ATCC 29099	0.002771
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__[Eubacterium] eligens;x__unknown;y__unknown;z__[Eubacterium] eligens ATCC 27750	0.002541
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__[Eubacterium] eligens;x__unknown;y__unknown;z__unknown	0.009292
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__uncultured Eubacterium sp.;x__unknown;y__unknown;z__unknown	0.006514
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__unknown;x__unknown;y__unknown;z__AF19-12LB	0.000537
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__unknown;x__unknown;y__unknown;z__AF22-9	0.000985
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__unknown;x__unknown;y__unknown;z__AM49-13BH	0.002454
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__unknown;x__unknown;y__unknown;z__CAG:38	0.000987
+k__Bacteria;p__Firmicutes;g__Evtepia;s__Evtepia gabavorous;x__unknown;y__unknown;z__unknown	0.000691
+k__Bacteria;p__Firmicutes;g__Faecalibacterium;s__Faecalibacterium prausnitzii;x__unknown;y__unknown;z__Faecalibacterium prausnitzii A2-165	0.016105
+k__Bacteria;p__Firmicutes;g__Faecalibacterium;s__Faecalibacterium prausnitzii;x__unknown;y__unknown;z__Faecalibacterium prausnitzii M21/2	0.001910
+k__Bacteria;p__Firmicutes;g__Faecalibacterium;s__Faecalibacterium prausnitzii;x__unknown;y__unknown;z__unknown	0.044733
+k__Bacteria;p__Firmicutes;g__Faecalibacterium;s__uncultured Faecalibacterium sp.;x__unknown;y__unknown;z__unknown	0.018135
+k__Bacteria;p__Firmicutes;g__Faecalicatena;s__Faecalicatena contorta;x__unknown;y__unknown;z__unknown	0.000221
+k__Bacteria;p__Firmicutes;g__Flavonifractor;s__uncultured Flavonifractor sp.;x__unknown;y__unknown;z__unknown	0.000536
+k__Bacteria;p__Firmicutes;g__Flavonifractor;s__unknown;x__unknown;y__unknown;z__An100	0.000186
+k__Bacteria;p__Firmicutes;g__Frisingicoccus;s__Frisingicoccus caecimuris;x__unknown;y__unknown;z__unknown	0.000297
+k__Bacteria;p__Firmicutes;g__Fusicatenibacter;s__Fusicatenibacter saccharivorans;x__unknown;y__unknown;z__unknown	0.026716
+k__Bacteria;p__Firmicutes;g__Gemmiger;s__Gemmiger formicilis;x__unknown;y__unknown;z__unknown	0.007234
+k__Bacteria;p__Firmicutes;g__Holdemania;s__Holdemania filiformis;x__unknown;y__unknown;z__Holdemania filiformis DSM 12042	0.000490
+k__Bacteria;p__Firmicutes;g__Hungatella;s__Hungatella hathewayi;x__unknown;y__unknown;z__Hungatella hathewayi DSM 13479	0.000119
+k__Bacteria;p__Firmicutes;g__Intestinimonas;s__Intestinimonas butyriciproducens;x__unknown;y__unknown;z__unknown	0.000189
+k__Bacteria;p__Firmicutes;g__Intestinimonas;s__Intestinimonas massiliensis;x__unknown;y__unknown;z__unknown	0.000581
+k__Bacteria;p__Firmicutes;g__Lachnobacterium;s__uncultured Lachnobacterium sp.;x__unknown;y__unknown;z__unknown	0.006603
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] bolteae;x__unknown;y__unknown;z__unknown	0.000468
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] citroniae;x__unknown;y__unknown;z__[Clostridium] citroniae WAL-17108	0.000149
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] clostridioforme;x__unknown;y__unknown;z__[Clostridium] clostridioforme AGR2157	0.000167
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] lavalense;x__unknown;y__unknown;z__unknown	0.000355
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] symbiosum;x__unknown;y__unknown;z__[Clostridium] symbiosum WAL-14163	0.000304
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__unknown;x__unknown;y__unknown;z__An138	0.000248
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__unknown;x__unknown;y__unknown;z__SNUG30386	0.002785
+k__Bacteria;p__Firmicutes;g__Lachnotalea;s__unknown;x__unknown;y__unknown;z__AF33-28	0.000208
+k__Bacteria;p__Firmicutes;g__Lactobacillus;s__Lactobacillus paracasei;x__unknown;y__unknown;z__Lactobacillus paracasei ATCC 334	0.000070
+k__Bacteria;p__Firmicutes;g__Lactobacillus;s__Lactobacillus rogosae;x__unknown;y__unknown;z__unknown	0.001052
+k__Bacteria;p__Firmicutes;g__Lactococcus;s__Lactococcus lactis;x__Lactococcus lactis subsp. lactis;y__unknown;z__unknown	0.000225
+k__Bacteria;p__Firmicutes;g__Lawsonibacter;s__Lawsonibacter asaccharolyticus;x__unknown;y__unknown;z__unknown	0.001641
+k__Bacteria;p__Firmicutes;g__Longibaculum;s__Longibaculum muris;x__unknown;y__unknown;z__unknown	0.000104
+k__Bacteria;p__Firmicutes;g__Marvinbryantia;s__Marvinbryantia formatexigens;x__unknown;y__unknown;z__Marvinbryantia formatexigens DSM 14469	0.000166
+k__Bacteria;p__Firmicutes;g__Marvinbryantia;s__uncultured Marvinbryantia sp.;x__unknown;y__unknown;z__unknown	0.001188
+k__Bacteria;p__Firmicutes;g__Massilioclostridium;s__Massilioclostridium coli;x__unknown;y__unknown;z__unknown	0.000125
+k__Bacteria;p__Firmicutes;g__Mediterraneibacter;s__Mediterraneibacter butyricigenes;x__unknown;y__unknown;z__unknown	0.000393
+k__Bacteria;p__Firmicutes;g__Mediterraneibacter;s__Mediterraneibacter massiliensis;x__unknown;y__unknown;z__unknown	0.000169
+k__Bacteria;p__Firmicutes;g__Megamonas;s__Megamonas funiformis;x__unknown;y__unknown;z__unknown	0.005316
+k__Bacteria;p__Firmicutes;g__Megamonas;s__Megamonas rupellensis;x__unknown;y__unknown;z__Megamonas rupellensis DSM 19944	0.001098
+k__Bacteria;p__Firmicutes;g__Merdibacter;s__Merdibacter massiliensis;x__unknown;y__unknown;z__unknown	0.000223
+k__Bacteria;p__Firmicutes;g__Monoglobus;s__Monoglobus pectinilyticus;x__unknown;y__unknown;z__unknown	0.001430
+k__Bacteria;p__Firmicutes;g__Mordavella;s__unknown;x__unknown;y__unknown;z__Marseille-P3756	0.000177
+k__Bacteria;p__Firmicutes;g__Negativibacillus;s__Negativibacillus massiliensis;x__unknown;y__unknown;z__unknown	0.000732
+k__Bacteria;p__Firmicutes;g__Neglecta;s__Neglecta timonensis;x__unknown;y__unknown;z__unknown	0.000691
+k__Bacteria;p__Firmicutes;g__Oscillibacter;s__Oscillibacter sp.;x__unknown;y__unknown;z__unknown	0.002840
+k__Bacteria;p__Firmicutes;g__Oscillibacter;s__uncultured Oscillibacter sp.;x__unknown;y__unknown;z__unknown	0.003259
+k__Bacteria;p__Firmicutes;g__Oscillibacter;s__unknown;x__unknown;y__unknown;z__57_20	0.001044
+k__Bacteria;p__Firmicutes;g__Oscillibacter;s__unknown;x__unknown;y__unknown;z__CAG:241	0.001199
+k__Bacteria;p__Firmicutes;g__Oscillibacter;s__unknown;x__unknown;y__unknown;z__CAG:241_62_21	0.001071
+k__Bacteria;p__Firmicutes;g__Oscillibacter;s__unknown;x__unknown;y__unknown;z__ER4	0.003732
+k__Bacteria;p__Firmicutes;g__Phascolarctobacterium;s__Phascolarctobacterium faecium;x__unknown;y__unknown;z__Phascolarctobacterium faecium DSM 14760	0.001269
+k__Bacteria;p__Firmicutes;g__Phascolarctobacterium;s__Phascolarctobacterium succinatutens;x__unknown;y__unknown;z__Phascolarctobacterium succinatutens YIT 12067	0.001588
+k__Bacteria;p__Firmicutes;g__Phocea;s__Phocea massiliensis;x__unknown;y__unknown;z__unknown	0.000104
+k__Bacteria;p__Firmicutes;g__Pseudoflavonifractor;s__Pseudoflavonifractor capillosus;x__unknown;y__unknown;z__Pseudoflavonifractor capillosus ATCC 29799	0.000453
+k__Bacteria;p__Firmicutes;g__Pseudoflavonifractor;s__unknown;x__unknown;y__unknown;z__AF19-9AC	0.000163
+k__Bacteria;p__Firmicutes;g__Pseudoflavonifractor;s__unknown;x__unknown;y__unknown;z__Marseille-P3106	0.000201
+k__Bacteria;p__Firmicutes;g__Pseudoruminoccoccus;s__Pseudoruminoccoccus massiliensis;x__unknown;y__unknown;z__unknown	0.006136
+k__Bacteria;p__Firmicutes;g__Romboutsia;s__Romboutsia timonensis;x__unknown;y__unknown;z__unknown	0.000625
+k__Bacteria;p__Firmicutes;g__Roseburia;s__Roseburia faecis;x__unknown;y__unknown;z__unknown	0.011723
+k__Bacteria;p__Firmicutes;g__Roseburia;s__Roseburia hominis;x__unknown;y__unknown;z__Roseburia hominis OB EAV1 11 DCM	0.003971
+k__Bacteria;p__Firmicutes;g__Roseburia;s__Roseburia hominis;x__unknown;y__unknown;z__unknown	0.001250
+k__Bacteria;p__Firmicutes;g__Roseburia;s__Roseburia intestinalis;x__unknown;y__unknown;z__Roseburia intestinalis L1-82	0.006566
+k__Bacteria;p__Firmicutes;g__Roseburia;s__Roseburia inulinivorans;x__unknown;y__unknown;z__Roseburia inulinivorans DSM 16841	0.001587
+k__Bacteria;p__Firmicutes;g__Roseburia;s__uncultured Roseburia sp.;x__unknown;y__unknown;z__unknown	0.004994
+k__Bacteria;p__Firmicutes;g__Roseburia;s__unknown;x__unknown;y__unknown;z__AM23-20	0.000579
+k__Bacteria;p__Firmicutes;g__Roseburia;s__unknown;x__unknown;y__unknown;z__CAG:10041_57	0.003336
+k__Bacteria;p__Firmicutes;g__Roseburia;s__unknown;x__unknown;y__unknown;z__CAG:182	0.000400
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__Ruminococcus bicirculans;x__unknown;y__unknown;z__unknown	0.010204
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__Ruminococcus bromii;x__unknown;y__unknown;z__unknown	0.031263
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__Ruminococcus faecis;x__unknown;y__unknown;z__Ruminococcus faecis JCM 15917	0.002677
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__Ruminococcus faecis;x__unknown;y__unknown;z__unknown	0.001467
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__Ruminococcus lactaris;x__unknown;y__unknown;z__Ruminococcus lactaris CC59_002D	0.000661
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__uncultured Ruminococcus sp.;x__unknown;y__unknown;z__unknown	0.017300
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__unknown;x__unknown;y__unknown;z__AF21-42	0.000576
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__unknown;x__unknown;y__unknown;z__AF31-8BH	0.001394
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__unknown;x__unknown;y__unknown;z__AF41-9	0.000627
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__unknown;x__unknown;y__unknown;z__AF46-10NS	0.001170
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__unknown;x__unknown;y__unknown;z__AM22-13	0.000975
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__unknown;x__unknown;y__unknown;z__AM40-10AC	0.006048
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__unknown;x__unknown;y__unknown;z__AM42-11	0.016504
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__unknown;x__unknown;y__unknown;z__JC304	0.001858
+k__Bacteria;p__Firmicutes;g__Ruthenibacterium;s__Ruthenibacterium lactatiformans;x__unknown;y__unknown;z__unknown	0.001817
+k__Bacteria;p__Firmicutes;g__Solobacterium;s__uncultured Solobacterium sp.;x__unknown;y__unknown;z__unknown	0.001011
+k__Bacteria;p__Firmicutes;g__Staphylococcus;s__unknown;x__unknown;y__unknown;z__CAG:324	0.000076
+k__Bacteria;p__Firmicutes;g__Streptococcus;s__Streptococcus thermophilus;x__unknown;y__unknown;z__unknown	0.000368
+k__Bacteria;p__Firmicutes;g__Subdoligranulum;s__Subdoligranulum variabile;x__unknown;y__unknown;z__Subdoligranulum variabile DSM 15176	0.000490
+k__Bacteria;p__Firmicutes;g__Subdoligranulum;s__Subdoligranulum variabile;x__unknown;y__unknown;z__unknown	0.000144
+k__Bacteria;p__Firmicutes;g__Subdoligranulum;s__unknown;x__unknown;y__unknown;z__APC924/74	0.024125
+k__Bacteria;p__Firmicutes;g__Subdoligranulum;s__unknown;x__unknown;y__unknown;z__CAG:314	0.001443
+k__Bacteria;p__Firmicutes;g__Turicibacter;s__Turicibacter sanguinis;x__unknown;y__unknown;z__unknown	0.000163
+k__Bacteria;p__Firmicutes;g__Tyzzerella;s__Tyzzerella nexilis;x__unknown;y__unknown;z__Tyzzerella nexilis DSM 1787	0.001913
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridia bacterium UC5.1-1D4;x__unknown;y__unknown;z__unknown	0.000311
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridia bacterium UC5.1-1E11;x__unknown;y__unknown;z__unknown	0.000127
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiaceae bacterium AM27-36LB;x__unknown;y__unknown;z__unknown	0.001022
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiaceae bacterium OM08-6BH;x__unknown;y__unknown;z__unknown	0.000940
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium CCNA10;x__unknown;y__unknown;z__unknown	0.001076
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium UBA1390;x__unknown;y__unknown;z__unknown	0.000199
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium UBA4696;x__unknown;y__unknown;z__unknown	0.001198
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium VE202-03;x__unknown;y__unknown;z__unknown	0.001465
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium;x__unknown;y__unknown;z__unknown	0.007973
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium AF25-13AC;x__unknown;y__unknown;z__unknown	0.013319
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium AM31-12AC;x__unknown;y__unknown;z__unknown	0.000307
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium AM55-24TS;x__unknown;y__unknown;z__unknown	0.009433
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:103;x__unknown;y__unknown;z__unknown	0.000786
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:124;x__unknown;y__unknown;z__unknown	0.006921
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:170;x__unknown;y__unknown;z__unknown	0.000296
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:176;x__unknown;y__unknown;z__unknown	0.000631
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:194;x__unknown;y__unknown;z__unknown	0.007416
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:24053_14;x__unknown;y__unknown;z__unknown	0.000281
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:424;x__unknown;y__unknown;z__unknown	0.000194
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:83;x__unknown;y__unknown;z__unknown	0.001981
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:94;x__unknown;y__unknown;z__unknown	0.000254
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:95;x__unknown;y__unknown;z__unknown	0.000160
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium OM08-11AC;x__unknown;y__unknown;z__unknown	0.001360
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium TM09-10;x__unknown;y__unknown;z__unknown	0.003926
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium AM48-27BH;x__unknown;y__unknown;z__unknown	0.001885
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium GAM79;x__unknown;y__unknown;z__unknown	0.004681
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium OF09-33XD;x__unknown;y__unknown;z__unknown	0.000200
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium OM04-12BH;x__unknown;y__unknown;z__unknown	0.000890
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium UBA7598;x__unknown;y__unknown;z__unknown	0.000366
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium;x__unknown;y__unknown;z__unknown	0.003141
+k__Bacteria;p__Firmicutes;g__unknown;s__Ruminococcaceae bacterium AM07-15;x__unknown;y__unknown;z__unknown	0.000424
+k__Bacteria;p__Firmicutes;g__unknown;s__Ruminococcaceae bacterium D16;x__unknown;y__unknown;z__unknown	0.000367
+k__Bacteria;p__Firmicutes;g__unknown;s__Ruminococcaceae bacterium D5;x__unknown;y__unknown;z__unknown	0.000106
+k__Bacteria;p__Firmicutes;g__unknown;s__Ruminococcaceae bacterium;x__unknown;y__unknown;z__unknown	0.004344
+k__Bacteria;p__Firmicutes;g__unknown;s__[Bacteroides] pectinophilus;x__unknown;y__unknown;z__[Bacteroides] pectinophilus ATCC 43243	0.000255
+k__Bacteria;p__Firmicutes;g__unknown;s__[Clostridium] leptum;x__unknown;y__unknown;z__[Clostridium] leptum DSM 753	0.000817
+k__Bacteria;p__Firmicutes;g__unknown;s__[Eubacterium] rectale;x__unknown;y__unknown;z__[Eubacterium] rectale ATCC 33656	0.009317
+k__Bacteria;p__Firmicutes;g__unknown;s__[Eubacterium] rectale;x__unknown;y__unknown;z__[Eubacterium] rectale M104/1	0.011760
+k__Bacteria;p__Firmicutes;g__unknown;s__[Eubacterium] siraeum;x__unknown;y__unknown;z__[Eubacterium] siraeum DSM 15702	0.036484
+k__Bacteria;p__Firmicutes;g__unknown;s__[Eubacterium] siraeum;x__unknown;y__unknown;z__unknown	0.006589
+k__Bacteria;p__Firmicutes;g__unknown;s__uncultured Clostridiales bacterium;x__unknown;y__unknown;z__unknown	0.032785
+k__Bacteria;p__Firmicutes;g__unknown;s__uncultured Erysipelotrichaceae bacterium;x__unknown;y__unknown;z__unknown	0.001752
+k__Bacteria;p__Firmicutes;g__unknown;s__uncultured Lachnospiraceae bacterium;x__unknown;y__unknown;z__unknown	0.006285
+k__Bacteria;p__Firmicutes;g__unknown;s__uncultured Ruminococcaceae bacterium;x__unknown;y__unknown;z__unknown	0.008337
+k__Bacteria;p__Lentisphaerae;g__unknown;s__Lentisphaeria bacterium;x__unknown;y__unknown;z__unknown	0.000274
+k__Bacteria;p__Lentisphaerae;g__unknown;s__Victivallales bacterium CCUG 44730;x__unknown;y__unknown;z__unknown	0.000296
+k__Bacteria;p__Proteobacteria;g__Acetobacter;s__unknown;x__unknown;y__unknown;z__46_36	0.001516
+k__Bacteria;p__Proteobacteria;g__Acinetobacter;s__unknown;x__unknown;y__unknown;z__N54.MGS-139	0.000588
+k__Bacteria;p__Proteobacteria;g__Bilophila;s__Bilophila wadsworthia;x__unknown;y__unknown;z__Bilophila wadsworthia ATCC 49260	0.001312
+k__Bacteria;p__Proteobacteria;g__Desulfovibrio;s__Desulfovibrio desulfuricans;x__unknown;y__unknown;z__Desulfovibrio desulfuricans ATCC 27774	0.000209
+k__Bacteria;p__Proteobacteria;g__Desulfovibrio;s__Desulfovibrio fairfieldensis;x__unknown;y__unknown;z__unknown	0.000126
+k__Bacteria;p__Proteobacteria;g__Desulfovibrio;s__uncultured Desulfovibrio sp.;x__unknown;y__unknown;z__unknown	0.000274
+k__Bacteria;p__Proteobacteria;g__Escherichia;s__Escherichia coli;x__unknown;y__unknown;z__unknown	0.000555
+k__Bacteria;p__Proteobacteria;g__Klebsiella;s__Klebsiella oxytoca;x__unknown;y__unknown;z__unknown	0.000213
+k__Bacteria;p__Proteobacteria;g__Oxalobacter;s__Oxalobacter formigenes;x__unknown;y__unknown;z__Oxalobacter formigenes HOxBLS	0.000133
+k__Bacteria;p__Proteobacteria;g__Parasutterella;s__Parasutterella excrementihominis;x__unknown;y__unknown;z__Parasutterella excrementihominis YIT 11859	0.001251
+k__Bacteria;p__Proteobacteria;g__Sutterella;s__Sutterella wadsworthensis;x__unknown;y__unknown;z__Sutterella wadsworthensis 3_1_45B	0.001271
+k__Bacteria;p__Proteobacteria;g__Sutterella;s__uncultured Sutterella sp.;x__unknown;y__unknown;z__unknown	0.001352
+k__Bacteria;p__Proteobacteria;g__unknown;s__Proteobacteria bacterium CAG:495;x__unknown;y__unknown;z__unknown	0.000224
+k__Bacteria;p__Proteobacteria;g__unknown;s__uncultured Rhodospirillaceae bacterium;x__unknown;y__unknown;z__unknown	0.000358
+k__Bacteria;p__Tenericutes;g__Mycoplasma;s__unknown;x__unknown;y__unknown;z__CAG:877	0.000172
+k__Bacteria;p__Tenericutes;g__unknown;s__Acholeplasmatales bacterium;x__unknown;y__unknown;z__unknown	0.001161
+k__Bacteria;p__Tenericutes;g__unknown;s__uncultured Mollicutes bacterium;x__unknown;y__unknown;z__unknown	0.000150
+k__Bacteria;p__Tenericutes;g__unknown;s__uncultured Tenericutes bacterium;x__unknown;y__unknown;z__unknown	0.000131
+k__Bacteria;p__Verrucomicrobia;g__Akkermansia;s__Akkermansia muciniphila;x__unknown;y__unknown;z__unknown	0.011171
+k__Bacteria;p__unknown;g__unknown;s__bacterium LF-3;x__unknown;y__unknown;z__unknown	0.002067
+k__Bacteria;p__unknown;g__unknown;s__bacterium;x__unknown;y__unknown;z__unknown	0.000882
+k__Bacteria;p__unknown;g__unknown;s__uncultured bacterium;x__unknown;y__unknown;z__unknown	0.001188
+k__Eukaryota;p__unknown;g__Blastocystis;s__Blastocystis hominis;x__unknown;y__unknown;z__unknown	0.000163
+k__Eukaryota;p__unknown;g__Blastocystis;s__unknown;x__unknown;y__unknown;z__subtype 6	0.001106
+k__Viruses;p__unknown;g__unknown;s__Faecalibacterium phage FP_Taranis;x__unknown;y__unknown;z__unknown	0.000088
+k__Viruses;p__unknown;g__unknown;s__Faecalibacterium phage FP_Toutatis;x__unknown;y__unknown;z__unknown	0.000122

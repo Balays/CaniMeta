@@ -1,0 +1,1480 @@
+species,protein,read_counts
+unknown,recombinase A,13
+unknown,3-isopropylmalate dehydrogenase,1
+unknown,glycosyl transferase CpsE,1
+unknown,galactose/methyl galaxtoside transporter ATP-binding protein,1
+unknown,transcriptional repressor CodY,3
+unknown,phosphate ABC transporter ATP-binding protein,1
+unknown,endopeptidase Clp ATP-binding chain C,10
+unknown,Holliday junction DNA helicase RuvB,1
+unknown,peptide chain release factor 3,1
+unknown,5-methyltetrahydropteroyltriglutamate/homocysteine S-methyltransferase,1
+unknown,preprotein translocase subunit SecA,11
+unknown,CTP synthetase,10
+unknown,capsular polysaccharide biosynthesis protein Cps4J,1
+unknown,mannosyl-transferase,1
+unknown,sugar ABC transporter ATP-binding protein SugC,1
+unknown,carbamoyl phosphate synthase large subunit,12
+unknown,hypothetical protein SP_0939,2
+unknown,hypothetical protein SPy_1633,1
+unknown,GTP-binding protein LepA,9
+unknown,4-deoxy-L-threo-5-hexosulose-uronate ketol-isomerase,2
+unknown,UreC,1
+unknown,RNA polymerase sigma factor,10
+unknown,hypothetical protein lmo2206,6
+unknown,excinuclease ABC subunit A,20
+unknown,RNA polymerase sigma factor SigB,3
+unknown,malic enzyme,1
+unknown,glucose-1-phosphate thymidylyltransferase,5
+unknown,UDP-glucose 4-epimerase,5
+unknown,urease accessory protein,1
+unknown,dihydroxy-acid dehydratase,1
+unknown,chaperonin GroEL,3
+unknown,isopropylmalate isomerase large subunit,1
+unknown,putative ABC transporter ATP-binding protein,1
+unknown,phosphoketolase,2
+unknown,F0F1 ATP synthase subunit alpha,20
+unknown,S-adenosylmethionine synthase,6
+unknown,formate acetyltransferase 3,1
+unknown,UDP-glucose 6-dehydrogenase,4
+unknown,elongation factor Tu,17
+unknown,2-isopropylmalate synthase,1
+unknown,formate--tetrahydrofolate ligase,21
+unknown,DNA polymerase III subunit alpha,1
+unknown,TDP-glucose pyrophosphorylase,3
+unknown,hypothetical protein SA0847,2
+unknown,"GDP-mannose 4,6-dehydratase",1
+unknown,sugar ABC transporter ATP-binding protein,2
+unknown,phosphoribosylformylglycinamide synthetase,4
+unknown,molecular chaperone DnaK,9
+unknown,sugar-transport ATP-binding protein ABC transporter SugC,1
+unknown,imidazole glycerol phosphate synthase subunit HisF,1
+unknown,DNA-directed RNA polymerase subunit beta,17
+unknown,DNA excision repair protein subunit A,8
+unknown,DNA gyrase subunit A,1
+unknown,urease,2
+unknown,glycosyl hydrolase,2
+unknown,"Hsp60, 60K heat shock protein HtpB",1
+unknown,ClpB protein,4
+unknown,ATP-dependent protease ATP-binding subunit ClpX,21
+unknown,lysine decarboxylase,13
+unknown,gluconate 5-dehydrogenase,8
+unknown,putative ATP-binding component of a transport system,9
+unknown,pyruvate kinase,1
+unknown,hypothetical protein,4
+unknown,phosphoglyceromutase,3
+unknown,glutamate dehydrogenase,8
+unknown,capsular polysaccharide biosynthesis protein Cps4K,2
+unknown,UDP-N-acetylglucosamine 2-epimerase,5
+unknown,urease subunit beta,1
+unknown,protein disaggregation chaperone,13
+unknown,serine hydroxymethyltransferase,6
+unknown,glutamate synthase NADPH large chain,6
+unknown,microcompartment protein,1
+unknown,resolvase family site-specific recombinase,11
+Faecalibacterium prausnitzii,gluconate 5-dehydrogenase,19
+Faecalibacterium prausnitzii,hypothetical protein,4
+Faecalibacterium prausnitzii,RNA polymerase sigma factor,1
+Faecalibacterium prausnitzii,hypothetical protein lmo2206,3
+Faecalibacterium prausnitzii,excinuclease ABC subunit A,8
+Faecalibacterium prausnitzii,RNA polymerase sigma factor RpoS,1
+Faecalibacterium prausnitzii,glutamate dehydrogenase,4
+Faecalibacterium prausnitzii,glucose-1-phosphate thymidylyltransferase,4
+Faecalibacterium prausnitzii,ATP-dependent protease,2
+Faecalibacterium prausnitzii,protein disaggregation chaperone,7
+Faecalibacterium prausnitzii,ketol-acid reductoisomerase,4
+Faecalibacterium prausnitzii,serine hydroxymethyltransferase,1
+Faecalibacterium prausnitzii,maltose ABC transporter ATP-binding protein,1
+Faecalibacterium prausnitzii,"type I restriction-modification system, M subunit",2
+Faecalibacterium prausnitzii,glutamate synthase NADPH large chain,1
+Faecalibacterium prausnitzii,S-adenosylmethionine synthase,1
+Faecalibacterium prausnitzii,resolvase family site-specific recombinase,2
+Faecalibacterium prausnitzii,F0F1 ATP synthase subunit alpha,10
+Faecalibacterium prausnitzii,elongation factor Tu,8
+Faecalibacterium prausnitzii,recombinase A,3
+Faecalibacterium prausnitzii,formate--tetrahydrofolate ligase,1
+Faecalibacterium prausnitzii,phosphate ABC transporter ATP-binding protein,1
+Faecalibacterium prausnitzii,ABC transporter ATP-binding protein,1
+Faecalibacterium prausnitzii,TDP-glucose pyrophosphorylase,2
+Faecalibacterium prausnitzii,endopeptidase Clp ATP-binding chain C,10
+Faecalibacterium prausnitzii,Holliday junction DNA helicase RuvB,3
+Faecalibacterium prausnitzii,molecular chaperone DnaK,9
+Faecalibacterium prausnitzii,phosphoribosylformylglycinamide synthetase,1
+Faecalibacterium prausnitzii,CTP synthetase,4
+Faecalibacterium prausnitzii,preprotein translocase subunit SecA,1
+Faecalibacterium prausnitzii,tRNA (uracil-5-)-methyltransferase Gid,3
+Faecalibacterium prausnitzii,DNA gyrase subunit A,2
+Faecalibacterium prausnitzii,DNA-directed RNA polymerase subunit beta,7
+Faecalibacterium prausnitzii,ClpB protein,1
+Faecalibacterium prausnitzii,"Hsp60, 60K heat shock protein HtpB",3
+Faecalibacterium prausnitzii,5-keto-4-deoxyuronate isomerase,1
+Faecalibacterium prausnitzii,carbamoyl phosphate synthase large subunit,5
+Faecalibacterium prausnitzii,acetyl-CoA carboxylase carboxyltransferase subunit alpha,3
+Faecalibacterium prausnitzii,phosphoenolpyruvate carboxykinase (ATP),1
+Faecalibacterium prausnitzii,GTP-binding protein LepA,5
+Faecalibacterium prausnitzii,hypothetical protein SP_0939,2
+Faecalibacterium prausnitzii,ATP-dependent protease ATP-binding subunit ClpX,3
+Faecalibacterium prausnitzii,lysine decarboxylase,10
+Bacteroides vulgatus,1-deoxy-D-xylulose-5-phosphate synthase,2
+Bacteroides vulgatus,phosphoglyceromutase,1
+Bacteroides vulgatus,"fructose-1,6-bisphosphatase",2
+Bacteroides vulgatus,excinuclease ABC subunit A,4
+Bacteroides vulgatus,"Vi polysaccharide biosynthesis protein, epimerase TviC",1
+Bacteroides vulgatus,elongation factor Tu,4
+Bacteroides vulgatus,recombinase A,9
+Bacteroides vulgatus,gluconate 5-dehydrogenase,6
+Bacteroides vulgatus,GDP-D-mannose dehydratase,2
+Bacteroides vulgatus,molecular chaperone DnaK,2
+Bacteroides vulgatus,adenosylmethionine-8-amino-7-oxononanoate aminotransferase,1
+Bacteroides vulgatus,endopeptidase Clp ATP-binding chain C,15
+Bacteroides vulgatus,malic enzyme,4
+Bacteroides vulgatus,glutamate dehydrogenase,6
+Bacteroides vulgatus,"GDP-mannose 4,6-dehydratase",12
+Bacteroides vulgatus,DNA excision repair protein subunit A,1
+Bacteroides vulgatus,DNA-directed RNA polymerase subunit beta,6
+Bacteroides vulgatus,protein disaggregation chaperone,1
+Bacteroides vulgatus,dihydroxy-acid dehydratase,8
+Bacteroides vulgatus,S-adenosylmethionine synthase,2
+Bacteroides vulgatus,UDP-glucose 6-dehydrogenase,1
+Bacteroides vulgatus,F0F1 ATP synthase subunit alpha,2
+Bacteroides vulgatus,chaperonin GroEL,1
+Bacteroides vulgatus,B12-dependent methionine synthase,3
+Bacteroides vulgatus,ClpB protein,1
+Bacteroides vulgatus,"dTDP-glucose-4,6-dehydratase",1
+Bacteroides vulgatus,putative ABC transporter ATP-binding protein,1
+Bacteroides vulgatus,glutamate synthase NADPH large chain,3
+[Eubacterium] siraeum,CTP synthetase,8
+[Eubacterium] siraeum,protein disaggregation chaperone,5
+[Eubacterium] siraeum,ATP-dependent protease,1
+[Eubacterium] siraeum,DNA excision repair protein subunit A,1
+[Eubacterium] siraeum,DNA-directed RNA polymerase subunit beta,3
+[Eubacterium] siraeum,DNA polymerase III PolC,1
+[Eubacterium] siraeum,GTP-dependent nucleic acid-binding protein EngD,1
+[Eubacterium] siraeum,S-adenosylmethionine synthase,3
+[Eubacterium] siraeum,GTP-binding protein LepA,4
+[Eubacterium] siraeum,F0F1 ATP synthase subunit alpha,6
+[Eubacterium] siraeum,ATP-dependent protease ATP-binding subunit ClpX,6
+[Eubacterium] siraeum,carbamoyl phosphate synthase large subunit,4
+[Eubacterium] siraeum,pyruvate kinase,2
+[Eubacterium] siraeum,putative ATP-binding component of a transport system,1
+[Eubacterium] siraeum,phoH-like protein,1
+[Eubacterium] siraeum,DNA polymerase III subunit alpha,1
+[Eubacterium] siraeum,formate--tetrahydrofolate ligase,4
+[Eubacterium] siraeum,excinuclease ABC subunit A,16
+[Eubacterium] siraeum,twitching motility protein PilT,1
+[Eubacterium] siraeum,hypothetical protein lmo2206,2
+[Eubacterium] siraeum,RNA polymerase sigma factor,1
+[Eubacterium] siraeum,glutamate dehydrogenase,1
+[Eubacterium] siraeum,RNA polymerase sigma factor SigB,1
+[Eubacterium] siraeum,Type III secretion system ATPase,1
+[Eubacterium] siraeum,type IV pilus assembly protein,1
+[Eubacterium] siraeum,endopeptidase Clp ATP-binding chain C,12
+[Eubacterium] siraeum,molecular chaperone DnaK,2
+[Eubacterium] siraeum,phosphoribosylformylglycinamide synthetase,2
+Ruminococcus bromii,preprotein translocase subunit SecA,3
+Ruminococcus bromii,CTP synthetase,5
+Ruminococcus bromii,ATP-dependent protease,1
+Ruminococcus bromii,DNA-directed RNA polymerase subunit beta,6
+Ruminococcus bromii,DNA excision repair protein subunit A,1
+Ruminococcus bromii,DNA polymerase III PolC,2
+Ruminococcus bromii,inosine-5'-monophosphate dehydrogenase,1
+Ruminococcus bromii,ClpB protein,1
+Ruminococcus bromii,DNA-directed RNA polymerase subunit alpha,2
+Ruminococcus bromii,ATP-dependent protease ATP-binding subunit ClpX,4
+Ruminococcus bromii,GTP-binding protein LepA,6
+Ruminococcus bromii,phosphoenolpyruvate carboxykinase (ATP),2
+Ruminococcus bromii,UDP-galactose-4-epimerase,1
+Ruminococcus bromii,carbamoyl phosphate synthase large subunit,2
+Ruminococcus bromii,putative ATP-binding component of a transport system,2
+Ruminococcus bromii,hypothetical protein,3
+Ruminococcus bromii,recombinase A,1
+Ruminococcus bromii,elongation factor Tu,1
+Ruminococcus bromii,excinuclease ABC subunit A,5
+Ruminococcus bromii,formate--tetrahydrofolate ligase,5
+Ruminococcus bromii,phosphoglyceromutase,1
+Ruminococcus bromii,RNA polymerase sigma factor,2
+Ruminococcus bromii,RNA polymerase sigma factor SigB,1
+Ruminococcus bromii,DNA-binding ATP-dependent protease La,1
+Ruminococcus bromii,glutamate dehydrogenase,5
+Ruminococcus bromii,endopeptidase Clp ATP-binding chain C,5
+Ruminococcus bromii,peptide chain release factor 3,1
+Ruminococcus bromii,phosphoribosylformylglycinamide synthetase,3
+Ruminococcus bromii,molecular chaperone DnaK,7
+Ruminococcus bromii,sugar ABC transporter ATP-binding protein,4
+Fusicatenibacter saccharivorans,urease accessory protein,1
+Fusicatenibacter saccharivorans,inosine-5'-monophosphate dehydrogenase,1
+Fusicatenibacter saccharivorans,"argininosuccinate synthase, putative",1
+Fusicatenibacter saccharivorans,glutamate synthase NADPH large chain,3
+Fusicatenibacter saccharivorans,urease accessory protein UreG,1
+Fusicatenibacter saccharivorans,resolvase family site-specific recombinase,2
+Fusicatenibacter saccharivorans,putative ATP-binding component of a transport system,4
+Fusicatenibacter saccharivorans,hypothetical protein,3
+Fusicatenibacter saccharivorans,RNA polymerase sigma factor,1
+Fusicatenibacter saccharivorans,phosphoglyceromutase,2
+Fusicatenibacter saccharivorans,excinuclease ABC subunit A,13
+Fusicatenibacter saccharivorans,"fructose-1,6-bisphosphatase",1
+Fusicatenibacter saccharivorans,glutamate dehydrogenase,3
+Fusicatenibacter saccharivorans,malic enzyme,2
+Fusicatenibacter saccharivorans,RNA polymerase sigma factor SigB,1
+Fusicatenibacter saccharivorans,urease subunit beta,1
+Fusicatenibacter saccharivorans,UDP-glucose 4-epimerase,1
+Fusicatenibacter saccharivorans,preprotein translocase subunit SecA,3
+Fusicatenibacter saccharivorans,CTP synthetase,1
+Fusicatenibacter saccharivorans,sugar-transport ATP-binding protein ABC transporter SugC,1
+Fusicatenibacter saccharivorans,DNA-directed RNA polymerase subunit beta,2
+Fusicatenibacter saccharivorans,capsular polysaccharide synthesis enzyme Cap8D,3
+Fusicatenibacter saccharivorans,carbamoyl phosphate synthase large subunit,2
+Fusicatenibacter saccharivorans,hypothetical protein SPy_1633,1
+Fusicatenibacter saccharivorans,ATP-dependent protease ATP-binding subunit ClpX,3
+Fusicatenibacter saccharivorans,GTP-binding protein LepA,3
+Fusicatenibacter saccharivorans,recombinase A,3
+Fusicatenibacter saccharivorans,elongation factor Tu,5
+Fusicatenibacter saccharivorans,transcriptional repressor CodY,1
+Fusicatenibacter saccharivorans,formate--tetrahydrofolate ligase,4
+Fusicatenibacter saccharivorans,TDP-glucose pyrophosphorylase,1
+Fusicatenibacter saccharivorans,endopeptidase Clp ATP-binding chain C,4
+Fusicatenibacter saccharivorans,sugar ABC transporter ATP-binding protein,3
+Fusicatenibacter saccharivorans,phosphoribosylformylglycinamide synthetase,1
+,type VI secretion system protein DotU,1
+,L-asparaginase,1
+,elongation factor Tu,3
+,ABC transporter amino acid-binding protein/permease,1
+,amino acid ABC transporter permease,2
+,dltB protein,2
+,uracil permease,1
+,sugar ABC transporter ATP-binding protein,2
+,hypothetical protein Z4168,1
+,molecular chaperone DnaK,2
+,iron ABC transporter permease,1
+,aconitate hydratase,1
+,endopeptidase Clp ATP-binding chain C,3
+,RTX toxin,1
+,Trk family potassium uptake protein,1
+,hyaluronidase,1
+,cytochrome C-type biogenesis,1
+,hypothetical protein EF0382,1
+,hypothetical protein SP_0686,1
+,glycosyl hydrolase,1
+,DNA-directed RNA polymerase subunit beta,1
+,DNA excision repair protein subunit A,2
+,CTP synthetase,1
+,alkaline amylopullulanase,1
+,ATP-dependent Clp protease proteolytic subunit,1
+,gluconate 5-dehydrogenase,1
+,acetolactate synthase catalytic subunit,1
+,TCS sensor kinase VicK,1
+,leucyl-tRNA synthetase,1
+,cryptic autophosphorylating protein tyrosine kinase Etk,1
+,pullulanase,2
+,UDP-N-acetylglucosamine 2-epimerase,5
+,TDP-4-oxo-6-deoxy-D-glucose transaminase,1
+,"type VII secretion system protein EssC, FtsK/SpoIIIE family ATPase",2
+,glutamate dehydrogenase,1
+,lipid A biosynthesis (KDO)2-(lauroyl)-lipid IVA acyltransferase,2
+,conjugation transfer regulator,2
+,hemolysin transport protein,1
+,argininosuccinate synthase,1
+,septation ring formation regulator EzrA,1
+,serine protease,1
+,dipeptide ABC transporter ATP-binding protein DppF,1
+,dihydroaeruginoic acid synthetase PchE,1
+,UDP-glucose 6-dehydrogenase,1
+,resolvase family site-specific recombinase,4
+,oligopeptide ABC transporter permease AmiD,1
+,UDP-N-acetylglucosamine-2-epimerase,1
+,F0F1 ATP synthase subunit alpha,4
+,3-phosphoshikimate 1-carboxyvinyltransferase,2
+,Hemolysin B,3
+,ATP-dependent DNA helicase II UVRD1,2
+,"type I restriction-modification system, R subunit",2
+uncultured Faecalibacterium sp.,F0F1 ATP synthase subunit alpha,3
+uncultured Faecalibacterium sp.,resolvase family site-specific recombinase,4
+uncultured Faecalibacterium sp.,protein disaggregation chaperone,2
+uncultured Faecalibacterium sp.,UDP-galactopyranose mutase,1
+uncultured Faecalibacterium sp.,N-acetylneuraminate lyase,1
+uncultured Faecalibacterium sp.,serine hydroxymethyltransferase,2
+uncultured Faecalibacterium sp.,Holliday junction DNA helicase ruvB,1
+uncultured Faecalibacterium sp.,glutamate dehydrogenase,3
+uncultured Faecalibacterium sp.,UDP-N-acetylglucosamine 2-epimerase,4
+uncultured Faecalibacterium sp.,gluconate 5-dehydrogenase,6
+uncultured Faecalibacterium sp.,ATP-dependent Clp protease proteolytic subunit,1
+uncultured Faecalibacterium sp.,putative ATP-binding component of a transport system,1
+uncultured Faecalibacterium sp.,hypothetical protein,1
+uncultured Faecalibacterium sp.,hypothetical protein lmo2206,2
+uncultured Faecalibacterium sp.,phosphoglyceromutase,2
+uncultured Faecalibacterium sp.,excinuclease ABC subunit A,6
+uncultured Faecalibacterium sp.,RNA polymerase sigma factor RpoS,1
+uncultured Faecalibacterium sp.,ClpB protein,1
+uncultured Faecalibacterium sp.,"Hsp60, 60K heat shock protein HtpB",1
+uncultured Faecalibacterium sp.,lysine decarboxylase,3
+uncultured Faecalibacterium sp.,ATP-dependent protease ATP-binding subunit ClpX,5
+uncultured Faecalibacterium sp.,GTP-binding protein LepA,2
+uncultured Faecalibacterium sp.,preprotein translocase subunit SecA,1
+uncultured Faecalibacterium sp.,CTP synthetase,1
+uncultured Faecalibacterium sp.,DNA-directed RNA polymerase subunit beta,7
+uncultured Faecalibacterium sp.,endopeptidase Clp ATP-binding chain C,4
+uncultured Faecalibacterium sp.,sugar ABC transporter ATP-binding protein,1
+uncultured Faecalibacterium sp.,phosphoribosylformylglycinamide synthetase,1
+uncultured Faecalibacterium sp.,molecular chaperone DnaK,2
+uncultured Faecalibacterium sp.,recombinase A,2
+uncultured Faecalibacterium sp.,elongation factor Tu,3
+uncultured Faecalibacterium sp.,formate--tetrahydrofolate ligase,3
+uncultured Clostridiales bacterium,glucose-1-phosphate thymidylyltransferase,1
+uncultured Clostridiales bacterium,tryptophan synthase subunit beta,1
+uncultured Clostridiales bacterium,RNA polymerase sigma factor SigB,1
+uncultured Clostridiales bacterium,TDP-4-oxo-6-deoxy-D-glucose transaminase,2
+uncultured Clostridiales bacterium,hypothetical protein lmo2206,2
+uncultured Clostridiales bacterium,RNA polymerase sigma factor,1
+uncultured Clostridiales bacterium,excinuclease ABC subunit A,4
+uncultured Clostridiales bacterium,gluconate 5-dehydrogenase,2
+uncultured Clostridiales bacterium,putative ATP-binding component of a transport system,1
+uncultured Clostridiales bacterium,hypothetical protein,3
+uncultured Clostridiales bacterium,UDP-galactose-4-epimerase,1
+uncultured Clostridiales bacterium,phosphoketolase,1
+uncultured Clostridiales bacterium,F0F1 ATP synthase subunit alpha,1
+uncultured Clostridiales bacterium,resolvase family site-specific recombinase,1
+uncultured Clostridiales bacterium,S-adenosylmethionine synthase,1
+uncultured Clostridiales bacterium,"type I restriction-modification system, M subunit",1
+uncultured Clostridiales bacterium,glutamate synthase NADPH large chain,1
+uncultured Clostridiales bacterium,GTP binding translational elongation factor Tu and G family protein,1
+uncultured Clostridiales bacterium,ATP-dependent protease,1
+uncultured Clostridiales bacterium,Holliday junction DNA helicase RuvB,1
+uncultured Clostridiales bacterium,phosphoribosylformylglycinamide synthetase,3
+uncultured Clostridiales bacterium,molecular chaperone DnaK,6
+uncultured Clostridiales bacterium,TDP-glucose pyrophosphorylase,1
+uncultured Clostridiales bacterium,endopeptidase Clp ATP-binding chain C,4
+uncultured Clostridiales bacterium,formate--tetrahydrofolate ligase,5
+uncultured Clostridiales bacterium,recombinase A,2
+uncultured Clostridiales bacterium,elongation factor Tu,3
+uncultured Clostridiales bacterium,carbamoyl phosphate synthase large subunit,1
+uncultured Clostridiales bacterium,ATP-dependent protease ATP-binding subunit ClpX,10
+uncultured Clostridiales bacterium,hypothetical protein SP_0939,1
+uncultured Clostridiales bacterium,GTP-binding protein LepA,2
+uncultured Clostridiales bacterium,DNA-directed RNA polymerase subunit beta,2
+uncultured Clostridiales bacterium,DNA excision repair protein subunit A,1
+uncultured Clostridiales bacterium,DNA gyrase subunit A,1
+uncultured Clostridiales bacterium,tRNA (uracil-5-)-methyltransferase Gid,1
+uncultured Clostridiales bacterium,preprotein translocase subunit SecA,1
+uncultured Clostridiales bacterium,CTP synthetase,3
+[Eubacterium] rectale,CTP synthetase,3
+[Eubacterium] rectale,ATP-dependent protease,2
+[Eubacterium] rectale,protein disaggregation chaperone,2
+[Eubacterium] rectale,DNA-directed RNA polymerase subunit beta,5
+[Eubacterium] rectale,serine hydroxymethyltransferase,1
+[Eubacterium] rectale,glutamate synthase NADPH large chain,1
+[Eubacterium] rectale,GTP-dependent nucleic acid-binding protein EngD,1
+[Eubacterium] rectale,ATP-dependent protease LA,1
+[Eubacterium] rectale,ClpB protein,1
+[Eubacterium] rectale,"type I restriction-modification system, M subunit",3
+[Eubacterium] rectale,hypothetical protein SPy_1633,2
+[Eubacterium] rectale,ATP-dependent protease ATP-binding subunit ClpX,7
+[Eubacterium] rectale,lysine decarboxylase,7
+[Eubacterium] rectale,F0F1 ATP synthase subunit alpha,1
+[Eubacterium] rectale,GTP-binding protein LepA,3
+[Eubacterium] rectale,carbamoyl phosphate synthase large subunit,1
+[Eubacterium] rectale,putative ATP-binding component of a transport system,3
+[Eubacterium] rectale,hypothetical protein,3
+[Eubacterium] rectale,recombinase A,1
+[Eubacterium] rectale,hypothetical protein lmo2206,1
+[Eubacterium] rectale,twitching motility protein PilT,1
+[Eubacterium] rectale,"type VII secretion system protein EssC, FtsK/SpoIIIE family ATPase",1
+[Eubacterium] rectale,endopeptidase Clp ATP-binding chain C,2
+[Eubacterium] rectale,TDP-glucose pyrophosphorylase,3
+[Eubacterium] rectale,tRNA uridine 5-carboxymethylaminomethyl modification protein GidA,1
+[Eubacterium] rectale,phosphoribosylformylglycinamide synthetase,2
+[Eubacterium] rectale,UDP-glucose 4-epimerase,2
+[Eubacterium] rectale,molybdopterin biosynthesis-like protein MoeZ,1
+[Eubacterium] rectale,molecular chaperone DnaK,5
+[Eubacterium] rectale,glucose-1-phosphate thymidylyltransferase,2
+Escherichia coli,aconitate hydratase,1
+Escherichia coli,ATP-binding hydrophilic protein ChuV,1
+Escherichia coli,general secretion pathway protein D,2
+Escherichia coli,phosphoheptose isomerase,1
+Escherichia coli,P pilus assembly protein PapJ,1
+Escherichia coli,PapD protein,1
+Escherichia coli,ATP-dependent dsDNA exonuclease,1
+Escherichia coli,yersiniabactin biosynthetic protein,1
+Escherichia coli,periplasmic heme-binding protein ChuT,1
+Escherichia coli,permease and ATP-binding protein of yersiniabactin-iron ABC transporter,1
+Escherichia coli,haemoglobin protease,1
+Escherichia coli,phosphomannomutase,1
+Escherichia coli,homoserine O-succinyltransferase,2
+Escherichia coli,DNA polymerase III subunit alpha,1
+Escherichia coli,outer membrane receptor FepA,3
+Escherichia coli,outer membrane porin,1
+Escherichia coli,GDP/GTP pyrophosphokinase,1
+Escherichia coli,polyphosphate kinase,2
+Escherichia coli,outer membrane protein PgaA,1
+Escherichia coli,carbamoyl phosphate synthase large subunit,1
+Escherichia coli,putative signal transducer,2
+Escherichia coli,transcriptional regulator PhoU,1
+Escherichia coli,putative transporter YfdV,1
+Escherichia coli,DNA-binding transcriptional regulator CpxR,1
+Escherichia coli,flagellum-specific ATP synthase FliI,2
+Escherichia coli,outer membrane heme/hemoglobin receptor,1
+Escherichia coli,inner membrane ABC-transporter YbtQ,1
+Escherichia coli,DNA-directed RNA polymerase subunit beta,2
+Escherichia coli,nickel-binding periplasmic protein precursor,1
+Escherichia coli,transporter,1
+Escherichia coli,"5,10-methylenetetrahydrofolate reductase",1
+Escherichia coli,E. coli common pilus chaperone EcpE,1
+Escherichia coli,DNA-binding ATP-dependent protease La,1
+Escherichia coli,anaerobic ribonucleoside triphosphate reductase,1
+Escherichia coli,protease,1
+Escherichia coli,"tagatose 6-phosphate aldolase 1, kbaY subunit",1
+Escherichia coli,yersiniabactin biosynthetic protein YbtT,1
+Escherichia coli,tryptophan synthase subunit beta,1
+Escherichia coli,ATP-dependent RNA helicase HrpA,2
+Escherichia coli,general secretion pathway protein E,2
+Escherichia coli,periplasmic beta-glucosidase precursor,1
+Escherichia coli,DNA-binding transcriptional activator SdiA,2
+Escherichia coli,phosphoribosylaminoimidazole synthetase,1
+Escherichia coli,flagellin,1
+Escherichia coli,chaperone protein PapD,1
+Escherichia coli,heme/hemoglobin transport protein ShuS,1
+Escherichia coli,Deoxyguanosinetriphosphate triphosphohydrolase,1
+Escherichia coli,ATPase,1
+Escherichia coli,isopropylmalate isomerase large subunit,1
+Escherichia coli,phosphoglucomutase,1
+Escherichia coli,general secretion pathway protein C,1
+Escherichia coli,dihydroxy-acid dehydratase,1
+Escherichia coli,cytochrome o ubiquinol oxidase subunit I,1
+Blautia obeum,ATP-dependent protease ATP-binding subunit ClpX,3
+Blautia obeum,lysine decarboxylase,2
+Blautia obeum,GTP-binding protein LepA,2
+Blautia obeum,carbamoyl phosphate synthase large subunit,1
+Blautia obeum,ClpB protein,2
+Blautia obeum,DNA excision repair protein subunit A,1
+Blautia obeum,DNA-directed RNA polymerase subunit beta,2
+Blautia obeum,urease,1
+Blautia obeum,preprotein translocase subunit SecA,2
+Blautia obeum,CTP synthetase,2
+Blautia obeum,molecular chaperone DnaK,2
+Blautia obeum,sugar ABC transporter ATP-binding protein,1
+Blautia obeum,endopeptidase Clp ATP-binding chain C,2
+Blautia obeum,formate--tetrahydrofolate ligase,5
+Blautia obeum,recombinase A,1
+Blautia obeum,amino acid ABC transporter permease,1
+Blautia obeum,elongation factor Tu,6
+Blautia obeum,3-isopropylmalate dehydrogenase,2
+Blautia obeum,UDP-glucose 6-dehydrogenase,2
+Blautia obeum,urease accessory protein UreG,1
+Blautia obeum,phosphoketolase,1
+Blautia obeum,"type I restriction-modification system, R subunit",1
+Blautia obeum,glutamate synthase NADPH large chain,2
+Blautia obeum,"urease beta subunit UreB, urea amidohydrolase",1
+Blautia obeum,serine hydroxymethyltransferase,1
+Blautia obeum,protein disaggregation chaperone,2
+Blautia obeum,ATP-dependent protease,1
+Blautia obeum,TDP-4-oxo-6-deoxy-D-glucose transaminase,1
+Blautia obeum,excinuclease ABC subunit A,2
+Blautia obeum,hypothetical protein lmo2206,2
+Blautia obeum,putative ATP-binding component of a transport system,1
+Blautia obeum,hypothetical protein,1
+Blautia obeum,polysaccharide biosynthesis protein CpsF,1
+[Eubacterium] eligens,putative ATP-binding component of a transport system,2
+[Eubacterium] eligens,type IV pilus assembly protein PilB,1
+[Eubacterium] eligens,2-isopropylmalate synthase,1
+[Eubacterium] eligens,gluconate 5-dehydrogenase,2
+[Eubacterium] eligens,recombinase A,3
+[Eubacterium] eligens,3-isopropylmalate dehydrogenase,1
+[Eubacterium] eligens,elongation factor Tu,6
+[Eubacterium] eligens,excinuclease ABC subunit A,2
+[Eubacterium] eligens,formate--tetrahydrofolate ligase,2
+[Eubacterium] eligens,hypothetical protein lmo2206,2
+[Eubacterium] eligens,glutamate dehydrogenase,1
+[Eubacterium] eligens,endopeptidase Clp ATP-binding chain C,1
+[Eubacterium] eligens,TDP-glucose pyrophosphorylase,3
+[Eubacterium] eligens,tryptophan synthase subunit beta,1
+[Eubacterium] eligens,UDP-glucose 4-epimerase,1
+[Eubacterium] eligens,molecular chaperone DnaK,1
+[Eubacterium] eligens,sugar ABC transporter ATP-binding protein,1
+[Eubacterium] eligens,glucose-1-phosphate thymidylyltransferase,1
+[Eubacterium] eligens,GDP-D-mannose dehydratase,1
+[Eubacterium] eligens,preprotein translocase subunit SecA,3
+[Eubacterium] eligens,CTP synthetase,1
+[Eubacterium] eligens,type III secretion system ATPase,1
+[Eubacterium] eligens,GTP-dependent nucleic acid-binding protein EngD,1
+[Eubacterium] eligens,ClpB protein,1
+[Eubacterium] eligens,ATP-dependent protease ATP-binding subunit ClpX,3
+[Eubacterium] eligens,hypothetical protein SP_0939,5
+[Eubacterium] eligens,GTP-binding protein LepA,3
+[Eubacterium] eligens,carbamoyl phosphate synthase large subunit,2
+uncultured Ruminococcus sp.,DNA-directed RNA polymerase subunit beta,6
+uncultured Ruminococcus sp.,"urease beta subunit UreB, urea amidohydrolase",1
+uncultured Ruminococcus sp.,DNA excision repair protein subunit A,1
+uncultured Ruminococcus sp.,serine hydroxymethyltransferase,1
+uncultured Ruminococcus sp.,GTP binding translational elongation factor Tu and G family protein,2
+uncultured Ruminococcus sp.,UDP-galactopyranose mutase,1
+uncultured Ruminococcus sp.,glucose-1-phosphate cytidylyltransferase,1
+uncultured Ruminococcus sp.,urease accessory protein,1
+uncultured Ruminococcus sp.,protein disaggregation chaperone,3
+uncultured Ruminococcus sp.,ATP-dependent protease,1
+uncultured Ruminococcus sp.,F0F1 ATP synthase subunit alpha,1
+uncultured Ruminococcus sp.,ATP-dependent protease ATP-binding subunit ClpX,4
+uncultured Ruminococcus sp.,resolvase family site-specific recombinase,3
+uncultured Ruminococcus sp.,S-adenosylmethionine synthase,1
+uncultured Ruminococcus sp.,GTP-binding protein LepA,2
+uncultured Ruminococcus sp.,UDP-glucose 6-dehydrogenase,3
+uncultured Ruminococcus sp.,urease accessory protein UreG,1
+uncultured Ruminococcus sp.,ClpB protein,1
+uncultured Ruminococcus sp.,formate--tetrahydrofolate ligase,1
+uncultured Ruminococcus sp.,putative ATP-binding component of a transport system,1
+uncultured Ruminococcus sp.,hypothetical protein,3
+uncultured Ruminococcus sp.,recombinase A,1
+uncultured Ruminococcus sp.,elongation factor Tu,5
+uncultured Ruminococcus sp.,phosphoribosylformylglycinamide synthetase,2
+uncultured Ruminococcus sp.,glutamate dehydrogenase,2
+uncultured Ruminococcus sp.,RNA polymerase sigma factor SigB,1
+uncultured Ruminococcus sp.,endopeptidase Clp ATP-binding chain C,2
+Blautia wexlerae,urease accessory protein,1
+Blautia wexlerae,protein disaggregation chaperone,1
+Blautia wexlerae,preprotein translocase subunit SecA,1
+Blautia wexlerae,mannosyl-transferase,1
+Blautia wexlerae,DNA-directed RNA polymerase subunit beta,1
+Blautia wexlerae,imidazole glycerol phosphate synthase subunit HisF,3
+Blautia wexlerae,serine hydroxymethyltransferase,1
+Blautia wexlerae,urease,1
+Blautia wexlerae,GTP binding translational elongation factor Tu and G family protein,1
+Blautia wexlerae,ClpB protein,1
+Blautia wexlerae,glutamate synthase NADPH large chain,1
+Blautia wexlerae,urease accessory protein UreG,1
+Blautia wexlerae,carbamoyl phosphate synthase large subunit,2
+Blautia wexlerae,lysine decarboxylase,5
+Blautia wexlerae,ATP-dependent protease ATP-binding subunit ClpX,3
+Blautia wexlerae,GTP-binding protein LepA,1
+Blautia wexlerae,S-adenosylmethionine synthase,1
+Blautia wexlerae,amino acid ABC transporter permease,1
+Blautia wexlerae,recombinase A,1
+Blautia wexlerae,UreC,1
+Blautia wexlerae,excinuclease ABC subunit A,4
+Blautia wexlerae,formate--tetrahydrofolate ligase,1
+Blautia wexlerae,endopeptidase Clp ATP-binding chain C,3
+Blautia wexlerae,glutamate dehydrogenase,1
+Blautia wexlerae,sugar ABC transporter ATP-binding protein,1
+Blautia wexlerae,glucose-1-phosphate thymidylyltransferase,2
+Blautia wexlerae,UDP-glucose 4-epimerase,1
+Blautia wexlerae,molecular chaperone DnaK,1
+Firmicutes bacterium CAG:194,endopeptidase Clp ATP-binding chain C,2
+Firmicutes bacterium CAG:194,RNA polymerase sigma factor SigB,2
+Firmicutes bacterium CAG:194,Type III secretion system ATPase,1
+Firmicutes bacterium CAG:194,sugar ABC transporter ATP-binding protein,1
+Firmicutes bacterium CAG:194,molecular chaperone DnaK,5
+Firmicutes bacterium CAG:194,UDP-N-acetylglucosamine 2-epimerase,4
+Firmicutes bacterium CAG:194,3-isopropylmalate dehydrogenase,3
+Firmicutes bacterium CAG:194,hypothetical protein,1
+Firmicutes bacterium CAG:194,2-isopropylmalate synthase,1
+Firmicutes bacterium CAG:194,putative ATP-binding component of a transport system,2
+Firmicutes bacterium CAG:194,hypothetical protein lmo2206,1
+Firmicutes bacterium CAG:194,RNA polymerase sigma factor,1
+Firmicutes bacterium CAG:194,excinuclease ABC subunit A,1
+Firmicutes bacterium CAG:194,formate--tetrahydrofolate ligase,1
+Firmicutes bacterium CAG:194,glutamate synthase NADPH large chain,1
+Firmicutes bacterium CAG:194,GTP-binding protein LepA,1
+Firmicutes bacterium CAG:194,UDP-glucose 6-dehydrogenase,4
+Firmicutes bacterium CAG:194,hypothetical protein SPy_1633,1
+Firmicutes bacterium CAG:194,F0F1 ATP synthase subunit alpha,1
+Firmicutes bacterium CAG:194,ATP-dependent protease ATP-binding subunit ClpX,3
+Firmicutes bacterium CAG:194,preprotein translocase subunit SecA,2
+Firmicutes bacterium CAG:194,mannosyl-transferase,1
+Firmicutes bacterium CAG:194,serine hydroxymethyltransferase,1
+Firmicutes bacterium CAG:194,DNA excision repair protein subunit A,1
+Firmicutes bacterium CAG:194,DNA-directed RNA polymerase subunit beta,1
+Roseburia faecis,RNA polymerase sigma factor SigB,1
+Roseburia faecis,glutamate dehydrogenase,1
+Roseburia faecis,endopeptidase Clp ATP-binding chain C,2
+Roseburia faecis,"dTDP-glucose 4,6-dehydratase",1
+Roseburia faecis,phosphoribosylformylglycinamide synthetase,1
+Roseburia faecis,molecular chaperone DnaK,3
+Roseburia faecis,sugar ABC transporter ATP-binding protein,1
+Roseburia faecis,glucose-1-phosphate thymidylyltransferase,1
+Roseburia faecis,putative ATP-binding component of a transport system,1
+Roseburia faecis,hypothetical protein,2
+Roseburia faecis,ATP-dependent Clp protease proteolytic subunit,2
+Roseburia faecis,elongation factor Tu,3
+Roseburia faecis,excinuclease ABC subunit A,5
+Roseburia faecis,RNA polymerase sigma factor,2
+Roseburia faecis,hypothetical protein lmo2206,3
+Roseburia faecis,glutamate synthase NADPH large chain,1
+Roseburia faecis,ClpB protein,2
+Roseburia faecis,F0F1 ATP synthase subunit alpha,2
+Roseburia faecis,lysine decarboxylase,1
+Roseburia faecis,ATP-dependent protease ATP-binding subunit ClpX,2
+Roseburia faecis,GTP-binding protein LepA,1
+Roseburia faecis,protein disaggregation chaperone,1
+Roseburia faecis,DNA excision repair protein subunit A,1
+Roseburia faecis,DNA-directed RNA polymerase subunit beta,1
+Firmicutes bacterium AF25-13AC,glucose-1-phosphate thymidylyltransferase,1
+Firmicutes bacterium AF25-13AC,molecular chaperone DnaK,2
+Firmicutes bacterium AF25-13AC,endopeptidase Clp ATP-binding chain C,2
+Firmicutes bacterium AF25-13AC,twitching motility protein PilT,2
+Firmicutes bacterium AF25-13AC,RNA polymerase sigma factor,2
+Firmicutes bacterium AF25-13AC,excinuclease ABC subunit A,2
+Firmicutes bacterium AF25-13AC,transcriptional repressor CodY,1
+Firmicutes bacterium AF25-13AC,3-isopropylmalate dehydrogenase,1
+Firmicutes bacterium AF25-13AC,gluconate 5-dehydrogenase,4
+Firmicutes bacterium AF25-13AC,recombinase A,2
+Firmicutes bacterium AF25-13AC,pyruvate kinase,2
+Firmicutes bacterium AF25-13AC,putative ATP-binding component of a transport system,1
+Firmicutes bacterium AF25-13AC,carbamoyl phosphate synthase large subunit,1
+Firmicutes bacterium AF25-13AC,GTP-binding protein LepA,2
+Firmicutes bacterium AF25-13AC,F0F1 ATP synthase subunit alpha,1
+Firmicutes bacterium AF25-13AC,lysine decarboxylase,3
+Firmicutes bacterium AF25-13AC,hypothetical protein SP_0939,2
+Firmicutes bacterium AF25-13AC,glutamate synthase NADPH large chain,1
+Firmicutes bacterium AF25-13AC,serine hydroxymethyltransferase,1
+Firmicutes bacterium AF25-13AC,DNA-directed RNA polymerase subunit beta,3
+Firmicutes bacterium AF25-13AC,protein disaggregation chaperone,1
+Firmicutes bacterium AF25-13AC,CTP synthetase,2
+Firmicutes bacterium AF25-13AC,preprotein translocase subunit SecA,1
+Ruminococcus bicirculans,endopeptidase Clp ATP-binding chain C,4
+Ruminococcus bicirculans,sugar ABC transporter ATP-binding protein,1
+Ruminococcus bicirculans,phosphoribosylformylglycinamide synthetase,2
+Ruminococcus bicirculans,"dTDP-glucose 4,6-dehydratase",1
+Ruminococcus bicirculans,molecular chaperone DnaK,1
+Ruminococcus bicirculans,elongation factor Tu,2
+Ruminococcus bicirculans,hypothetical protein,2
+Ruminococcus bicirculans,RNA polymerase sigma factor,1
+Ruminococcus bicirculans,formate--tetrahydrofolate ligase,2
+Ruminococcus bicirculans,excinuclease ABC subunit A,3
+Ruminococcus bicirculans,"Hsp60, 60K heat shock protein HtpB",2
+Ruminococcus bicirculans,glutamate synthase NADPH large chain,3
+Ruminococcus bicirculans,F0F1 ATP synthase subunit alpha,3
+Ruminococcus bicirculans,formate acetyltransferase 3,1
+Ruminococcus bicirculans,protein disaggregation chaperone,1
+Ruminococcus bicirculans,urease subunit alpha,1
+Ruminococcus bicirculans,DNA polymerase III PolC,1
+Ruminococcus bicirculans,DNA-directed RNA polymerase subunit beta,1
+Anaerostipes hadrus,DNA-directed RNA polymerase subunit beta,2
+Anaerostipes hadrus,UDP-galactopyranose mutase,2
+Anaerostipes hadrus,formate acetyltransferase,3
+Anaerostipes hadrus,carbamoyl phosphate synthase large subunit,1
+Anaerostipes hadrus,F0F1 ATP synthase subunit alpha,1
+Anaerostipes hadrus,ATP-dependent protease ATP-binding subunit ClpX,4
+Anaerostipes hadrus,GTP-binding protein LepA,1
+Anaerostipes hadrus,S-adenosylmethionine synthase,1
+Anaerostipes hadrus,"type I restriction-modification system, M subunit",1
+Anaerostipes hadrus,glutamate synthase NADPH large chain,1
+Anaerostipes hadrus,hypothetical protein lmo2206,2
+Anaerostipes hadrus,RNA polymerase sigma factor,1
+Anaerostipes hadrus,excinuclease ABC subunit A,4
+Anaerostipes hadrus,ABC transporter ATP-binding protein,1
+Anaerostipes hadrus,recombinase A,1
+Anaerostipes hadrus,elongation factor Tu,1
+Anaerostipes hadrus,pyruvate kinase,1
+Anaerostipes hadrus,hypothetical protein,2
+Anaerostipes hadrus,glucose-1-phosphate thymidylyltransferase,1
+Anaerostipes hadrus,tryptophan synthase subunit beta,1
+Firmicutes bacterium AM55-24TS,glutamate dehydrogenase,1
+Firmicutes bacterium AM55-24TS,sugar ABC transporter ATP-binding protein,1
+Firmicutes bacterium AM55-24TS,phosphoribosylformylglycinamide synthetase,4
+Firmicutes bacterium AM55-24TS,molecular chaperone DnaK,1
+Firmicutes bacterium AM55-24TS,gluconate 5-dehydrogenase,1
+Firmicutes bacterium AM55-24TS,recombinase A,1
+Firmicutes bacterium AM55-24TS,elongation factor Tu,2
+Firmicutes bacterium AM55-24TS,putative ATP-binding component of a transport system,1
+Firmicutes bacterium AM55-24TS,RNA polymerase sigma factor,1
+Firmicutes bacterium AM55-24TS,excinuclease ABC subunit A,1
+Firmicutes bacterium AM55-24TS,UDP-glucose pyrophosphorylase,1
+Firmicutes bacterium AM55-24TS,"argininosuccinate synthase, putative",1
+Firmicutes bacterium AM55-24TS,UDP-galactose-4-epimerase,1
+Firmicutes bacterium AM55-24TS,carbamoyl phosphate synthase large subunit,1
+Firmicutes bacterium AM55-24TS,geranyltranstransferase,2
+Firmicutes bacterium AM55-24TS,ATP-dependent protease ATP-binding subunit ClpX,4
+Firmicutes bacterium AM55-24TS,hypothetical protein SP_0939,1
+Firmicutes bacterium AM55-24TS,ATP-dependent protease,2
+Firmicutes bacterium AM55-24TS,DNA-directed RNA polymerase subunit beta,3
+Streptococcus thermophilus,metallo-beta-lactamase superfamily protein,3
+Streptococcus thermophilus,endopeptidase Clp ATP-binding chain C,1
+Streptococcus thermophilus,LysR family transcriptional regulator,1
+Streptococcus thermophilus,tRNA uridine 5-carboxymethylaminomethyl modification protein GidA,1
+Streptococcus thermophilus,excinuclease ABC subunit A,1
+Streptococcus thermophilus,oligopeptide ABC transporter permease AmiC,2
+Streptococcus thermophilus,DNA-directed RNA polymerase subunit delta,2
+Streptococcus thermophilus,thymidine kinase,1
+Streptococcus thermophilus,phosphotransferase system enzyme I,1
+Streptococcus thermophilus,TCS sensor kinase VicK,1
+Streptococcus thermophilus,acetolactate synthase catalytic subunit,2
+Streptococcus thermophilus,fructose-bisphosphate aldolase,1
+Streptococcus thermophilus,amino acid ABC transporter permease,1
+Streptococcus thermophilus,ATP-dependent Clp protease proteolytic subunit,3
+Streptococcus thermophilus,ABC transporter amino acid-binding protein/permease,1
+Streptococcus thermophilus,"glutamine synthetase, type I",2
+Streptococcus thermophilus,UDP-glucose pyrophosphorylase,1
+Streptococcus thermophilus,sortase,1
+Streptococcus thermophilus,aspartate aminotransferase,1
+Streptococcus thermophilus,DNA polymerase III PolC,2
+Streptococcus thermophilus,bifunctional phosphoribosylaminoimidazolecarboxamide formyltransferase/IMP cyclohydrolase,1
+Akkermansia muciniphila,twitching motility protein PilT,1
+Akkermansia muciniphila,catalase,3
+Akkermansia muciniphila,leucyl-tRNA synthetase,1
+Akkermansia muciniphila,GDP-D-mannose dehydratase,1
+Akkermansia muciniphila,molecular chaperone DnaK,2
+Akkermansia muciniphila,aconitate hydratase,4
+Akkermansia muciniphila,endopeptidase Clp ATP-binding chain C,5
+Akkermansia muciniphila,TDP-4-oxo-6-deoxy-D-glucose transaminase,1
+Akkermansia muciniphila,glutamate dehydrogenase,1
+Akkermansia muciniphila,DNA-directed RNA polymerase subunit beta,2
+Akkermansia muciniphila,ATP-dependent protease,1
+Akkermansia muciniphila,phospho-2-dehydro-3-deoxyheptonate aldolase,1
+Akkermansia muciniphila,carbamoyl phosphate synthase large subunit,2
+Akkermansia muciniphila,S-adenosylmethionine synthase,1
+Akkermansia muciniphila,ATP-dependent protease ATP-binding subunit ClpX,1
+Akkermansia muciniphila,chaperonin GroEL,1
+Akkermansia muciniphila,glutamate synthase NADPH large chain,1
+Dorea longicatena,carbamoyl phosphate synthase large subunit,1
+Dorea longicatena,UDP-glucose 6-dehydrogenase,1
+Dorea longicatena,ATP-dependent protease ATP-binding subunit ClpX,2
+Dorea longicatena,"Hsp60, 60K heat shock protein HtpB",1
+Dorea longicatena,capsular polysaccharide synthesis enzyme Cap8D,2
+Dorea longicatena,DNA excision repair protein subunit A,5
+Dorea longicatena,CTP synthetase,2
+Dorea longicatena,molecular chaperone DnaK,2
+Dorea longicatena,UDP-glucose 4-epimerase,1
+Dorea longicatena,"dTDP-glucose 4,6-dehydratase",1
+Dorea longicatena,endopeptidase Clp ATP-binding chain C,1
+Dorea longicatena,TDP-glucose pyrophosphorylase,1
+Dorea longicatena,glutamate dehydrogenase,1
+Dorea longicatena,formate--tetrahydrofolate ligase,1
+Dorea longicatena,excinuclease ABC subunit A,3
+Dorea longicatena,ATP-dependent Clp protease proteolytic subunit,1
+Dorea longicatena,putative ATP-binding component of a transport system,1
+Megamonas funiformis,formate acetyltransferase,1
+Megamonas funiformis,CTP synthetase,1
+Megamonas funiformis,DNA gyrase subunit A,1
+Megamonas funiformis,serine hydroxymethyltransferase,1
+Megamonas funiformis,DNA-directed RNA polymerase subunit beta,1
+Megamonas funiformis,GTP-binding protein LepA,1
+Megamonas funiformis,ATP-dependent protease ATP-binding subunit ClpX,1
+Megamonas funiformis,hypothetical protein SPy_1633,1
+Megamonas funiformis,elongation factor Tu,1
+Megamonas funiformis,ATP-dependent Clp protease proteolytic subunit,1
+Megamonas funiformis,pyrimidine-nucleoside phosphorylase,3
+Megamonas funiformis,recombinase A,3
+Megamonas funiformis,RNA polymerase sigma factor,2
+Megamonas funiformis,formate--tetrahydrofolate ligase,1
+Megamonas funiformis,excinuclease ABC subunit A,1
+Megamonas funiformis,endopeptidase Clp ATP-binding chain C,3
+Megamonas funiformis,molecular chaperone DnaK,2
+Megamonas funiformis,phosphoribosylformylglycinamide synthetase,1
+Megamonas funiformis,tryptophan synthase subunit beta,1
+uncultured Clostridium sp.,Listeria adhesion protein Lap,2
+uncultured Clostridium sp.,preprotein translocase subunit SecA,1
+uncultured Clostridium sp.,ATP-dependent protease ATP-binding subunit ClpX,4
+uncultured Clostridium sp.,"Hsp60, 60K heat shock protein HtpB",1
+uncultured Clostridium sp.,formate--tetrahydrofolate ligase,1
+uncultured Clostridium sp.,excinuclease ABC subunit A,2
+uncultured Clostridium sp.,RNA polymerase sigma factor,1
+uncultured Clostridium sp.,hypothetical protein lmo2206,1
+uncultured Clostridium sp.,"CapB, involved in Poly-gamma-glutamate synthesis",1
+uncultured Clostridium sp.,hypothetical protein,1
+uncultured Clostridium sp.,elongation factor Tu,4
+uncultured Clostridium sp.,recombinase A,2
+uncultured Clostridium sp.,ATP-dependent Clp protease proteolytic subunit,1
+uncultured Clostridium sp.,molecular chaperone DnaK,1
+uncultured Clostridium sp.,capsular polysaccharide biosynthesis protein Cps4K,2
+uncultured Clostridium sp.,endopeptidase Clp ATP-binding chain C,2
+uncultured Eubacterium sp.,DNA-directed RNA polymerase subunit beta,4
+uncultured Eubacterium sp.,ATP-dependent protease,1
+uncultured Eubacterium sp.,formate acetyltransferase,1
+uncultured Eubacterium sp.,F0F1 ATP synthase subunit alpha,1
+uncultured Eubacterium sp.,ATP-dependent protease ATP-binding subunit ClpX,1
+uncultured Eubacterium sp.,"type I restriction-modification system, M subunit",1
+uncultured Eubacterium sp.,ClpB protein,1
+uncultured Eubacterium sp.,hypothetical protein lmo2206,2
+uncultured Eubacterium sp.,gluconate 5-dehydrogenase,1
+uncultured Eubacterium sp.,putative ATP-binding component of a transport system,4
+uncultured Eubacterium sp.,UDP-N-acetylglucosamine 2-epimerase,1
+uncultured Eubacterium sp.,phosphoribosylformylglycinamide synthetase,1
+uncultured Eubacterium sp.,molecular chaperone DnaK,2
+uncultured Eubacterium sp.,GMP synthase,1
+uncultured Eubacterium sp.,endopeptidase Clp ATP-binding chain C,1
+uncultured Eubacterium sp.,RNA polymerase sigma factor SigB,2
+uncultured Eubacterium sp.,glutamate dehydrogenase,1
+Gemmiger formicilis,capsular polysaccharide biosynthesis protein Cps4K,1
+Gemmiger formicilis,TDP-4-oxo-6-deoxy-D-glucose transaminase,1
+Gemmiger formicilis,endopeptidase Clp ATP-binding chain C,1
+Gemmiger formicilis,peptide chain release factor 3,1
+Gemmiger formicilis,resolvase family site-specific recombinase,4
+Gemmiger formicilis,UDP-N-acetylglucosamine 2-epimerase,7
+Gemmiger formicilis,UDP-glucose 6-dehydrogenase,1
+Gemmiger formicilis,molecular chaperone DnaK,1
+Gemmiger formicilis,GTP-binding protein LepA,1
+Gemmiger formicilis,preprotein translocase subunit SecA,1
+Gemmiger formicilis,putative ATP-binding component of a transport system,1
+Gemmiger formicilis,gluconate 5-dehydrogenase,3
+Gemmiger formicilis,DNA excision repair protein subunit A,1
+Gemmiger formicilis,DNA-directed RNA polymerase subunit beta,1
+Gemmiger formicilis,RNA polymerase sigma factor,1
+Bacteroides uniformis,dihydroxy-acid dehydratase,2
+Bacteroides uniformis,protein disaggregation chaperone,1
+Bacteroides uniformis,UDP-glucose 6-dehydrogenase,1
+Bacteroides uniformis,DNA topoisomerase IV subunit B,1
+Bacteroides uniformis,putative ABC transporter ATP-binding protein,1
+Bacteroides uniformis,ABC transporter ATP-binding protein,1
+Bacteroides uniformis,excinuclease ABC subunit A,2
+Bacteroides uniformis,phosphate ABC transporter ATP-binding protein,1
+Bacteroides uniformis,1-deoxy-D-xylulose-5-phosphate synthase,1
+Bacteroides uniformis,phosphoglyceromutase,1
+Bacteroides uniformis,hypothetical protein,1
+Bacteroides uniformis,gluconate 5-dehydrogenase,1
+Bacteroides uniformis,recombinase A,1
+Bacteroides uniformis,molecular chaperone DnaK,1
+Bacteroides uniformis,UDP-N-acetylglucosamine 2-epimerase,2
+Bacteroides uniformis,GDP-D-mannose dehydratase,1
+Bacteroides uniformis,malic enzyme,1
+Bacteroides uniformis,glutamate dehydrogenase,1
+Bacteroides uniformis,"GDP-mannose 4,6-dehydratase",3
+Bacteroides uniformis,endopeptidase Clp ATP-binding chain C,1
+Pseudoruminoccoccus massiliensis,RNA polymerase sigma factor,1
+Pseudoruminoccoccus massiliensis,formate--tetrahydrofolate ligase,2
+Pseudoruminoccoccus massiliensis,DNA excision repair protein subunit A,1
+Pseudoruminoccoccus massiliensis,excinuclease ABC subunit A,1
+Pseudoruminoccoccus massiliensis,pyruvate kinase,1
+Pseudoruminoccoccus massiliensis,CTP synthetase,1
+Pseudoruminoccoccus massiliensis,preprotein translocase subunit SecA,1
+Pseudoruminoccoccus massiliensis,putative ATP-binding component of a transport system,5
+Pseudoruminoccoccus massiliensis,GTP-binding protein LepA,1
+Pseudoruminoccoccus massiliensis,molecular chaperone DnaK,1
+Pseudoruminoccoccus massiliensis,ATP-dependent protease ATP-binding subunit ClpX,1
+Pseudoruminoccoccus massiliensis,F0F1 ATP synthase subunit alpha,2
+Pseudoruminoccoccus massiliensis,chaperonin GroEL,1
+Pseudoruminoccoccus massiliensis,glutamate dehydrogenase,4
+uncultured Ruminococcaceae bacterium,UDP-N-acetylglucosamine 2-epimerase,1
+uncultured Ruminococcaceae bacterium,sugar ABC transporter ATP-binding protein,1
+uncultured Ruminococcaceae bacterium,capsular polysaccharide biosynthesis protein Cps4K,1
+uncultured Ruminococcaceae bacterium,RNA polymerase sigma factor SigB,1
+uncultured Ruminococcaceae bacterium,endopeptidase Clp ATP-binding chain C,2
+uncultured Ruminococcaceae bacterium,excinuclease ABC subunit A,2
+uncultured Ruminococcaceae bacterium,gluconate 5-dehydrogenase,1
+uncultured Ruminococcaceae bacterium,elongation factor Tu,1
+uncultured Ruminococcaceae bacterium,ATP-dependent protease ATP-binding subunit ClpX,1
+uncultured Ruminococcaceae bacterium,formate acetyltransferase 3,2
+uncultured Ruminococcaceae bacterium,carbamoyl phosphate synthase large subunit,2
+uncultured Ruminococcaceae bacterium,myo-inositol-1-phosphate synthase INO1 (inositol 1-phosphate synthetase) (D-glucose 6-phosphate cycloaldolase) (glucose 6-phosphate cyclase) (glucocycloaldolase),1
+uncultured Ruminococcaceae bacterium,DNA-directed RNA polymerase subunit beta,1
+uncultured Ruminococcaceae bacterium,urease,1
+uncultured Ruminococcaceae bacterium,serine hydroxymethyltransferase,1
+uncultured Ruminococcaceae bacterium,DNA polymerase III PolC,1
+uncultured Blautia sp.,sugar ABC transporter ATP-binding protein,1
+uncultured Blautia sp.,glucose-1-phosphate thymidylyltransferase,2
+uncultured Blautia sp.,molecular chaperone DnaK,1
+uncultured Blautia sp.,endopeptidase Clp ATP-binding chain C,1
+uncultured Blautia sp.,RNA polymerase sigma factor SigB,1
+uncultured Blautia sp.,formate--tetrahydrofolate ligase,2
+uncultured Blautia sp.,hypothetical protein,1
+uncultured Blautia sp.,putative ATP-binding component of a transport system,1
+uncultured Blautia sp.,UreC,1
+uncultured Blautia sp.,GTP-binding protein LepA,1
+uncultured Blautia sp.,ATP-dependent protease ATP-binding subunit ClpX,1
+uncultured Blautia sp.,F0F1 ATP synthase subunit alpha,1
+uncultured Blautia sp.,resolvase family site-specific recombinase,2
+uncultured Blautia sp.,glutamate synthase NADPH large chain,1
+uncultured Blautia sp.,GTP-dependent nucleic acid-binding protein EngD,1
+uncultured Blautia sp.,imidazole glycerol phosphate synthase subunit HisF,1
+Clostridiales bacterium,excinuclease ABC subunit A,1
+Clostridiales bacterium,formate--tetrahydrofolate ligase,1
+Clostridiales bacterium,DNA-directed RNA polymerase subunit beta,3
+Clostridiales bacterium,RNA polymerase sigma factor,1
+Clostridiales bacterium,hypothetical protein lmo2206,4
+Clostridiales bacterium,hypothetical protein,1
+Clostridiales bacterium,ATP-dependent protease,3
+Clostridiales bacterium,molecular chaperone DnaK,3
+Clostridiales bacterium,ATP-dependent protease ATP-binding subunit ClpX,1
+Clostridiales bacterium,RNA polymerase sigma factor SigB,1
+uncultured Lachnospiraceae bacterium,recombinase A,2
+uncultured Lachnospiraceae bacterium,ATP-dependent Clp protease proteolytic subunit,1
+uncultured Lachnospiraceae bacterium,polysaccharide biosynthesis protein CpsF,1
+uncultured Lachnospiraceae bacterium,capsular polysaccharide biosynthesis protein Cps4J,1
+uncultured Lachnospiraceae bacterium,putative ATP-binding component of a transport system,1
+uncultured Lachnospiraceae bacterium,RNA polymerase sigma factor,1
+uncultured Lachnospiraceae bacterium,serine hydroxymethyltransferase,1
+uncultured Lachnospiraceae bacterium,formate--tetrahydrofolate ligase,2
+uncultured Lachnospiraceae bacterium,endopeptidase Clp ATP-binding chain C,2
+uncultured Lachnospiraceae bacterium,glutamate dehydrogenase,1
+uncultured Lachnospiraceae bacterium,alginate o-acetyltransferase AlgI,1
+uncultured Lachnospiraceae bacterium,carbamoyl phosphate synthase large subunit,1
+uncultured Lachnospiraceae bacterium,F0F1 ATP synthase subunit alpha,1
+uncultured Lachnospiraceae bacterium,lysine decarboxylase,1
+uncultured Lachnospiraceae bacterium,ATP-dependent protease ATP-binding subunit ClpX,2
+Firmicutes bacterium CAG:124,UDP-N-acetylglucosamine-2-epimerase,1
+Firmicutes bacterium CAG:124,ATP-dependent protease ATP-binding subunit ClpX,2
+Firmicutes bacterium CAG:124,glutamate synthase NADPH large chain,1
+Firmicutes bacterium CAG:124,endopeptidase Clp ATP-binding chain C,1
+Firmicutes bacterium CAG:124,DNA-directed RNA polymerase subunit beta,1
+Firmicutes bacterium CAG:124,excinuclease ABC subunit A,4
+Firmicutes bacterium CAG:124,cell division protein FtsZ,1
+Firmicutes bacterium CAG:124,RNA polymerase sigma factor,1
+Firmicutes bacterium CAG:124,galactose/methyl galaxtoside transporter ATP-binding protein,1
+Firmicutes bacterium CAG:124,putative ATP-binding component of a transport system,2
+Firmicutes bacterium CAG:124,CTP synthetase,1
+Firmicutes bacterium CAG:124,recombinase A,2
+Firmicutes bacterium CAG:124,elongation factor Tu,1
+Bacteroides ovatus,formate--tetrahydrofolate ligase,1
+Bacteroides ovatus,"Vi polysaccharide biosynthesis protein, epimerase TviC",1
+Bacteroides ovatus,catalase,2
+Bacteroides ovatus,capsular polysaccharide biosynthesis protein Cps4J,1
+Bacteroides ovatus,dihydroxy-acid dehydratase,3
+Bacteroides ovatus,UDP-N-acetylglucosamine 2-epimerase,1
+Bacteroides ovatus,GTP-binding protein LepA,2
+Bacteroides ovatus,S-adenosylmethionine synthase,1
+Bacteroides ovatus,endopeptidase Clp ATP-binding chain C,2
+Bacteroides ovatus,"GDP-mannose 4,6-dehydratase",2
+Bacteroides ovatus,isopropylmalate isomerase large subunit,1
+Bacteroides ovatus,glutamate synthase NADPH large chain,1
+Bacteroides ovatus,malic enzyme,1
+Blautia massiliensis,lysine decarboxylase,1
+Blautia massiliensis,GTP-binding protein LepA,2
+Blautia massiliensis,sugar ABC transporter ATP-binding protein,1
+Blautia massiliensis,glucose-1-phosphate thymidylyltransferase,1
+Blautia massiliensis,RNA polymerase sigma factor SigB,1
+Blautia massiliensis,ClpB protein,1
+Blautia massiliensis,chaperonin GroEL,1
+Blautia massiliensis,formate--tetrahydrofolate ligase,1
+Blautia massiliensis,DNA-directed RNA polymerase subunit beta,2
+Blautia massiliensis,DNA excision repair protein subunit A,1
+Blautia massiliensis,RNA polymerase sigma factor,1
+Blautia massiliensis,hypothetical protein,2
+Blautia massiliensis,CTP synthetase,1
+Blautia massiliensis,recombinase A,1
+Blautia massiliensis,elongation factor Tu,1
+Lachnospiraceae bacterium,F0F1 ATP synthase subunit alpha,1
+Lachnospiraceae bacterium,ATP-dependent protease ATP-binding subunit ClpX,2
+Lachnospiraceae bacterium,UDP-glucose 6-dehydrogenase,3
+Lachnospiraceae bacterium,endopeptidase Clp ATP-binding chain C,2
+Lachnospiraceae bacterium,RNA polymerase sigma factor,1
+Lachnospiraceae bacterium,excinuclease ABC subunit A,4
+Lachnospiraceae bacterium,DNA excision repair protein subunit A,1
+Lachnospiraceae bacterium,serine hydroxymethyltransferase,1
+Lachnospiraceae bacterium,elongation factor Tu,1
+Lachnospiraceae bacterium,CTP synthetase,1
+Lachnospiraceae bacterium,polysaccharide biosynthesis protein CpsF,1
+Alistipes shahii,dihydroxy-acid dehydratase,2
+Alistipes shahii,catalase,2
+Alistipes shahii,gluconate 5-dehydrogenase,1
+Alistipes shahii,ABC transporter ATP-binding protein,1
+Alistipes shahii,excinuclease ABC subunit A,1
+Alistipes shahii,glutamate dehydrogenase,1
+Alistipes shahii,chaperonin GroEL,1
+Alistipes shahii,endopeptidase Clp ATP-binding chain C,3
+Alistipes shahii,S-adenosylmethionine synthase,1
+Alistipes shahii,molecular chaperone DnaK,2
+Alistipes shahii,thymidylate synthase,1
+Alistipes shahii,ATP-dependent protease ATP-binding subunit ClpX,1
+Alistipes shahii,carbamoyl phosphate synthase large subunit,1
+Firmicutes bacterium TM09-10,glutamate dehydrogenase,3
+Firmicutes bacterium TM09-10,"Hsp60, 60K heat shock protein HtpB",1
+Firmicutes bacterium TM09-10,hypothetical protein SP_0939,2
+Firmicutes bacterium TM09-10,F0F1 ATP synthase subunit alpha,2
+Firmicutes bacterium TM09-10,molecular chaperone DnaK,1
+Firmicutes bacterium TM09-10,carbamoyl phosphate synthase large subunit,1
+Firmicutes bacterium TM09-10,putative ATP-binding component of a transport system,1
+Firmicutes bacterium TM09-10,UDP-galactopyranose mutase,1
+Firmicutes bacterium TM09-10,hypothetical protein,1
+Firmicutes bacterium TM09-10,elongation factor Tu,2
+Firmicutes bacterium TM09-10,excinuclease ABC subunit A,1
+Firmicutes bacterium TM09-10,DNA-directed RNA polymerase subunit beta,1
+Parabacteroides distasonis,formate acetyltransferase 3,1
+Parabacteroides distasonis,UDP-N-acetylglucosamine 2-epimerase,3
+Parabacteroides distasonis,DedA protein,1
+Parabacteroides distasonis,DNA-directed RNA polymerase subunit beta,1
+Parabacteroides distasonis,formate--tetrahydrofolate ligase,1
+Parabacteroides distasonis,elongation factor Tu,1
+Parabacteroides distasonis,recombinase A,4
+Parabacteroides distasonis,dihydroxy-acid dehydratase,2
+Parabacteroides distasonis,UDP-galactopyranose mutase,1
+uncultured Roseburia sp.,GTP-dependent nucleic acid-binding protein EngD,1
+uncultured Roseburia sp.,endopeptidase Clp ATP-binding chain C,1
+uncultured Roseburia sp.,Holliday junction DNA helicase ruvB,1
+uncultured Roseburia sp.,lysine decarboxylase,2
+uncultured Roseburia sp.,ATP-dependent protease ATP-binding subunit ClpX,1
+uncultured Roseburia sp.,F0F1 ATP synthase subunit alpha,1
+uncultured Roseburia sp.,GTP-binding protein LepA,1
+uncultured Roseburia sp.,carbamoyl phosphate synthase large subunit,2
+uncultured Roseburia sp.,sugar ABC transporter ATP-binding protein,1
+uncultured Roseburia sp.,putative ATP-binding component of a transport system,1
+uncultured Roseburia sp.,5-methyltetrahydropteroyltriglutamate/homocysteine S-methyltransferase,2
+uncultured Roseburia sp.,DNA excision repair protein subunit A,1
+uncultured Sutterella sp.,imidazole glycerol phosphate synthase subunit HisF,1
+uncultured Sutterella sp.,DNA-directed RNA polymerase subunit beta,1
+uncultured Sutterella sp.,cytochrome c-type biogenesis protein CcmF,2
+uncultured Sutterella sp.,"pyruvate, water dikinase",2
+uncultured Sutterella sp.,2-oxoglutarate dehydrogenase E1 component,1
+uncultured Sutterella sp.,argininosuccinate synthase,2
+uncultured Sutterella sp.,elongation factor Tu,1
+uncultured Sutterella sp.,molecular chaperone DnaK,1
+uncultured Sutterella sp.,isopropylmalate isomerase large subunit,1
+uncultured Sutterella sp.,GTP-dependent nucleic acid-binding protein EngD,1
+uncultured Sutterella sp.,ClpB protein,1
+Roseburia intestinalis,excinuclease ABC subunit A,1
+Roseburia intestinalis,formate--tetrahydrofolate ligase,1
+Roseburia intestinalis,phosphoglyceromutase,1
+Roseburia intestinalis,gluconate 5-dehydrogenase,1
+Roseburia intestinalis,recombinase A,1
+Roseburia intestinalis,elongation factor Tu,1
+Roseburia intestinalis,lysine decarboxylase,1
+Roseburia intestinalis,F0F1 ATP synthase subunit alpha,1
+Roseburia intestinalis,UDP-glucose 4-epimerase,1
+Roseburia intestinalis,S-adenosylmethionine synthase,1
+Roseburia intestinalis,carbamoyl phosphate synthase large subunit,1
+Roseburia intestinalis,"type VII secretion system protein EssC, FtsK/SpoIIIE family ATPase",1
+Roseburia intestinalis,DNA-binding ATP-dependent protease La,1
+Roseburia intestinalis,tRNA uridine 5-carboxymethylaminomethyl modification protein GidA,1
+Eisenbergiella massiliensis,UDP-glucose 6-dehydrogenase,1
+Eisenbergiella massiliensis,resolvase family site-specific recombinase,11
+Eisenbergiella massiliensis,gluconate 5-dehydrogenase,1
+uncultured Lachnobacterium sp.,sugar ABC transporter ATP-binding protein,1
+uncultured Lachnobacterium sp.,ATP-dependent protease ATP-binding subunit ClpX,1
+uncultured Lachnobacterium sp.,lysine decarboxylase,4
+uncultured Lachnobacterium sp.,TDP-glucose pyrophosphorylase,1
+uncultured Lachnobacterium sp.,"type I restriction-modification system, M subunit",1
+uncultured Lachnobacterium sp.,endopeptidase Clp ATP-binding chain C,1
+uncultured Lachnobacterium sp.,hypothetical protein lmo2206,1
+uncultured Lachnobacterium sp.,transcriptional repressor CodY,1
+uncultured Lachnobacterium sp.,putative ATP-binding component of a transport system,1
+uncultured Lachnobacterium sp.,CTP synthetase,1
+Roseburia hominis,RNA polymerase sigma factor,1
+Roseburia hominis,gluconate 5-dehydrogenase,2
+Roseburia hominis,4-deoxy-L-threo-5-hexosulose-uronate ketol-isomerase,1
+Roseburia hominis,ATP-dependent protease ATP-binding subunit ClpX,1
+Roseburia hominis,tryptophan synthase subunit beta,1
+Roseburia hominis,hypothetical protein SPy_1633,1
+Roseburia hominis,resolvase family site-specific recombinase,1
+Roseburia hominis,molecular chaperone DnaK,1
+Roseburia hominis,S-adenosylmethionine synthase,1
+Roseburia hominis,Type III secretion system ATPase,2
+Roseburia hominis,glutamate synthase NADPH large chain,1
+Ruminococcus faecis,carbamoyl phosphate synthase large subunit,1
+Ruminococcus faecis,lysine decarboxylase,1
+Ruminococcus faecis,S-adenosylmethionine synthase,1
+Ruminococcus faecis,endopeptidase Clp ATP-binding chain C,2
+Ruminococcus faecis,hypothetical protein lmo2206,1
+Ruminococcus faecis,DNA-directed RNA polymerase subunit beta,1
+Ruminococcus faecis,DNA excision repair protein subunit A,1
+Ruminococcus faecis,transcriptional repressor CodY,1
+Ruminococcus faecis,putative ATP-binding component of a transport system,1
+Ruminococcus faecis,preprotein translocase subunit SecA,1
+Ruminococcus faecis,polysaccharide biosynthesis protein CpsF,1
+Ruminococcus faecis,CTP synthetase,1
+Bacteroides faecis,hypothetical protein,1
+Bacteroides faecis,catalase,2
+Bacteroides faecis,elongation factor Tu,1
+Bacteroides faecis,protein disaggregation chaperone,1
+Bacteroides faecis,gluconate 5-dehydrogenase,1
+Bacteroides faecis,excinuclease ABC subunit A,2
+Bacteroides faecis,endopeptidase Clp ATP-binding chain C,1
+Bacteroides faecis,molecular chaperone DnaK,1
+Bacteroides faecis,UDP-glucose 6-dehydrogenase,1
+Bacteroides faecis,UDP-N-acetylglucosamine 2-epimerase,1
+Bacteroides massiliensis,glutamate synthase NADPH large chain,1
+Bacteroides massiliensis,endopeptidase Clp ATP-binding chain C,2
+Bacteroides massiliensis,TDP-glucose pyrophosphorylase,1
+Bacteroides massiliensis,dihydroxy-acid dehydratase,2
+Bacteroides massiliensis,elongation factor Tu,1
+Bacteroides massiliensis,protein disaggregation chaperone,2
+Bacteroides massiliensis,gluconate 5-dehydrogenase,2
+Bacteroides massiliensis,DNA-directed RNA polymerase subunit beta,1
+Alistipes putredinis,alginate o-acetyltransferase AlgI,1
+Alistipes putredinis,glutamate dehydrogenase,1
+Alistipes putredinis,chaperonin GroEL,1
+Alistipes putredinis,S-adenosylmethionine synthase,1
+Alistipes putredinis,ATP-dependent protease ATP-binding subunit ClpX,1
+Alistipes putredinis,hypothetical protein,1
+Alistipes putredinis,"dTDP-glucose 4,6 dehydratase",1
+Alistipes putredinis,protein disaggregation chaperone,1
+Alistipes putredinis,catalase,2
+Alistipes putredinis,DNA excision repair protein subunit A,1
+Alistipes putredinis,hypothetical protein lmo2206,1
+Parasutterella excrementihominis,carbamoyl phosphate synthase large subunit,1
+Parasutterella excrementihominis,alanyl-tRNA synthetase,1
+Parasutterella excrementihominis,thioredoxin reductase,1
+Parasutterella excrementihominis,DNA-directed RNA polymerase subunit beta,1
+Parasutterella excrementihominis,argininosuccinate synthase,2
+Parasutterella excrementihominis,elongation factor Tu,1
+Parasutterella excrementihominis,protein disaggregation chaperone,1
+Parasutterella excrementihominis,preprotein translocase subunit SecA,1
+Parasutterella excrementihominis,phosphoribosylformylglycinamidine synthase,1
+Parasutterella excrementihominis,phospho-2-dehydro-3-deoxyheptonate aldolase,1
+Bifidobacterium pseudocatenulatum,DNA-directed RNA polymerase subunit beta,1
+Bifidobacterium pseudocatenulatum,excinuclease ABC subunit A,2
+Bifidobacterium pseudocatenulatum,phosphoribosylaminoimidazole synthetase,2
+Bifidobacterium pseudocatenulatum,glutamate dehydrogenase,1
+Bifidobacterium pseudocatenulatum,protein disaggregation chaperone,1
+Bifidobacterium pseudocatenulatum,endopeptidase Clp ATP-binding chain C,2
+Bifidobacterium pseudocatenulatum,recombinase A,2
+[Ruminococcus] torques,endopeptidase Clp ATP-binding chain C,1
+[Ruminococcus] torques,glutamate synthase NADPH large chain,1
+[Ruminococcus] torques,molecular chaperone DnaK,1
+[Ruminococcus] torques,UDP-glucose 6-dehydrogenase,1
+[Ruminococcus] torques,GTP-binding protein LepA,1
+[Ruminococcus] torques,ATP-dependent protease ATP-binding subunit ClpX,1
+[Ruminococcus] torques,protein disaggregation chaperone,1
+[Ruminococcus] torques,ATP-dependent Clp protease proteolytic subunit,2
+[Ruminococcus] torques,putative ATP-binding component of a transport system,1
+[Ruminococcus] torques,excinuclease ABC subunit A,1
+Sutterella wadsworthensis,Mg2+ transporter,1
+Sutterella wadsworthensis,transcriptional regulator FleQ,1
+Sutterella wadsworthensis,elongation factor Tu,3
+Sutterella wadsworthensis,Mg2+ transport protein,1
+Sutterella wadsworthensis,carbamoyl phosphate synthase large subunit,1
+Sutterella wadsworthensis,possible transferase,3
+Sutterella wadsworthensis,phosphoribosylaminoimidazole synthetase,1
+Anaerobutyricum hallii,putative ATP-binding component of a transport system,3
+Anaerobutyricum hallii,pyruvate kinase,1
+Anaerobutyricum hallii,glutamate dehydrogenase,1
+Anaerobutyricum hallii,endopeptidase Clp ATP-binding chain C,2
+Anaerobutyricum hallii,transcriptional repressor CodY,1
+Anaerobutyricum hallii,DNA-directed RNA polymerase subunit beta,2
+Anaerobutyricum hallii,UDP-glucose 6-dehydrogenase,1
+Lachnospiraceae bacterium GAM79,endopeptidase Clp ATP-binding chain C,3
+Lachnospiraceae bacterium GAM79,ATP-dependent protease ATP-binding subunit ClpX,2
+Lachnospiraceae bacterium GAM79,F0F1 ATP synthase subunit alpha,1
+Lachnospiraceae bacterium GAM79,resolvase family site-specific recombinase,1
+Lachnospiraceae bacterium GAM79,molecular chaperone DnaK,1
+Lachnospiraceae bacterium GAM79,elongation factor Tu,1
+Lachnospiraceae bacterium GAM79,hypothetical protein lmo2206,1
+Lachnospiraceae bacterium GAM79,DNA-directed RNA polymerase subunit beta,1
+Bacteroides stercoris,excinuclease ABC subunit A,2
+Bacteroides stercoris,Holliday junction DNA helicase RuvB,1
+Bacteroides stercoris,glutamate dehydrogenase,1
+Bacteroides stercoris,glutamate synthase NADPH large chain,2
+Bacteroides stercoris,dihydroxy-acid dehydratase,2
+Bacteroides stercoris,endopeptidase Clp ATP-binding chain C,1
+Bacteroides stercoris,gluconate 5-dehydrogenase,1
+uncultured Bacteroides sp.,hypothetical protein lmo2206,1
+uncultured Bacteroides sp.,dihydroxy-acid dehydratase,1
+uncultured Bacteroides sp.,gluconate 5-dehydrogenase,1
+uncultured Bacteroides sp.,recombinase A,1
+uncultured Bacteroides sp.,"VI polysaccharide biosynthesis protein, epimerase",1
+uncultured Bacteroides sp.,hypothetical protein SP_0939,2
+uncultured Bacteroides sp.,UDP-N-acetylglucosamine 2-epimerase,1
+uncultured Bacteroides sp.,glutamate synthase NADPH large chain,1
+uncultured Bacteroides sp.,endopeptidase Clp ATP-binding chain C,1
+Clostridium sporogenes,DNA-directed RNA polymerase subunit beta,2
+Clostridium sporogenes,TDP-glucose pyrophosphorylase,1
+Clostridium sporogenes,hypothetical protein,1
+Clostridium sporogenes,formate acetyltransferase,3
+Clostridium sporogenes,pyruvate kinase,2
+Clostridium sporogenes,capsular polysaccharide biosynthesis protein Cps4J,1
+Coprococcus phoceensis,DNA-directed RNA polymerase subunit beta,1
+Coprococcus phoceensis,F0F1 ATP synthase subunit alpha,1
+Coprococcus phoceensis,GTP-binding protein LepA,1
+Coprococcus phoceensis,"type VII secretion system protein EssC, FtsK/SpoIIIE family ATPase",3
+Coprococcus phoceensis,CTP synthetase,2
+Coprococcus phoceensis,elongation factor Tu,2
+Agathobaculum butyriciproducens,endopeptidase Clp ATP-binding chain C,1
+Agathobaculum butyriciproducens,phosphoribosylformylglycinamide synthetase,1
+Agathobaculum butyriciproducens,F0F1 ATP synthase subunit alpha,1
+Agathobaculum butyriciproducens,resolvase family site-specific recombinase,1
+Agathobaculum butyriciproducens,S-adenosylmethionine synthase,1
+Agathobaculum butyriciproducens,putative ATP-binding component of a transport system,1
+Agathobaculum butyriciproducens,ATP-dependent protease,1
+Agathobaculum butyriciproducens,elongation factor Tu,1
+Agathobaculum butyriciproducens,RNA polymerase sigma factor,2
+uncultured Oscillibacter sp.,excinuclease ABC subunit A,4
+uncultured Oscillibacter sp.,phosphoribosylformylglycinamide synthetase,1
+uncultured Oscillibacter sp.,molecular chaperone DnaK,1
+uncultured Oscillibacter sp.,RNA polymerase sigma factor,1
+uncultured Oscillibacter sp.,recombinase A,1
+uncultured Oscillibacter sp.,ATP-dependent protease,1
+Roseburia inulinivorans,lysine decarboxylase,1
+Roseburia inulinivorans,ATP-dependent protease ATP-binding subunit ClpX,1
+Roseburia inulinivorans,molecular chaperone DnaK,1
+Roseburia inulinivorans,excinuclease ABC subunit A,2
+Roseburia inulinivorans,DNA excision repair protein subunit A,1
+Roseburia inulinivorans,preprotein translocase subunit SecA,1
+Roseburia inulinivorans,ATP-dependent protease,1
+Roseburia inulinivorans,elongation factor Tu,1
+bacterium LF-3,DNA-directed RNA polymerase subunit beta,1
+bacterium LF-3,F0F1 ATP synthase subunit alpha,1
+bacterium LF-3,RNA polymerase sigma factor,1
+bacterium LF-3,glucose-1-phosphate thymidylyltransferase,1
+bacterium LF-3,formate acetyltransferase,3
+bacterium LF-3,elongation factor Tu,1
+bacterium LF-3,UDP-glucose pyrophosphorylase,1
+uncultured Collinsella sp.,preprotein translocase subunit SecA,1
+uncultured Collinsella sp.,elongation factor Tu,1
+uncultured Collinsella sp.,gluconate 5-dehydrogenase,1
+uncultured Collinsella sp.,endopeptidase Clp ATP-binding chain C,1
+uncultured Collinsella sp.,ATP-dependent protease ATP-binding subunit ClpX,3
+uncultured Collinsella sp.,carbamoyl-phosphate synthase large subunit,1
+Candidatus Cibiobacter qucibialis,ketol-acid reductoisomerase,1
+Candidatus Cibiobacter qucibialis,gluconate 5-dehydrogenase,1
+Candidatus Cibiobacter qucibialis,protein disaggregation chaperone,1
+Candidatus Cibiobacter qucibialis,glucose-1-phosphate thymidylyltransferase,1
+Candidatus Cibiobacter qucibialis,phosphoribosylformylglycinamide synthetase,1
+Candidatus Cibiobacter qucibialis,ATP-dependent protease ATP-binding subunit ClpX,1
+Candidatus Cibiobacter qucibialis,endopeptidase Clp ATP-binding chain C,1
+Candidatus Cibiobacter qucibialis,TDP-glucose pyrophosphorylase,1
+uncultured Erysipelotrichaceae bacterium,2-isopropylmalate synthase,1
+uncultured Erysipelotrichaceae bacterium,leucyl-tRNA synthetase,1
+uncultured Erysipelotrichaceae bacterium,hyaluronidase,1
+uncultured Erysipelotrichaceae bacterium,carbamoyl phosphate synthase large subunit,1
+uncultured Erysipelotrichaceae bacterium,GTP-binding protein LepA,1
+uncultured Erysipelotrichaceae bacterium,DNA-directed RNA polymerase subunit beta,2
+uncultured Erysipelotrichaceae bacterium,peptide chain release factor 3,1
+Monoglobus pectinilyticus,elongation factor Tu,2
+Monoglobus pectinilyticus,excinuclease ABC subunit A,1
+Monoglobus pectinilyticus,F0F1 ATP synthase subunit alpha,1
+Monoglobus pectinilyticus,ATP-dependent protease ATP-binding subunit ClpX,1
+Monoglobus pectinilyticus,tryptophan synthase subunit beta,1
+Monoglobus pectinilyticus,molecular chaperone DnaK,1
+Monoglobus pectinilyticus,GMP synthase,1
+Bacteroides salyersiae,molecular chaperone DnaK,1
+Bacteroides salyersiae,GTP-binding protein LepA,1
+Bacteroides salyersiae,catalase,1
+Bacteroides salyersiae,gluconate 5-dehydrogenase,1
+Bacteroides salyersiae,endopeptidase Clp ATP-binding chain C,3
+Bacteroides salyersiae,malic enzyme,1
+Candidatus Gastranaerophilales bacterium,endopeptidase Clp ATP-binding chain C,1
+Candidatus Gastranaerophilales bacterium,elongation factor Tu,3
+Candidatus Gastranaerophilales bacterium,putative ATP-binding component of a transport system,1
+Candidatus Gastranaerophilales bacterium,CTP synthetase,1
+Candidatus Gastranaerophilales bacterium,DNA-directed RNA polymerase subunit beta,1
+Candidatus Gastranaerophilales bacterium,ATP-dependent protease ATP-binding subunit ClpX,1
+Bilophila wadsworthia,carbamoyl phosphate synthase large subunit,1
+Bilophila wadsworthia,"dTDP-glucose-4,6-dehydratase",2
+Bilophila wadsworthia,ClpB protein,1
+Bilophila wadsworthia,"dTDP-glucose 4,6 dehydratase",1
+Bilophila wadsworthia,catalase,1
+Bilophila wadsworthia,preprotein translocase subunit SecA,1
+Parabacteroides merdae,elongation factor Tu,2
+Parabacteroides merdae,glucose-1-phosphate thymidylyltransferase,1
+Parabacteroides merdae,hypothetical protein lmo2206,1
+Parabacteroides merdae,excinuclease ABC subunit A,1
+Parabacteroides merdae,DNA-directed RNA polymerase subunit beta,2
+Oscillibacter sp.,preprotein translocase subunit SecA,2
+Oscillibacter sp.,hypothetical protein SP_0939,1
+Oscillibacter sp.,excinuclease ABC subunit A,2
+Oscillibacter sp.,phosphoketolase,2
+Ruminococcaceae bacterium,elongation factor Tu,1
+Ruminococcaceae bacterium,endopeptidase Clp ATP-binding chain C,1
+Ruminococcaceae bacterium,serine hydroxymethyltransferase,1
+Ruminococcaceae bacterium,formate--tetrahydrofolate ligase,1
+Ruminococcaceae bacterium,ATP-dependent protease ATP-binding subunit ClpX,1
+Ruminococcaceae bacterium,excinuclease ABC subunit A,1
+Ruminococcaceae bacterium,UDP-N-acetylglucosamine 2-epimerase,1
+uncultured Marvinbryantia sp.,gluconate 5-dehydrogenase,1
+uncultured Marvinbryantia sp.,endopeptidase Clp ATP-binding chain C,1
+uncultured Marvinbryantia sp.,recombinase A,1
+uncultured Marvinbryantia sp.,TDP-4-oxo-6-deoxy-D-glucose transaminase,1
+uncultured Marvinbryantia sp.,malic enzyme,1
+uncultured Marvinbryantia sp.,sugar ABC transporter ATP-binding protein,1
+uncultured Marvinbryantia sp.,carbamoyl phosphate synthase large subunit,1
+Bacteroides dorei,dihydroxy-acid dehydratase,1
+Bacteroides dorei,putative ABC transporter ATP-binding protein,1
+Bacteroides dorei,B12-dependent methionine synthase,2
+Bacteroides dorei,protein disaggregation chaperone,1
+Bacteroides dorei,gluconate 5-dehydrogenase,1
+Bacteroides dorei,recombinase A,1
+Lactobacillus rogosae,mannosyl-transferase,1
+Lactobacillus rogosae,lysine decarboxylase,1
+Lactobacillus rogosae,formate--tetrahydrofolate ligase,1
+Lactobacillus rogosae,molecular chaperone DnaK,1
+Lactobacillus rogosae,ClpB protein,1
+Lactobacillus rogosae,glutamate synthase NADPH large chain,1
+[Ruminococcus] gnavus,phosphoribosylformylglycinamide synthetase,2
+[Ruminococcus] gnavus,formate--tetrahydrofolate ligase,1
+[Ruminococcus] gnavus,F0F1 ATP synthase subunit alpha,1
+[Ruminococcus] gnavus,serine hydroxymethyltransferase,1
+[Ruminococcus] gnavus,protein disaggregation chaperone,1
+Klebsiella oxytoca,"bifunctional (p)ppGpp synthetase II/ guanosine-3',5'-bis pyrophosphate 3'-pyrophosphohydrolase",1
+Klebsiella oxytoca,serine hydroxymethyltransferase,1
+Klebsiella oxytoca,phosphoribosylamine--glycine ligase,1
+Klebsiella oxytoca,50S ribosomal protein L20,1
+Klebsiella oxytoca,phosphoglucomutase,1
+Klebsiella oxytoca,Holliday junction DNA helicase ruvB,1
+Dysosmobacter welbionis,endopeptidase Clp ATP-binding chain C,3
+Dysosmobacter welbionis,excinuclease ABC subunit A,2
+Dysosmobacter welbionis,molecular chaperone DnaK,1
+Eubacterium ramulus,preprotein translocase subunit SecA,2
+Eubacterium ramulus,hypothetical protein SPy_1633,1
+Eubacterium ramulus,ATP-dependent protease ATP-binding subunit ClpX,2
+Eubacterium ramulus,UDP-glucose 6-dehydrogenase,1
+Ruthenibacterium lactatiformans,UDP-N-acetylglucosamine 2-epimerase,2
+Ruthenibacterium lactatiformans,sugar ABC transporter ATP-binding protein,3
+Ruthenibacterium lactatiformans,preprotein translocase subunit SecA,1
+Bacteroides thetaiotaomicron,S-adenosylmethionine synthase,1
+Bacteroides thetaiotaomicron,UDP-N-acetylglucosamine 2-epimerase,1
+Bacteroides thetaiotaomicron,glutamate synthase NADPH large chain,1
+Bacteroides thetaiotaomicron,capsular polysaccharide biosynthesis protein Cps4J,1
+Bacteroides thetaiotaomicron,endopeptidase Clp ATP-binding chain C,1
+Clostridiales bacterium VE202-03,putative ATP-binding component of a transport system,1
+Clostridiales bacterium VE202-03,preprotein translocase subunit SecA,2
+Clostridiales bacterium VE202-03,microcompartment protein,1
+Clostridiales bacterium VE202-03,molecular chaperone DnaK,1
+Clostridiales bacterium UBA4696,putative ATP-binding component of a transport system,1
+Clostridiales bacterium UBA4696,endopeptidase Clp ATP-binding chain C,1
+Clostridiales bacterium UBA4696,ClpB protein,1
+Clostridiales bacterium UBA4696,serine hydroxymethyltransferase,1
+Clostridiales bacterium UBA4696,DNA-directed RNA polymerase subunit beta,1
+Oxalobacter formigenes,acetolactate synthase 3 catalytic subunit,1
+Oxalobacter formigenes,3-isopropylmalate dehydrogenase,1
+Oxalobacter formigenes,quinolinate synthetase,1
+Oxalobacter formigenes,GMP synthase,2
+Bacteroides cellulosilyticus,endopeptidase Clp ATP-binding chain C,1
+Bacteroides cellulosilyticus,gluconate 5-dehydrogenase,2
+Bacteroides cellulosilyticus,B12-dependent methionine synthase,2
+Lawsonibacter asaccharolyticus,tryptophan synthase subunit beta,1
+Lawsonibacter asaccharolyticus,phosphoribosylformylglycinamide synthetase,1
+Lawsonibacter asaccharolyticus,RNA polymerase sigma factor,1
+Lawsonibacter asaccharolyticus,RNA polymerase sigma factor SigB,1
+Lawsonibacter asaccharolyticus,pyruvate kinase,1
+Lactococcus lactis,leucyl-tRNA synthetase,1
+Lactococcus lactis,CTP synthetase,1
+Lactococcus lactis,phosphatidate cytidylyltransferase,1
+Lactococcus lactis,ATP-dependent protease ATP-binding subunit ClpX,1
+Lactococcus lactis,cysteine synthase,1
+Megamonas rupellensis,molecular chaperone DnaK,1
+Megamonas rupellensis,hypothetical protein SPy_1633,1
+Megamonas rupellensis,DNA-directed RNA polymerase subunit beta,1
+Megamonas rupellensis,excinuclease ABC subunit A,1
+Megamonas rupellensis,elongation factor Tu,1
+Dorea formicigenerans,glutamate synthase NADPH large chain,1
+Dorea formicigenerans,DNA excision repair protein subunit A,1
+Dorea formicigenerans,ATP-dependent protease ATP-binding subunit ClpX,1
+Dorea formicigenerans,DNA-directed RNA polymerase subunit beta,1
+Dorea formicigenerans,molecular chaperone DnaK,1
+Phascolarctobacterium succinatutens,CTP synthetase,1
+Phascolarctobacterium succinatutens,endopeptidase Clp ATP-binding chain C,1
+Phascolarctobacterium succinatutens,formate--tetrahydrofolate ligase,1
+Phascolarctobacterium succinatutens,excinuclease ABC subunit A,1
+Phascolarctobacterium succinatutens,DNA polymerase III subunit alpha,1
+Parabacteroides johnsonii,catalase,1
+Parabacteroides johnsonii,glutamate dehydrogenase,1
+Parabacteroides johnsonii,molecular chaperone DnaK,1
+Parabacteroides johnsonii,UDP-N-acetylglucosamine 2-epimerase,1
+Bifidobacterium bifidum,endopeptidase Clp ATP-binding chain C,1
+Bifidobacterium bifidum,2-isopropylmalate synthase,1
+Bifidobacterium bifidum,zinc metalloprotease,1
+Bifidobacterium bifidum,DNA-directed RNA polymerase subunit beta,1
+Phascolarctobacterium faecium,ATP-dependent protease ATP-binding subunit ClpX,3
+Phascolarctobacterium faecium,endopeptidase Clp ATP-binding chain C,1
+Coprococcus comes,F0F1 ATP synthase subunit alpha,1
+Coprococcus comes,endopeptidase Clp ATP-binding chain C,1
+Coprococcus comes,recombinase A,1
+Coprococcus comes,protein disaggregation chaperone,1
+Alistipes onderdonkii,DNA-directed RNA polymerase subunit beta,1
+Alistipes onderdonkii,excinuclease ABC subunit A,1
+Alistipes onderdonkii,molecular chaperone DnaK,1
+Alistipes onderdonkii,catalase,1
+uncultured Dialister sp.,resolvase family site-specific recombinase,2
+uncultured Dialister sp.,"type I restriction-modification system, M subunit",2
+Bacteroides xylanisolvens,glutamate dehydrogenase,1
+Bacteroides xylanisolvens,protein disaggregation chaperone,1
+Bacteroides xylanisolvens,endopeptidase Clp ATP-binding chain C,1
+Bacteroides xylanisolvens,tryptophan synthase subunit beta,1
+Bacteroides caccae CAG:21,"GDP-mannose 4,6-dehydratase",3
+Bacteroides caccae CAG:21,malic enzyme,1
+Intestinimonas massiliensis,hypothetical protein,1
+Intestinimonas massiliensis,protein disaggregation chaperone,1
+Intestinimonas massiliensis,GTP-binding protein LepA,1
+Intestinimonas massiliensis,molecular chaperone DnaK,1
+uncultured Solobacterium sp.,CTP synthetase,1
+uncultured Solobacterium sp.,recombinase A,2
+uncultured Solobacterium sp.,UDP-glucose 6-dehydrogenase,1
+Firmicutes bacterium OM08-11AC,CTP synthetase,1
+Firmicutes bacterium OM08-11AC,elongation factor Tu,1
+Firmicutes bacterium OM08-11AC,F0F1 ATP synthase subunit alpha,1
+Firmicutes bacterium OM08-11AC,carbamoyl phosphate synthase large subunit,1
+Clostridiaceae bacterium AM27-36LB,microcompartment protein,1
+Clostridiaceae bacterium AM27-36LB,excinuclease ABC subunit A,2
+Clostridiaceae bacterium AM27-36LB,UDP-glucose 6-dehydrogenase,1
+Alistipes communis,molecular chaperone DnaK,1
+Alistipes communis,DNA-directed RNA polymerase subunit beta,1
+Alistipes communis,glutamate dehydrogenase,2
+Clostridiaceae bacterium OM08-6BH,ATP-dependent Clp protease proteolytic subunit,1
+Clostridiaceae bacterium OM08-6BH,microcompartment protein,2
+Acholeplasmatales bacterium,serine hydroxymethyltransferase,1
+Acholeplasmatales bacterium,molecular chaperone DnaK,1
+Acholeplasmatales bacterium,hypothetical protein lmo2206,1
+Bacteroides finegoldii CAG:203,"GDP-mannose 4,6-dehydratase",1
+Bacteroides finegoldii CAG:203,1-deoxy-D-xylulose-5-phosphate synthase,1
+Bacteroides finegoldii CAG:203,GDP-D-mannose dehydratase,1
+Tyzzerella nexilis,carbamoyl phosphate synthase large subunit,1
+Tyzzerella nexilis,DNA-directed RNA polymerase subunit beta,1
+Tyzzerella nexilis,UDP-N-acetylglucosamine-2-epimerase,1
+uncultured Flavonifractor sp.,serine hydroxymethyltransferase,1
+uncultured Flavonifractor sp.,DNA-directed RNA polymerase subunit beta,1
+uncultured Flavonifractor sp.,hypothetical protein lmo2206,1
+uncultured Rhodospirillaceae bacterium,excinuclease ABC subunit A,1
+uncultured Rhodospirillaceae bacterium,chaperonin GroEL,2
+[Clostridium] leptum,hypothetical protein,1
+[Clostridium] leptum,DNA-directed RNA polymerase subunit beta,2
+Eggerthella lenta,endopeptidase Clp ATP-binding chain C,1
+Eggerthella lenta,formate--tetrahydrofolate ligase,1
+Eggerthella lenta,excinuclease ABC subunit A,1
+Bifidobacterium longum,ATP-dependent protease ATP-binding subunit ClpX,1
+Bifidobacterium longum,excinuclease ABC subunit A,1
+Bifidobacterium longum,carbamoyl phosphate synthase large subunit,1
+Odoribacter splanchnicus,isopropylmalate isomerase large subunit,1
+Odoribacter splanchnicus,dihydroxy-acid dehydratase,2
+uncultured bacterium,protein disaggregation chaperone,2
+uncultured bacterium,endopeptidase Clp ATP-binding chain C,1
+Subdoligranulum variabile,UDP-glucose 6-dehydrogenase,1
+Subdoligranulum variabile,UDP-N-acetylglucosamine-2-epimerase,1
+Lachnospiraceae bacterium OF09-33XD,recombinase A,1
+Lachnospiraceae bacterium OF09-33XD,DNA-directed RNA polymerase subunit beta,1
+uncultured Dorea sp.,ATP-dependent protease ATP-binding subunit ClpX,1
+uncultured Dorea sp.,transcriptional repressor CodY,1
+Mediterraneibacter butyricigenes,CTP synthetase,1
+Mediterraneibacter butyricigenes,capsular polysaccharide synthesis enzyme Cap8D,1
+Romboutsia timonensis,elongation factor Tu,1
+Romboutsia timonensis,recombinase A,1
+Asaccharobacter celatus,carbamoyl phosphate synthase large subunit,1
+Asaccharobacter celatus,ATP-dependent protease ATP-binding subunit ClpX,1
+Bacteroides finegoldii,F0F1 ATP synthase subunit alpha,1
+Bacteroides finegoldii,tryptophan synthase subunit beta,1
+uncultured Alistipes sp.,alginate o-acetyltransferase AlgI,1
+uncultured Alistipes sp.,excinuclease ABC subunit A,1
+Methanobrevibacter smithii,excinuclease ABC subunit A,2
+Turicibacter sanguinis,carbamoyl phosphate synthase large subunit,1
+Turicibacter sanguinis,excinuclease ABC subunit A,1
+Odoribacter laneus,UDP-N-acetylglucosamine-2-epimerase,2
+Collinsella intestinalis,UDP-galactose-4-epimerase,1
+Collinsella intestinalis,elongation factor Tu,1
+Coprococcus catus,3-dehydroquinate dehydratase,1
+Coprococcus catus,hypothetical protein SP_0939,1
+Bacteroides cellulosilyticus CAG:158,B12-dependent methionine synthase,1
+Bacteroides cellulosilyticus CAG:158,excinuclease ABC subunit A,1
+Adlercreutzia equolifaciens,ATP-dependent protease ATP-binding subunit ClpX,2
+Ruminococcaceae bacterium D16,excinuclease ABC subunit A,1
+Ruminococcaceae bacterium D16,endopeptidase Clp ATP-binding chain C,1
+Negativibacillus massiliensis,elongation factor Tu,2
+Evtepia gabavorous,ATP-binding protein of ABC-transport system,1
+Evtepia gabavorous,GTP binding translational elongation factor Tu and G family protein,1
+Firmicutes bacterium CAG:83,hypothetical protein,1
+Firmicutes bacterium CAG:83,ATP-dependent protease ATP-binding subunit ClpX,1
+Clostridium phoceensis,ATP-dependent protease ATP-binding subunit ClpX,1
+Clostridium phoceensis,excinuclease ABC subunit A,1
+Firmicutes bacterium AM31-12AC,UDP-N-acetylglucosamine 2-epimerase,2
+Firmicutes bacterium CAG:94,DNA-directed RNA polymerase subunit beta,1
+Firmicutes bacterium CAG:94,DNA excision repair protein subunit A,1
+Firmicutes bacterium CAG:176,recombinase A,1
+Frisingicoccus caecimuris,N-acetylneuraminate lyase,1
+Alistipes timonensis,glutamate dehydrogenase,1
+Ruminococcaceae bacterium AM07-15,excinuclease ABC subunit A,1
+Barnesiella intestinihominis,F0F1 ATP synthase subunit alpha,1
+Blautia hansenii,formate--tetrahydrofolate ligase,1
+Dialister invisus,ATP-dependent protease ATP-binding subunit ClpX,1
+uncultured Eggerthella sp.,endopeptidase Clp ATP-binding chain C,1
+Anaerobutyricum soehngenii,molecular chaperone DnaK,1
+Coprococcus eutactus,excinuclease ABC subunit A,1
+Alistipes ihumii,thymidylate synthase,1
+Lachnospiraceae bacterium AM48-27BH,resolvase family site-specific recombinase,1
+[Bacteroides] pectinophilus,resolvase family site-specific recombinase,1
+Faecalicatena contorta,pyruvate kinase,1
+[Clostridium] lavalense,CTP synthetase,1
+Victivallales bacterium CCUG 44730,"Hsp60, 60K heat shock protein HtpB",1
+Alistipes finegoldii,excinuclease ABC subunit A,1
+Lachnospiraceae bacterium OM04-12BH,DNA-directed RNA polymerase subunit beta,1
+bacterium,GTP-binding protein LepA,1
+[Clostridium] bolteae,capsular polysaccharide biosynthesis protein Cps4J,1
+Bacteroides dorei CAG:222,formate--tetrahydrofolate ligase,1
+Longibaculum muris,UDP-glucose 6-dehydrogenase,1
+Holdemania filiformis,Listeria adhesion protein Lap,1
+Ruminococcaceae bacterium D5,resolvase family site-specific recombinase,1
+Merdibacter massiliensis,GMP synthase,1
+Clostridia bacterium UC5.1-1D4,hypothetical protein SP_0939,1
+Pseudoflavonifractor capillosus,endopeptidase Clp ATP-binding chain C,1
+Gordonibacter pamelaeae,DNA-directed RNA polymerase subunit beta,1

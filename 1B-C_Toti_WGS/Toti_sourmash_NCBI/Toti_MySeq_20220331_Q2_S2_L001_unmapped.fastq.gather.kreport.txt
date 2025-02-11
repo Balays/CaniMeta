@@ -1,0 +1,56 @@
+79.11	22087000	0	D		Bacteria
+20.89	5832999	5832999	U		unclassified
+58.97	16463999	0	P		Bacteroidetes
+11.23	3135000	0	P		Fusobacteria
+7.15	1995000	0	P		Firmicutes
+1.77	492999	0	P		Proteobacteria
+58.97	16463999	0	C		Bacteroidia
+11.23	3135000	0	C		Fusobacteriia
+4.97	1389000	0	C		Negativicutes
+1.64	458000	0	C		Clostridia
+1.29	359000	0	C		Betaproteobacteria
+0.48	134000	0	C		Epsilonproteobacteria
+0.29	82000	0	C		Erysipelotrichia
+58.97	16463999	0	O		Bacteroidales
+11.23	3135000	0	O		Fusobacteriales
+4.97	1389000	0	O		Selenomonadales
+1.64	458000	0	O		Eubacteriales
+1.29	359000	0	O		Burkholderiales
+0.48	134000	0	O		Campylobacterales
+0.29	82000	0	O		Erysipelotrichales
+58.97	16463999	0	F		Bacteroidaceae
+11.23	3135000	0	F		Fusobacteriaceae
+4.97	1389000	0	F		Selenomonadaceae
+1.29	359000	0	F		Sutterellaceae
+1.27	354000	0	F		Oscillospiraceae
+0.29	82000	0	F		Coprobacillaceae
+0.27	76000	0	F		Helicobacteraceae
+0.21	58000	0	F		Campylobacteraceae
+0.19	53000	0	F		Eubacteriaceae
+0.18	51000	0	F		Lachnospiraceae
+54.14	15117000	0	G		Phocaeicola
+10.78	3010000	0	G		Fusobacterium
+4.97	1389000	0	G		Megamonas
+4.82	1347000	0	G		Bacteroides
+1.29	359000	0	G		Sutterella
+1.27	354000	0	G		Faecalibacterium
+0.29	82000	0	G		Catenibacterium
+0.27	76000	0	G		Helicobacter
+0.21	58000	0	G		Campylobacter
+0.19	53000	0	G		Eubacterium
+0.18	51000	0	G		Mediterraneibacter
+54.14	15117000	15117000	S		Phocaeicola vulgatus
+9.56	2668000	2668000	S		uncultured Fusobacterium sp.
+4.82	1347000	1347000	S		uncultured Bacteroides sp.
+4.52	1262000	1262000	S		Megamonas sp. Calf98-2
+1.29	359000	359000	S		Sutterella wadsworthensis
+1.27	354000	354000	S		uncultured Faecalibacterium sp.
+1.22	342000	342000	S		Fusobacterium sp.
+0.45	124999	124999	S		Fusobacteriaceae bacterium
+0.45	127000	127000	S		Megamonas funiformis
+0.29	82000	82000	S		Catenibacterium sp. BIOML-A1
+0.27	76000	76000	S		Helicobacter canis
+0.24	66000	66000	S		Firmicutes bacterium
+0.21	58000	58000	S		Campylobacter upsaliensis
+0.19	53000	53000	S		uncultured Eubacterium sp.
+0.18	51000	51000	S		[Ruminococcus] gnavus

@@ -1,0 +1,242 @@
+# Constructed from biom file
+#OTU ID	DNA.profile
+k__Archaea;p__Euryarchaeota;g__Methanobrevibacter;s__Methanobrevibacter smithii	9367
+k__Bacteria;p__Actinobacteria;g__Actinomyces;s__unknown	475
+k__Bacteria;p__Actinobacteria;g__Adlercreutzia;s__Adlercreutzia equolifaciens	2997
+k__Bacteria;p__Actinobacteria;g__Asaccharobacter;s__Asaccharobacter celatus	5414
+k__Bacteria;p__Actinobacteria;g__Bifidobacterium;s__Bifidobacterium bifidum	6472
+k__Bacteria;p__Actinobacteria;g__Bifidobacterium;s__Bifidobacterium longum	5090
+k__Bacteria;p__Actinobacteria;g__Bifidobacterium;s__Bifidobacterium pseudocatenulatum	7709
+k__Bacteria;p__Actinobacteria;g__Collinsella;s__Collinsella intestinalis	1248
+k__Bacteria;p__Actinobacteria;g__Collinsella;s__uncultured Collinsella sp.	11350
+k__Bacteria;p__Actinobacteria;g__Collinsella;s__unknown	11777
+k__Bacteria;p__Actinobacteria;g__Cryptobacterium;s__unknown	380
+k__Bacteria;p__Actinobacteria;g__Eggerthella;s__Eggerthella lenta	1807
+k__Bacteria;p__Actinobacteria;g__Eggerthella;s__uncultured Eggerthella sp.	896
+k__Bacteria;p__Actinobacteria;g__Eggerthella;s__unknown	2086
+k__Bacteria;p__Actinobacteria;g__Enorma;s__Enorma massiliensis	1303
+k__Bacteria;p__Actinobacteria;g__Gordonibacter;s__Gordonibacter pamelaeae	922
+k__Bacteria;p__Actinobacteria;g__unknown;s__Coriobacteriia bacterium	811
+k__Bacteria;p__Actinobacteria;g__unknown;s__uncultured Coriobacteriaceae bacterium	1648
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes communis	5276
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes finegoldii	4311
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes ihumii	3618
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes indistinctus	410
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes onderdonkii	12921
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes putredinis	24238
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes shahii	28165
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__Alistipes timonensis	1093
+k__Bacteria;p__Bacteroidetes;g__Alistipes;s__uncultured Alistipes sp.	2808
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides caccae CAG:21	5755
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides cellulosilyticus	22536
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides cellulosilyticus CAG:158	13073
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides dorei	34022
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides dorei CAG:222	7721
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides eggerthii	690
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides faecis	20184
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides finegoldii	5304
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides finegoldii CAG:203	4136
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides fragilis	3482
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides massiliensis	23620
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides ovatus	46373
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides salyersiae	15236
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides stercoris	21817
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides thetaiotaomicron	28007
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides timonensis	4212
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides uniformis	80352
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides vulgatus	242070
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__Bacteroides xylanisolvens	12232
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__uncultured Bacteroides sp.	18776
+k__Bacteria;p__Bacteroidetes;g__Bacteroides;s__unknown	12062
+k__Bacteria;p__Bacteroidetes;g__Barnesiella;s__Barnesiella intestinihominis	8802
+k__Bacteria;p__Bacteroidetes;g__Butyricimonas;s__Butyricimonas faecalis	4450
+k__Bacteria;p__Bacteroidetes;g__Butyricimonas;s__Butyricimonas virosa	1924
+k__Bacteria;p__Bacteroidetes;g__Gabonia;s__Gabonia massiliensis	378
+k__Bacteria;p__Bacteroidetes;g__Odoribacter;s__Odoribacter laneus	3236
+k__Bacteria;p__Bacteroidetes;g__Odoribacter;s__Odoribacter splanchnicus	11540
+k__Bacteria;p__Bacteroidetes;g__Odoribacter;s__uncultured Odoribacter sp.	298
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides distasonis	40524
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides goldsteinii	2924
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides johnsonii	7880
+k__Bacteria;p__Bacteroidetes;g__Parabacteroides;s__Parabacteroides merdae	7561
+k__Bacteria;p__Bacteroidetes;g__Tidjanibacter;s__Tidjanibacter massiliensis	840
+k__Bacteria;p__Candidatus Melainabacteria;g__unknown;s__Candidatus Gastranaerophilales bacterium	12465
+k__Bacteria;p__Firmicutes;g__Agathobaculum;s__Agathobaculum butyriciproducens	14447
+k__Bacteria;p__Firmicutes;g__Anaerobutyricum;s__Anaerobutyricum hallii	17174
+k__Bacteria;p__Firmicutes;g__Anaerobutyricum;s__Anaerobutyricum soehngenii	3472
+k__Bacteria;p__Firmicutes;g__Anaeromassilibacillus;s__unknown	5813
+k__Bacteria;p__Firmicutes;g__Anaerostipes;s__Anaerostipes hadrus	34723
+k__Bacteria;p__Firmicutes;g__Anaerotignum;s__Anaerotignum faecicola	2452
+k__Bacteria;p__Firmicutes;g__Anaerotruncus;s__Anaerotruncus colihominis	886
+k__Bacteria;p__Firmicutes;g__Anaerotruncus;s__Anaerotruncus massiliensis	1879
+k__Bacteria;p__Firmicutes;g__Bittarella;s__Bittarella massiliensis	725
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia hansenii	858
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia massiliensis	16463
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia obeum	63571
+k__Bacteria;p__Firmicutes;g__Blautia;s__Blautia wexlerae	53536
+k__Bacteria;p__Firmicutes;g__Blautia;s__[Ruminococcus] gnavus	8511
+k__Bacteria;p__Firmicutes;g__Blautia;s__[Ruminococcus] torques	9810
+k__Bacteria;p__Firmicutes;g__Blautia;s__uncultured Blautia sp.	22148
+k__Bacteria;p__Firmicutes;g__Blautia;s__unknown	33076
+k__Bacteria;p__Firmicutes;g__Butyricicoccus;s__unknown	686
+k__Bacteria;p__Firmicutes;g__Candidatus Cibiobacter;s__Candidatus Cibiobacter qucibialis	12766
+k__Bacteria;p__Firmicutes;g__Candidatus Stoquefichus;s__unknown	357
+k__Bacteria;p__Firmicutes;g__Catabacter;s__unknown	765
+k__Bacteria;p__Firmicutes;g__Clostridium;s__Clostridium disporicum	795
+k__Bacteria;p__Firmicutes;g__Clostridium;s__Clostridium phoceensis	3232
+k__Bacteria;p__Firmicutes;g__Clostridium;s__Clostridium sporogenes	6636
+k__Bacteria;p__Firmicutes;g__Clostridium;s__uncultured Clostridium sp.	32203
+k__Bacteria;p__Firmicutes;g__Clostridium;s__unknown	124900
+k__Bacteria;p__Firmicutes;g__Coprococcus;s__Coprococcus catus	4305
+k__Bacteria;p__Firmicutes;g__Coprococcus;s__Coprococcus comes	13133
+k__Bacteria;p__Firmicutes;g__Coprococcus;s__Coprococcus eutactus	3657
+k__Bacteria;p__Firmicutes;g__Coprococcus;s__Coprococcus phoceensis	6515
+k__Bacteria;p__Firmicutes;g__Dialister;s__Dialister invisus	1268
+k__Bacteria;p__Firmicutes;g__Dialister;s__uncultured Dialister sp.	3547
+k__Bacteria;p__Firmicutes;g__Dorea;s__Dorea formicigenerans	11039
+k__Bacteria;p__Firmicutes;g__Dorea;s__Dorea longicatena	25457
+k__Bacteria;p__Firmicutes;g__Dorea;s__uncultured Dorea sp.	1162
+k__Bacteria;p__Firmicutes;g__Dorea;s__unknown	3565
+k__Bacteria;p__Firmicutes;g__Dysosmobacter;s__Dysosmobacter welbionis	7559
+k__Bacteria;p__Firmicutes;g__Eisenbergiella;s__Eisenbergiella massiliensis	3558
+k__Bacteria;p__Firmicutes;g__Eisenbergiella;s__Eisenbergiella tayi	1177
+k__Bacteria;p__Firmicutes;g__Erysipelatoclostridium;s__[Clostridium] innocuum	468
+k__Bacteria;p__Firmicutes;g__Erysipelatoclostridium;s__[Clostridium] spiroforme	455
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__Eubacterium ramulus	9340
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__[Eubacterium] eligens	39880
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__uncultured Eubacterium sp.	21956
+k__Bacteria;p__Firmicutes;g__Eubacterium;s__unknown	16730
+k__Bacteria;p__Firmicutes;g__Evtepia;s__Evtepia gabavorous	2330
+k__Bacteria;p__Firmicutes;g__Faecalibacterium;s__Faecalibacterium prausnitzii	211483
+k__Bacteria;p__Firmicutes;g__Faecalibacterium;s__uncultured Faecalibacterium sp.	61120
+k__Bacteria;p__Firmicutes;g__Faecalicatena;s__Faecalicatena contorta	744
+k__Bacteria;p__Firmicutes;g__Flavonifractor;s__uncultured Flavonifractor sp.	1807
+k__Bacteria;p__Firmicutes;g__Flavonifractor;s__unknown	627
+k__Bacteria;p__Firmicutes;g__Frisingicoccus;s__Frisingicoccus caecimuris	1000
+k__Bacteria;p__Firmicutes;g__Fusicatenibacter;s__Fusicatenibacter saccharivorans	90044
+k__Bacteria;p__Firmicutes;g__Gemmiger;s__Gemmiger formicilis	24380
+k__Bacteria;p__Firmicutes;g__Holdemania;s__Holdemania filiformis	1653
+k__Bacteria;p__Firmicutes;g__Hungatella;s__Hungatella hathewayi	400
+k__Bacteria;p__Firmicutes;g__Intestinimonas;s__Intestinimonas butyriciproducens	637
+k__Bacteria;p__Firmicutes;g__Intestinimonas;s__Intestinimonas massiliensis	1957
+k__Bacteria;p__Firmicutes;g__Lachnobacterium;s__uncultured Lachnobacterium sp.	22255
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] bolteae	1578
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] citroniae	503
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] clostridioforme	564
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] lavalense	1197
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__[Clostridium] symbiosum	1024
+k__Bacteria;p__Firmicutes;g__Lachnoclostridium;s__unknown	10222
+k__Bacteria;p__Firmicutes;g__Lachnotalea;s__unknown	700
+k__Bacteria;p__Firmicutes;g__Lactobacillus;s__Lactobacillus paracasei	236
+k__Bacteria;p__Firmicutes;g__Lactobacillus;s__Lactobacillus rogosae	3544
+k__Bacteria;p__Firmicutes;g__Lactococcus;s__Lactococcus lactis	757
+k__Bacteria;p__Firmicutes;g__Lawsonibacter;s__Lawsonibacter asaccharolyticus	5532
+k__Bacteria;p__Firmicutes;g__Longibaculum;s__Longibaculum muris	352
+k__Bacteria;p__Firmicutes;g__Marvinbryantia;s__Marvinbryantia formatexigens	558
+k__Bacteria;p__Firmicutes;g__Marvinbryantia;s__uncultured Marvinbryantia sp.	4005
+k__Bacteria;p__Firmicutes;g__Massilioclostridium;s__Massilioclostridium coli	421
+k__Bacteria;p__Firmicutes;g__Mediterraneibacter;s__Mediterraneibacter butyricigenes	1325
+k__Bacteria;p__Firmicutes;g__Mediterraneibacter;s__Mediterraneibacter massiliensis	570
+k__Bacteria;p__Firmicutes;g__Megamonas;s__Megamonas funiformis	17917
+k__Bacteria;p__Firmicutes;g__Megamonas;s__Megamonas rupellensis	3700
+k__Bacteria;p__Firmicutes;g__Merdibacter;s__Merdibacter massiliensis	752
+k__Bacteria;p__Firmicutes;g__Monoglobus;s__Monoglobus pectinilyticus	4819
+k__Bacteria;p__Firmicutes;g__Mordavella;s__unknown	598
+k__Bacteria;p__Firmicutes;g__Negativibacillus;s__Negativibacillus massiliensis	2466
+k__Bacteria;p__Firmicutes;g__Neglecta;s__Neglecta timonensis	2328
+k__Bacteria;p__Firmicutes;g__Oscillibacter;s__Oscillibacter sp.	9571
+k__Bacteria;p__Firmicutes;g__Oscillibacter;s__uncultured Oscillibacter sp.	10984
+k__Bacteria;p__Firmicutes;g__Oscillibacter;s__unknown	23750
+k__Bacteria;p__Firmicutes;g__Phascolarctobacterium;s__Phascolarctobacterium faecium	4278
+k__Bacteria;p__Firmicutes;g__Phascolarctobacterium;s__Phascolarctobacterium succinatutens	5353
+k__Bacteria;p__Firmicutes;g__Phocea;s__Phocea massiliensis	350
+k__Bacteria;p__Firmicutes;g__Pseudoflavonifractor;s__Pseudoflavonifractor capillosus	1528
+k__Bacteria;p__Firmicutes;g__Pseudoflavonifractor;s__unknown	1226
+k__Bacteria;p__Firmicutes;g__Pseudoruminoccoccus;s__Pseudoruminoccoccus massiliensis	20679
+k__Bacteria;p__Firmicutes;g__Romboutsia;s__Romboutsia timonensis	2105
+k__Bacteria;p__Firmicutes;g__Roseburia;s__Roseburia faecis	39511
+k__Bacteria;p__Firmicutes;g__Roseburia;s__Roseburia hominis	17599
+k__Bacteria;p__Firmicutes;g__Roseburia;s__Roseburia intestinalis	22131
+k__Bacteria;p__Firmicutes;g__Roseburia;s__Roseburia inulinivorans	5350
+k__Bacteria;p__Firmicutes;g__Roseburia;s__uncultured Roseburia sp.	16830
+k__Bacteria;p__Firmicutes;g__Roseburia;s__unknown	14542
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__Ruminococcus bicirculans	34392
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__Ruminococcus bromii	105369
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__Ruminococcus faecis	13966
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__Ruminococcus lactaris	2228
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__uncultured Ruminococcus sp.	58306
+k__Bacteria;p__Firmicutes;g__Ruminococcus;s__unknown	98254
+k__Bacteria;p__Firmicutes;g__Ruthenibacterium;s__Ruthenibacterium lactatiformans	6124
+k__Bacteria;p__Firmicutes;g__Solobacterium;s__uncultured Solobacterium sp.	3409
+k__Bacteria;p__Firmicutes;g__Staphylococcus;s__unknown	255
+k__Bacteria;p__Firmicutes;g__Streptococcus;s__Streptococcus thermophilus	1239
+k__Bacteria;p__Firmicutes;g__Subdoligranulum;s__Subdoligranulum variabile	2138
+k__Bacteria;p__Firmicutes;g__Subdoligranulum;s__unknown	86176
+k__Bacteria;p__Firmicutes;g__Turicibacter;s__Turicibacter sanguinis	550
+k__Bacteria;p__Firmicutes;g__Tyzzerella;s__Tyzzerella nexilis	6448
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridia bacterium UC5.1-1D4	1049
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridia bacterium UC5.1-1E11	429
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiaceae bacterium AM27-36LB	3445
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiaceae bacterium OM08-6BH	3168
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium	26871
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium CCNA10	3628
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium UBA1390	671
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium UBA4696	4039
+k__Bacteria;p__Firmicutes;g__unknown;s__Clostridiales bacterium VE202-03	4937
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium AF25-13AC	44890
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium AM31-12AC	1034
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium AM55-24TS	31791
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:103	2650
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:124	23326
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:170	996
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:176	2128
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:194	24994
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:24053_14	946
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:424	654
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:83	6676
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:94	855
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium CAG:95	539
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium OM08-11AC	4585
+k__Bacteria;p__Firmicutes;g__unknown;s__Firmicutes bacterium TM09-10	13231
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium	10585
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium AM48-27BH	6352
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium GAM79	15775
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium OF09-33XD	673
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium OM04-12BH	2999
+k__Bacteria;p__Firmicutes;g__unknown;s__Lachnospiraceae bacterium UBA7598	1234
+k__Bacteria;p__Firmicutes;g__unknown;s__Ruminococcaceae bacterium	14641
+k__Bacteria;p__Firmicutes;g__unknown;s__Ruminococcaceae bacterium AM07-15	1428
+k__Bacteria;p__Firmicutes;g__unknown;s__Ruminococcaceae bacterium D16	1238
+k__Bacteria;p__Firmicutes;g__unknown;s__Ruminococcaceae bacterium D5	358
+k__Bacteria;p__Firmicutes;g__unknown;s__[Bacteroides] pectinophilus	859
+k__Bacteria;p__Firmicutes;g__unknown;s__[Clostridium] leptum	2755
+k__Bacteria;p__Firmicutes;g__unknown;s__[Eubacterium] rectale	71038
+k__Bacteria;p__Firmicutes;g__unknown;s__[Eubacterium] siraeum	145170
+k__Bacteria;p__Firmicutes;g__unknown;s__uncultured Clostridiales bacterium	110496
+k__Bacteria;p__Firmicutes;g__unknown;s__uncultured Erysipelotrichaceae bacterium	5906
+k__Bacteria;p__Firmicutes;g__unknown;s__uncultured Lachnospiraceae bacterium	21183
+k__Bacteria;p__Firmicutes;g__unknown;s__uncultured Ruminococcaceae bacterium	28098
+k__Bacteria;p__Lentisphaerae;g__unknown;s__Lentisphaeria bacterium	925
+k__Bacteria;p__Lentisphaerae;g__unknown;s__Victivallales bacterium CCUG 44730	996
+k__Bacteria;p__Proteobacteria;g__Acetobacter;s__unknown	5111
+k__Bacteria;p__Proteobacteria;g__Acinetobacter;s__unknown	1982
+k__Bacteria;p__Proteobacteria;g__Bilophila;s__Bilophila wadsworthia	4423
+k__Bacteria;p__Proteobacteria;g__Desulfovibrio;s__Desulfovibrio desulfuricans	706
+k__Bacteria;p__Proteobacteria;g__Desulfovibrio;s__Desulfovibrio fairfieldensis	424
+k__Bacteria;p__Proteobacteria;g__Desulfovibrio;s__uncultured Desulfovibrio sp.	923
+k__Bacteria;p__Proteobacteria;g__Escherichia;s__Escherichia coli	1872
+k__Bacteria;p__Proteobacteria;g__Klebsiella;s__Klebsiella oxytoca	717
+k__Bacteria;p__Proteobacteria;g__Oxalobacter;s__Oxalobacter formigenes	448
+k__Bacteria;p__Proteobacteria;g__Parasutterella;s__Parasutterella excrementihominis	4215
+k__Bacteria;p__Proteobacteria;g__Sutterella;s__Sutterella wadsworthensis	4285
+k__Bacteria;p__Proteobacteria;g__Sutterella;s__uncultured Sutterella sp.	4557
+k__Bacteria;p__Proteobacteria;g__unknown;s__Proteobacteria bacterium CAG:495	755
+k__Bacteria;p__Proteobacteria;g__unknown;s__uncultured Rhodospirillaceae bacterium	1206
+k__Bacteria;p__Tenericutes;g__Mycoplasma;s__unknown	580
+k__Bacteria;p__Tenericutes;g__unknown;s__Acholeplasmatales bacterium	3913
+k__Bacteria;p__Tenericutes;g__unknown;s__uncultured Mollicutes bacterium	506
+k__Bacteria;p__Tenericutes;g__unknown;s__uncultured Tenericutes bacterium	441
+k__Bacteria;p__Verrucomicrobia;g__Akkermansia;s__Akkermansia muciniphila	37651
+k__Bacteria;p__unknown;g__unknown;s__bacterium	2974
+k__Bacteria;p__unknown;g__unknown;s__bacterium LF-3	6966
+k__Bacteria;p__unknown;g__unknown;s__uncultured bacterium	4004

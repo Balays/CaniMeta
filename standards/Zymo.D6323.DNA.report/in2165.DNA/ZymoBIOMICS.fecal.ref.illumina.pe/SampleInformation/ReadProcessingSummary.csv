@@ -1,0 +1,2 @@
+internal_id,sample_lable,raw_reads,paired_end,Reads Surviving(%),Reads Dropped(%)
+in2165_39,DNA.profile,52009282,PE,99.30000000000001,0.7

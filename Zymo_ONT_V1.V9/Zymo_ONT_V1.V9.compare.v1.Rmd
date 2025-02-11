@@ -1,0 +1,4191 @@
+---
+title: "Comparison of Results from Zymo D6300; D6331 and D6323 FR : V1-V9 EMU on EMU
+  database"
+author: "Balázs Kakuk"
+date: "2025-01-09"
+output:
+  pdf_document:
+    toc: true
+  html_document:
+    code_folding: hide
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+---
+
+```{css, echo=FALSE}
+    body .main-container {
+      max-width: 90% !important;
+      width: 90% !important;
+    }
+    body {
+      max-width: 90% !important;
+      margin-left: auto;
+      margin-right: auto;
+    }
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.align = 'center', fig.height = 10, fig.width = 30, warning = F, message = F, error = F)
+library(tidyverse)
+library(ggpubr)
+library(factoextra)
+library(FactoMineR)
+library(ggrepel)
+library(phyloseq, quietly = T)
+library(DESeq2)
+library(data.table)
+library(ggsci)
+library(hrbrthemes)
+library(ggh4x)
+library(RColorBrewer)
+library(stringr); library(stringi)
+library("ape")
+library("ggtree")
+library(Biostrings)
+library(dplyr)
+library(UpSetR)
+library(ComplexHeatmap)
+library(genefilter)
+library(viridis)
+library(knitr)
+library(Maaslin2)
+
+
+## Own functions
+misc.dir    <- 'C:/GitHub/Rlyeh/R'
+minitax.dir <- 'C:/GitHub/minitax/R'
+
+if (.Platform$OS.type!="windows") {
+  
+  misc.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', misc.dir))),
+                      stri_replace_first_regex(misc.dir, '.*:\\/', '')
+  )
+  
+  minitax.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', minitax.dir))),
+                         stri_replace_first_regex(minitax.dir, '.*:\\/', '')
+  )
+  
+}
+
+for(f in list.files(misc.dir,    '*.R', full.names = T)) { try({message(f); source(f)}) }
+for(f in list.files(minitax.dir, '*.R', full.names = T)) { try({message(f); source(f)}) }
+
+bam.flags           <- fread(paste0(misc.dir, '/bam.flags.tsv'))
+gff_compare_classes <- fread(paste0(misc.dir, '/gff_compare.txt'))
+nproc <- 32
+
+
+### General settings
+
+filt.version <- ''
+filtering    <- ''
+writetables  <- T
+save.Figs    <- F
+res.dir      <- 'Zymo_ONT_V1.V9_EMU_EMUdb_compare'; dir.create(res.dir)
+#platforms <- c('illumina', 'PacBIO')
+
+## color palette
+alpha   <- 0.9
+pal.man <- c(brewer.pal(7, 'Set1'), brewer.pal(8, 'Accent')[c(1,2,6)], brewer.pal(8, 'Set2')[c(1,3,5,6,7)], brewer.pal(8, 'Dark2') )
+pal.man <- c(colorvec[c(8,32,12:14,17,24,1:2,4,7,5,6,3,10,11,27:28,9,29)], 'grey', 'black')
+pal.man <- alpha(c(pal.man, pal.man), alpha)
+
+pal.gigasci <- c(
+  #"giga_green"  = 
+    "#71BF44",
+  #"medium_gray" = 
+   "#7E7E7E",
+  #"deep_green"  = 
+   "#005B2A",
+  #"dark_gray"   = 
+   "#333333",
+  #"light_green" = 
+  "#9AD07C"
+)
+
+## taxonomic ranks
+ranks <- c("superkingdom", "phylum", "class", "order", "family", "genus", "species")
+
+### minitax settings
+## Database
+db <- 'EMUdb'
+db.dir <- '../databases/EMUdb'
+## Genome Size normalization?
+NormToGenomeSize <- F
+NormFunction     <- 'mean'
+## MAPQ filtering ?
+mapq.filt <- NA #  1:59 # 
+## Filtering samples
+filter.samples.pattern <- 'LCA|Undetermined|SpeciesEstimate|BestAln'  ### filter out LCA method
+
+
+## Exclude unclassified reads?
+exclude.unclass <- T
+
+## Omit very low abundance samples
+abund.threshold <- 10
+
+## Other settings
+consider.euk <- T
+count_multiplier <- 100000
+count_colname    <- c('Zymo_D6323')
+
+
+### Gold Standard Settings
+cami.lineage <- 'db'
+add.GS.taxa <- F ## add all GS taxa to the barplots and the correlation plots?
+zymo.GS <- read_delim('../standards/Zymo.D6323.DNA.report/zymo_D6323_specdata.tsv')
+GS_name <- 'Zymo_6323_WGS_kraken2'
+GS_nr   <- 1
+GS_version <- 'D6323'
+just_GS <- T
+vars <- c('platform') # 'GS_name' ('project') # c('DNA_isolation_method', 'db', 'workflow', 'method', 
+#vars <- c('Vregion', 'platform', 'db', 'workflow', 'method','DNA_isolation_method') # 'GS_version'
+glom_spec <- T
+
+## Gram strain info
+phyla.gram <- read.delim('../databases/phyla.gram.tsv')[,1:2]
+colnames(phyla.gram)[2] <- 'Gram.Stain'
+
+
+## Exclude Bifidobacteria?
+exclude.Bifido <- F
+if(exclude.Bifido) {
+  zymo.GS <- zymo.GS[!grepl('Bifodobac', zymo.GS[,1]) & !grepl('Bifodobac', zymo.GS[,2]), ]
+}
+
+## Keep and plot GS taxa only?
+keep.GS.taxa.only <- F
+
+mark.GS.Taxa <- F
+merge.non.GS.Taxa <- F
+
+
+## calculate correlation from top20 or from all taxa?
+correl <- 'topN'
+
+## Fix taxa
+crop_taxa <- NULL # 'Veillonella rogosae|Prevotella corporis'
+
+genera_to_glom <- data.frame(glom= c('Veillonella', 'Faecalibacterium', 'Prevotella', 'Roseburia'),
+                           to  = c('Veillonella rogosae','Faecalibacterium prausnitzii', 'Prevotella corporis', 'Roseburia hominis')) ## NULL
+species_to_glom <- data.frame(glom= c('Bacteroides fragilis', 'Bacteroides fragilis CAG:47', 'Bacteroides fragilis_A'),
+                           to  = c('Bacteroides fragilis')) ## NULL
+
+
+
+abundance_threshold <- 1
+filter_func <- filterfun(function(x) sum(x) > abundance_threshold)
+
+```
+
+
+
+# Notes
+
+- Unclassified reads *were* excluded
+- Taxa with total reads number of 10 or lower were excluded 
+- Eukaryotes *were* excluded from the analyis
+
+```{r, Database import}
+# altough *Lactobacillus fermentum* was changed to *Limosilactobacillus fermentum* 
+  
+#### Database import ####
+
+if (db == 'proGcontigs_2') {
+  prog.db <- fread(paste0(db.dir, '/proGenomes2.1_specI_lineageNCBI.tab'), header = F)
+  colnames(prog.db) <- c("genome", "superkingdom", "phylum", "class", "order", "family", "genus", "species")
+  prog.db <- data.frame(taxid=gsub('\\..*', '', prog.db$genome  ), prog.db)
+  ranks <- c("superkingdom", "phylum", "class", "order", "family", "genus", "species")
+  prog.db$taxid <- as.integer(prog.db$taxid)
+  
+  prog.db[,ranks]  <- as.data.frame(apply(prog.db[,ranks], 2, function(x) str_replace(as.character(unlist(x)),  pattern = "^\\d+\\s", replacement = "")))
+  
+  prog.gt <- gather(prog.db, rank, taxon, -c(1:2))
+  prog.db.spec.uni <- unique.data.frame(prog.db[,ranks])
+  
+  db.data <- prog.db
+  db.name <- db
+  
+  prog.db.uni     <- db.data %>% distinct(across(all_of(c('taxid', ranks)))) #unique.data.frame(db.data[,c('taxid', ranks)])
+  db.uni.data     <- prog.db.uni
+
+   if (NormToGenomeSize) {
+    genome_sizes <- as.data.frame(fread(paste0(db.dir, '/proGenomes2.1_specI_lineageNCBI.genomesize.tab')))
+    genome_sizes[genome_sizes == ''] <- NA
+    genome_sizes[,ranks]  <- 
+      as.data.frame(apply(genome_sizes[,ranks], 2, 
+                          function(x) str_replace(as.character(unlist(x)),  pattern = "^\\d+\\s", replacement = "")))
+  }
+  
+  db.uni.ranks <- unique.data.frame(db.uni.data[,ranks])
+  
+  #### Fix Lactobacillus in proGenomes_2
+  db.uni.ranks$genus  [db.uni.ranks$species ==  'Lactobacillus fermentum' ] <- 'Limosilactobacillus'
+  db.uni.ranks$species[db.uni.ranks$species ==  'Lactobacillus fermentum' ] <- 'Limosilactobacillus fermentum'
+
+} else if (db=="all_NCBI_genomes") {
+  
+  #db.data     <- fread(paste0(db.dir, "/NCBI.db.tsv"), header = T)
+  db.uni.data <- fread(paste0(db.dir, "/NCBI.db.uni.tsv"), header = T)
+  db.uni.data <- unique(db.uni.data[,..ranks])
+  db.uni.data[db.uni.data == ''] <- NA
+
+  if (NormToGenomeSize) {
+    genome_sizes <- as.data.frame(fread(paste0(db.dir, '/NCBI.db.genomesize.tsv')))
+    genome_sizes[genome_sizes == ''] <- NA
+  }
+  
+  
+  #### Fix Akkermansia municiphila
+  db.uni.data <- data.table(plyr::rbind.fill(db.uni.data,
+    setNames(data.frame(
+      rbind(c('Bacteria', 'Verrucomicrobia', 'Verrucomicrobiae', 'Verrucomicrobiales', 'Akkermansiaceae', 'Akkermansia', 'Akkermansia muciniphila'))),
+             ranks)
+  ))
+} else if (db == 'EMUdb') {
+
+  ranks <- c("superkingdom", "phylum", "class", "order", "family", "genus", "species")
+  
+  try({ db.uni.data <- fread(file.path(db.dir, 'db.uni.data.tsv')) })
+  if(!exists('db.uni.data')) {
+    emu.db    <- read.delim(paste0(db.dir, '/taxonomy.tsv'))
+    colnames(emu.db)[1] <- 'taxid'
+    emu.db <- emu.db[,c('taxid', ranks)]
+    emu.db[emu.db == ''] <- NA
+  
+    emu.fasta <- seqinr::read.fasta(paste0(db.dir, '/species_taxid.fasta'), whole.header = T)
+    emu.fasta <- data.frame(names=names(emu.fasta), taxid=gsub(':.*', '', names(emu.fasta)))
+    emu.fasta$seq_id <- gsub(' \\[.*', '', emu.fasta$names)
+  
+    emu.idx    <- merge(emu.fasta, emu.db, by='taxid')
+  
+    db.data <- data.table(emu.db)
+    db.name <- db #'EMUdb'
+    db.uni.data <- db.data
+  }
+
+}
+
+
+```
+
+
+## Import Exp data
+
+### MCM D6300
+```{r}
+load('MCM_D6300_EMU_EMUdb.RData')
+
+ps.all   <- prune_samples(grep('Zymo_', sample_names(ps.all), value = T, invert = T), ps.all)
+
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+
+ps.d6300 <- ps.all
+
+```
+
+### MCM D6331
+```{r}
+load('MCM_D6331_EMU_EMUdb.RData')
+
+ps.all   <- prune_samples(grep('Zymo_', sample_names(ps.all), value = T, invert = T), ps.all)
+
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+
+
+ps.d6331 <- ps.all
+
+```
+
+### FR D6323
+```{r}
+load('FR_D6323_EMU_EMUdb.RData')
+
+ps.all   <- prune_samples(grep('Zymo_', sample_names(ps.all), value = T, invert = T), ps.all)
+
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+
+
+ps.d6323 <- ps.all
+
+```
+
+### *Canis lupus*
+```{r}
+load('Clupus_EMU_EMUdb.RData')
+
+ps.all   <- prune_samples(grep('Zymo_', sample_names(ps.all), value = T, invert = T), ps.all)
+
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+
+ps.all@sam_data$source <- 'Canis_lupus'
+
+ps.clupus <- ps.all
+
+```
+
+### *Homo sapiens*
+```{r}
+load('Hsapiens_EMU_EMUdb.RData')
+
+ps.all   <- prune_samples(grep('Zymo_', sample_names(ps.all), value = T, invert = T), ps.all)
+
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+
+ps.all@sam_data$source <- 'Homo_sapiens'
+
+ps.hsapiens <- ps.all
+
+```
+
+### Merge
+```{r}
+
+ps.merged <- merge_phyloseq(ps.d6300,
+                            ps.d6331,
+                            ps.d6323,
+                            ps.clupus,
+                            ps.hsapiens)
+
+
+ps.all <- ps.merged
+
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+
+
+```
+
+
+
+## Filter Exp data
+```{r, eval=F}
+## Filter for samples
+samples.to.keep <- c(
+  sample_names(ps.all)[
+    grepl('FR',   metadata$source)]
+)
+
+ps.all <- prune_samples(samples.to.keep, ps.all)
+
+##
+ps.all@sam_data$sample <- sample_names(ps.all)  
+
+
+
+## Filter out taxa that no longer have an abundance
+abundance_threshold <- 1
+filter_func <- filterfun(function(x) sum(x) > abundance_threshold)
+ps.all <- filter_taxa(ps.all, filter_func, prune = TRUE)
+
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+
+```
+
+
+## Filter samples based on total read count
+```{r}
+samples.to.keep <- colnames(
+  as.data.frame(otutab[,colSums(otutab) >= abund.threshold])
+  )
+
+message("The following samples were filtered out, because they had a read count less than ", abund.threshold, ": \n", 
+        paste0(setdiff(sample_names(ps.all),  samples.to.keep), collapse = '\n'))
+
+ps.all <- prune_samples(samples.to.keep, ps.all)
+
+abundance_threshold <- 1
+filter_func <- filterfun(function(x) sum(x) > abundance_threshold)
+ps.all <- filter_taxa(ps.all, filter_func, prune = TRUE)
+
+
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+
+
+```
+
+
+## Fix sample names
+```{r, eval=F}
+setDT(metadata)
+metadata[,group        := .GRP, by=.(source, primer, Vregion, platform, workflow, db)] 
+metadata[,sample_nr    := seq_along(sample), by=.(group)]
+metadata[,sample_name  := paste0(primer, sample_nr)]
+
+metadata <- data.frame(metadata, row.names = metadata$sample)
+
+ps.all@sam_data <- sample_data(metadata)
+
+
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+
+```
+
+
+## Add lineage and metadata to Gold Standard Data
+
+*Limosilactobacillus fermentum* in the theoretical composition was changed to *Lactobacillus fermentum*
+```{r, Import Theoretical Composition, eval=F}
+###
+#zymo.GS[,count_colname] <- as.numeric(zymo.GS[,count_colname])
+
+colnames(zymo.GS)[1] <- 'species'
+zymo.GS <- zymo.GS[,c('species', count_colname)]
+colnames(zymo.GS)[2] <- 'count'
+
+zymo.GS <- zymo.GS[zymo.GS$count > 0, ]
+
+zymo.GS$count <- zymo.GS$count * count_multiplier
+
+## summarise on species-level (mainly because of Eschericia strains)
+if(glom_spec) {
+  setDT(zymo.GS)
+  zymo.GS$strain  <- zymo.GS$species
+  zymo.GS$species <- gsub(' \\(.*', '', zymo.GS$species)
+  cols_by         <- c('species') 
+  zymo.GS[,count := sum(count), by=cols_by]
+  zymo.GS[,strain := NULL]
+  zymo.GS <- unique(zymo.GS)
+}
+
+
+if(!is.null(crop_taxa)) {
+  zymo.GS <- zymo.GS[grep(crop_taxa, zymo.GS$species, invert = T),]
+}
+
+zymo.GS <- as.data.frame(merge(db.uni.data,  zymo.GS, by='species', all.y=T))
+if(!consider.euk) { ## will be done later
+  zymo.GS <- zymo.GS[
+    #zymo.GS$superkingdom != 'Eukaryota'
+    #grep('Saccharomyces|Candida|Cryptococcus', zymo.GS$species, invert = T)
+    ,]
+}
+
+mtgs <- unique.data.frame(as.data.frame(metadata[,vars])); colnames(mtgs) <- vars
+mtgs$sample_name <- GS_name
+mtgs <- unite(mtgs, 'sample', c('sample_name', vars), remove = F)
+rownames(mtgs) <- mtgs$sample
+
+taxtab.gs <- zymo.GS[,ranks]
+rownames(taxtab.gs) <- taxtab.gs[,'species']
+
+otutab.gs <- setNames(data.frame(replicate(length(mtgs$sample), zymo.GS$count, simplify = FALSE), row.names = rownames(taxtab.gs)), mtgs$sample)
+
+mtgs$GS_name   <- GS_name
+mtgs$sample_nr <- GS_name
+
+#mtgs <- merge(metadata.gs, mtgs, by=c(0,1,2,3))[,-1]
+#rownames(mtgs) <- mtgs$sample
+
+
+ps.gs <- phyloseq(otu_table(as.matrix(otutab.gs), taxa_are_rows = T), 
+                   tax_table(as.matrix(taxtab.gs)), 
+                   sample_data(mtgs))
+```
+
+
+```{r, Merge Theoretical Compositions, eval=F}
+
+ps.gsa <- ps.gs
+
+```
+
+
+```{r, eval=F}
+### Add Gold Standard version to all sample names
+sample_names(ps.all) <- paste0(sample_names(ps.all), '_', GS_version)
+ps.all@sam_data$GS_version <- GS_version
+
+### Fix sample names
+ps.all@sam_data$sample <- sample_names(ps.all)
+
+```
+
+
+
+```{r, NA to unclassified}
+
+#taxtab[is.na(taxtab)] <- 'unclassified'
+
+#ps.all   <- phyloseq(otu_table(as.matrix(otutab), taxa_are_rows = T),
+#                     tax_table(as.matrix(taxtab)),
+#                     sample_data(metadata))
+
+ps.all@tax_table[is.na(ps.all@tax_table)] <- 'unassigned'
+
+otutab   <- data.frame(otu_table  (ps.all))
+taxtab   <- data.frame(tax_table  (ps.all))
+metadata <- data.frame(sample_data(ps.all))
+```
+
+
+
+```{r, Exclude unclassified reads}
+
+if (exclude.unclass) {
+  
+  snames <- sample_names(ps.all)
+  
+  otutab <- otutab[rownames(otutab) != 'unassigned', ]
+  taxtab <- taxtab[rownames(taxtab) != 'unassigned', ]
+  
+  otutab <- otutab[taxtab$species   != 'unassigned', ]
+  taxtab <- taxtab[taxtab$species   != 'unassigned', ]
+  
+  otutab <- otutab[taxtab$phylum    != 'unassigned', ]
+  taxtab <- taxtab[taxtab$phylum    != 'unassigned', ]
+  
+  colnames(otutab) <- snames
+  
+  ps.all   <- phyloseq(otu_table(as.matrix(otutab), taxa_are_rows = T),
+                       tax_table(as.matrix(taxtab)),
+                       sample_data(metadata))
+
+}
+
+metadata <- data.frame(sample_data(ps.all))
+```
+
+
+```{r}
+## Filter for taxa below threshold, again ?
+if (!is.na(abund.threshold)) {
+
+  snames <- sample_names(ps.all)
+  
+  otutab   <- data.frame(otu_table(ps.all))
+  taxtab   <- data.frame(tax_table(ps.all))
+  metadata <- data.frame(sample_data(ps.all))
+
+  otutab  <- otutab[rowSums(otutab) >= abund.threshold, ]
+  taxtab  <- taxtab[rowSums(otutab) >= abund.threshold, ]
+
+  colnames(otutab) <- snames
+  
+  ps.all   <- phyloseq(otu_table(as.matrix(otutab), taxa_are_rows = T),
+                       tax_table(as.matrix(taxtab)),
+                       sample_data(metadata))
+
+
+}
+
+```
+
+
+```{r}
+### Check if species names are unique
+if( n_distinct(ps.all@tax_table[,'species']) == nrow(ps.all@tax_table[,]) ) {
+  
+  message('using species as taxon identifier')
+  
+  ### And get rid of tax.identity AND lineage from taxtab if so  
+  
+  ps <- ps.all
+  
+  metadata   <- data.frame(sample_data(ps))
+  otutab     <- data.frame(otu_table(ps))
+  taxtab     <- data.frame(tax_table(ps))
+  samp_names <- sample_names(ps)
+
+  rownames(taxtab) <- taxtab$species
+  rownames(otutab) <- rownames(taxtab)
+  
+  taxtab           <- taxtab[,ranks]  
+  
+  colnames(otutab) <- samp_names
+  
+  ps <- phyloseq(tax_table(as.matrix(taxtab)),
+                 otu_table(as.matrix(otutab), taxa_are_rows = T),
+                 sample_data(metadata))
+  
+  ps.all <- ps
+ 
+} else {
+  
+  ### Otherwise get rid of tax.identity OR lineage from taxtab if so
+  
+  
+  rank_names(ps.all)
+  
+  ps <- ps.all
+  
+  metadata   <- data.frame(sample_data(ps))
+  otutab     <- data.frame(otu_table(ps))
+  taxtab     <- data.frame(tax_table(ps))
+  samp_names <- sample_names(ps)
+  colnames(otutab)   <- samp_names
+  rownames(metadata) <- samp_names
+  
+  taxtabuni <- unique.data.frame(taxtab[,c(ranks, 'tax.identity')]) 
+  stopifnot(nrow(taxtabuni) == nrow(taxtab))
+  dups <- dup(taxtabuni$tax.identity)
+  if(length(dups) == 0) {
+    message('using tax.identity as taxon identifier')
+    rownames(taxtabuni) <- taxtabuni$tax.identity  
+  } else {
+    message('using lineage as taxon identifier')
+    #rownames(taxtabuni) <- taxtabuni$tax.identity  
+  }
+  
+  taxtabuni <- unique.data.frame(taxtabuni[,c(ranks)])
+  stopifnot(nrow(taxtabuni) == nrow(taxtab))
+  
+  rownames(otutab) <- rownames(taxtabuni)
+  
+  ps <- phyloseq(tax_table(as.matrix(taxtabuni)),
+                 otu_table(as.matrix(otutab), taxa_are_rows = T),
+                 sample_data(metadata))
+  
+  
+  ## Glomerating on sepcies level for check
+  ps.glom <- tax_glom_fast(ps, rank_level =  7, ignore_lineage = T)
+  
+  
+  ##
+  metadata   <- data.frame(sample_data(ps))
+  otutab     <- data.frame(otu_table(ps))
+  taxtab     <- data.frame(tax_table(ps))
+  samp_names <- sample_names(ps)
+  colnames(otutab)   <- samp_names
+  rownames(metadata) <- samp_names
+
+}
+
+
+
+
+```
+
+```{r, Fix genera}
+
+
+if(!is.null(genera_to_glom)) {
+    
+  taxatofilt <- taxa_names(ps.all)[!grepl(paste0(genera_to_glom$glom, collapse='|'), taxtab$genus)]
+
+  ps <- prune_taxa(taxatofilt, ps.all)
+
+  for (i in 1:nrow(genera_to_glom)) {
+   
+    glom   <- genera_to_glom[i, 'glom']
+    to     <- genera_to_glom[i, 'to']
+    
+    message('Glomerating all hits from: ', glom, ' to: ', to)
+    
+    taxatokeep <- taxa_names(ps.all)[grepl(glom, taxtab$genus)]
+    
+    try({
+    ## Glomerate several taxa from the same genus
+    ps.glom     <- prune_taxa(taxatokeep, ps.all)
+    ps.glom     <- tax_glom_fast(ps.glom, rank_level = 6, ignore_lineage = F)
+    taxtab.glom <- data.frame(tax_table(ps.glom))
+    
+    ## Change the species name of these to the desired
+    taxtab.glom$species <- to
+    ps.glom@tax_table <- tax_table(as.matrix(taxtab.glom))
+    taxa_names(ps.glom) <- to
+    taxtab.glom <- data.frame(tax_table(ps.glom))
+    
+    ##
+    ps <- merge_phyloseq(ps.glom, ps)
+    
+    })
+    
+  }
+  
+  ps.all <- ps
+  
+}
+
+otutab   <- data.frame(otu_table(ps))
+taxtab   <- data.frame(tax_table(ps))
+metadata <- data.frame(sample_data(ps))
+##
+
+```
+
+
+```{r, Fix species}
+
+if(!is.null(species_to_glom)) {
+  taxtab <- data.frame(tax_table(ps.all))
+  for (i in 1:nrow(species_to_glom)) {
+   
+    glom <- species_to_glom$glom[i]
+    to   <- species_to_glom$to[i]
+    message('Glomerating all hits from: ', paste(glom, collapse = ' ,'), ' to: ', to)
+    
+    taxtab[rownames(taxtab) == glom, 'species'] <- to
+  }
+  ps.all@tax_table <- tax_table(as.matrix(taxtab))
+  taxtab <- data.frame(tax_table(ps.all))
+}
+
+##
+
+```
+## Fix sample names from '-'
+```{r}
+
+sample_names(ps.all) <- gsub('-', '.', sample_names(ps.all))
+
+```
+
+
+
+## Merge exp data with GS
+```{r, eval=F}
+metadata.gs <- data.frame(sample_data(ps.gsa))
+
+## this caused non-sensical metadata changes
+ps.all   <- merge_phyloseq(ps.gsa, ps.all)
+
+## use own function to merge
+#ps.all <- merge_phylo_fast(ps1 = ps.gsa, ps2 = ps.standard)
+
+###
+metadata <- data.frame(sample_data(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+```
+
+
+
+## Filter Taxa for Gold Standard
+
+These are the taxa that were found in the experimental data
+```{r, Gold Standard and Experimental Matches, eval=F}
+otutab.gsa     <- data.frame(otu_table(ps.gsa))
+taxtab.gsa     <- data.frame(tax_table(ps.gsa))
+metadata.gsa   <- data.frame(sample_data(ps.gsa))
+
+otutab.sum     <- data.frame(EXP_sum=rowSums(otutab), row.names = rownames(otutab))
+
+gs.exp.match   <- merge(zymo.GS, otutab.sum, all.x=T, by.x='species', by.y=0)
+
+print(gs.exp.match)
+```
+
+
+```{r, keep taxa from Gold Standard, eval=F}
+
+taxa.gs        <- taxa_names(ps.gsa)
+ps.standard    <- prune_taxa(taxa.gs, ps.all)
+
+abundance_threshold <- abund.threshold
+filter_func  <- filterfun(function(x) sum(x) > abundance_threshold)
+   
+ps.standard  <- filter_taxa(ps.standard, filter_func, prune = TRUE)
+
+
+if (keep.GS.taxa.only) {
+
+  ps.all <- ps.standard
+  
+} else {
+  
+  ps.all  <- filter_taxa(ps.all, filter_func, prune = TRUE) 
+  
+}
+
+
+taxtab   <- data.frame(tax_table(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+metadata <- data.frame(sample_data(ps.all))
+
+```
+
+
+## Add Gram Stain Info
+```{r, eval=T}
+
+taxtab   <- data.frame(tax_table(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+metadata <- data.frame(sample_data(ps.all))
+
+rownames <- rownames(taxtab)
+taxtab$rownames <- rownames
+
+stopifnot(all.equal(taxa_names(ps.all), rownames))
+
+taxtab.gram <- merge(taxtab, phyla.gram, by='phylum', all.x=T)
+
+taxtab      <- data.frame(taxtab.gram[,c(ranks, 'Gram.Stain')], row.names = taxtab.gram$rownames)
+
+taxtab      <- taxtab[rownames,]
+otutab      <- otutab[rownames,]
+
+ps.all <- phyloseq(tax_table(as.matrix(taxtab)),
+                   otu_table(as.matrix(otutab), taxa_are_rows = T),
+                   sample_data(metadata))
+
+
+taxtab   <- data.frame(tax_table(ps.all))
+otutab   <- data.frame(otu_table(ps.all))
+metadata <- data.frame(sample_data(ps.all))
+
+
+```
+
+
+
+## Omit Eukaryotes
+```{r, Omit Eukaryotes?}
+
+if(!consider.euk) {
+  taxtab      <- data.frame(tax_table(ps.all))
+  taxatoprune <- rownames(taxtab)[!is.element(taxtab$superkingdom, 'Eukaryota') & !is.na(taxtab$superkingdom)]
+  ps.all      <- prune_taxa(taxatoprune, ps.all)
+  
+}
+
+otutab   <- data.frame(otu_table(ps.all))
+taxtab   <- data.frame(tax_table(ps.all))
+metadata <- data.frame(sample_data(ps.all))
+
+```
+
+
+
+#  *Zymo ONT V1-V9 comparison*: Relative abundance of taxa at each taxonomic level
+
+```{r}
+
+ps <- ps.all
+
+```
+
+
+
+```{r, Barplots}
+scales <- 'fixed'
+fig.height  <- 20
+fig.width   <- 16
+top <- 20
+top.MCM <- 20
+
+multiV <- c(F, T)
+
+fig.height.vr <- fig.height
+fig.width.vr  <- fig.width
+
+## plotting function for barplots
+plotfun <- function(ps, x='sample_name', t=t, fill=t) {
+  plot_bar(ps, x=x, fill=fill
+         ) + 
+    scale_fill_manual(values=as.character(pal.man)) +
+    guides(fill = guide_legend(direction = "vertical", ncol = 1)) +
+    #theme_ipsum() 
+    theme_bw() +
+    theme(legend.position="right", 
+          legend.text = element_text(face = "italic"),
+          panel.spacing.x = unit(1.5, 'mm'),
+          axis.text.x = element_text(),
+          axis.title.x = element_blank()) +
+    # facet_grid(rows = vars(sequencing_date), cols = vars(DNA_isolation_method), scales = 'free')
+    facet_nested(cols   = vars(primer), rows   = vars(source), scales = 'free_x')
+}
+
+```
+
+## Gram Stain level
+
+```{r, Glom taxa at Gram-level}
+ps <- ps.all
+
+n <- 8
+
+t <- rank_names(ps)[n]
+
+## glomerate at n taxonomic level, regardless of lineage
+ps.glom <- tax_glom_fast(ps, rank_level = n, ignore_lineage = T)
+otutab <- data.frame(ps.glom@otu_table)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+#ps.glom.norm@otu_table
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  try({ top.taxa  <- unique(c(top.taxa, taxtab.gs[,t])) })
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  try({ top.taxa  <- unique(c(top.taxa, taxtab.gs[,t])) })
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## get data
+ps.data.glom.top  <- df.from.ps(ps.glom.top,   comb=F)
+ps.data.glom      <- df.from.ps(ps.glom,       comb=F)
+
+## filenames for plots and tables
+filenames <- c(
+  paste0(res.dir, '_top' , top, '_', t, '_ratios'),
+  paste0(res.dir, '_all_', t,           '_ratios') 
+)
+## write tables
+if (writetables){
+ write_tsv(ps.data.glom.top, paste0(res.dir, '/', filenames[1], '.tsv')) 
+ write_tsv(ps.data.glom,     paste0(res.dir, '/', filenames[2], '.tsv')) 
+}
+
+```
+
+### Barplot of abundances
+
+```{r, Gram-level plot, fig.height=fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+
+ggtop20    <- plotfun(
+  ps.glom.norm.top,
+                t=t, fill=t) + 
+  theme(legend.position = 'right') +
+  ggtitle(paste0('Top', top, ' ', t))
+
+ggtop20
+
+if (save.Figs){
+  ggsave(paste0(res.dir, '/', filenames[1], '_Vregions.jpg'), width = fig.width.vr, height = fig.height.vr)
+}
+
+
+
+ps.glom.norm.top.gram <- ps.glom.norm.top
+ps.glom.norm.gram     <- ps.glom.norm
+ps.glom.top.gram      <- ps.glom.top
+ps.glom.gram          <- ps.glom
+
+
+```
+
+### Heatmap of VST-normalized abundance values
+
+```{r}
+## 
+
+ps      <- ps.glom.gram
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+
+
+## Run DESeq2 
+de.seq <- phyloseq_to_deseq2(ps, ~source + primer)
+de.seq <- DESeq(de.seq,  test = "Wald", fitType = "parametric", sfType = "poscounts" )
+
+figw = 24
+figh = min(max(nrow(taxtab.DT), 12), 28)
+```
+
+
+```{r, fig.height=figw, fig.width=figh, eval=F}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+# Remove lineage, just keep taxon
+vst_normalized_data$taxon <- gsub('.*;', '', vst_normalized_data$taxon)
+
+# Convert to matrix format suitable for pheatmap
+vst_matrix <- as.matrix(vst_normalized_data[, -1, with = FALSE])
+rownames(vst_matrix) <- vst_normalized_data$taxon
+
+# Extract sample information from colData
+sample_info        <- colData(de.seq)$source
+names(sample_info) <- colnames(vst_matrix)
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Define annotation colors
+#annotation_colors <- list(Sample = setNames(rainbow(45), unique(sample_info)))
+
+
+# Define annotation colors using distinct divergent colors
+distinct_colors <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939", "#8c6d31", "#843c39", "#7b4173", "#5254a3", "#9c9ede", "#8ca252", "#bd9e39", "#ad494a", "#a55194", "#6b6ecf", "#b5cf6b", "#e7ba52", "#d6616b", "#ce6dbd", "#9c755f", "#d9d574", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5", "#8c564b", "#ff7f0e", pal_nejm()(5))
+
+annotation_colors <- list(Sample = setNames(distinct_colors[1:length(unique(sample_info))], unique(sample_info)))
+
+
+# Create heatmap with annotation
+pheatmap(vst_matrix, #[rownames(vst_matrix) %in% significant_taxa$taxon, ],
+         color = heatmap_colors,
+         cluster_rows = TRUE,       # Cluster rows (taxa)
+         cluster_cols = TRUE,       # Cluster columns (samples)
+         show_rownames = TRUE,      # Show row names (taxa)
+         show_colnames = TRUE,      # Show column names (samples)
+         labels_col   = colData(de.seq)$sample_name,
+         fontsize_row = 8,          # Font size for row labels
+         fontsize_col = 8,          # Font size for column labels
+         main = "Heatmap of VST-normalized Taxon Abundances",
+         annotation_col = data.frame(Sample = sample_info),
+         annotation_colors = annotation_colors,
+         fontface_row = "italic")
+
+
+```
+
+
+
+## Phylum level
+
+```{r, Glom taxa at Phylum-level}
+ps <- ps.all
+
+n <- 2
+
+t <- rank_names(ps)[n]
+
+## glomerate at n taxonomic level, regardless of lineage
+ps.glom <- tax_glom_fast(ps, rank_level = n, ignore_lineage = T)
+otutab <- data.frame(ps.glom@otu_table)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+#ps.glom.norm@otu_table
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## get data
+ps.data.glom.top  <- df.from.ps(ps.glom.top,   comb=F)
+ps.data.glom      <- df.from.ps(ps.glom,       comb=F)
+
+## filenames for plots and tables
+filenames <- c(
+  paste0(res.dir, '_top' , top, '_', t, '_ratios'),
+  paste0(res.dir, '_all_', t,           '_ratios') 
+)
+## write tables
+if (writetables){
+ write_tsv(ps.data.glom.top, paste0(res.dir, '/', filenames[1], '.tsv')) 
+ write_tsv(ps.data.glom,     paste0(res.dir, '/', filenames[2], '.tsv')) 
+}
+
+```
+
+```{r}
+
+## Mark GS Taxa with Asterisks
+if (mark.GS.Taxa) {
+  ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]] <- paste0(ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]], "*")
+}
+
+```
+
+```{r}
+if (merge.non.GS.Taxa) {
+  gs.taxa          <- unique(taxtab.gs[,t])
+  ps.glom.norm.top.merged <- merge.other.Taxa(ps.glom.norm.top, gs.taxa )
+} else {
+  ps.glom.norm.top.merged <- ps.glom.norm.top
+}
+
+```
+
+
+### Barplot of abundacnes
+```{r, Phylum-level plot, fig.height=fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+
+ggtop20    <- plotfun(
+  ps.glom.norm.top.merged,
+                t=t, fill=t) + 
+  theme(legend.position = 'right') +
+  ggtitle(paste0('Top', top, ' ', t))
+
+ggtop20
+
+if (save.Figs){
+  ggsave(paste0(res.dir, '/', filenames[1], '_Vregions.jpg'), width = fig.width.vr, height = fig.height.vr)
+}
+
+
+
+ps.glom.norm.top.phy <- ps.glom.norm.top
+ps.glom.norm.phy     <- ps.glom.norm
+ps.glom.top.phy      <- ps.glom.top
+ps.glom.phy          <- ps.glom
+
+
+```
+
+### Number of Significantly Different Taxa Among *FR*, *H. sapiens* and *C. lupus*
+
+
+
+
+## Class level
+
+```{r, Glom taxa at Class-level}
+ps <- ps.all
+
+n <- 3
+
+t <- rank_names(ps)[n]
+
+## glomerate at n taxonomic level, regardless of lineage
+ps.glom <- tax_glom_fast(ps, rank_level = n, ignore_lineage = T)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+ top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## get data
+ps.data.glom.top  <- df.from.ps(ps.glom.top,   comb=F)
+ps.data.glom      <- df.from.ps(ps.glom,       comb=F)
+
+## filenames for plots and tables
+filenames <- c(
+  paste0(res.dir, '_top' , top, '_', t, '_ratios'),
+  paste0(res.dir, '_all_', t,           '_ratios') 
+)
+## write tables
+if (writetables){
+ write_tsv(ps.data.glom.top, paste0(res.dir, '/', filenames[1], '.tsv')) 
+ write_tsv(ps.data.glom,     paste0(res.dir, '/', filenames[2], '.tsv')) 
+}
+
+```
+
+```{r}
+
+## Mark GS Taxa with Asterisks
+if (mark.GS.Taxa) {
+  ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]] <- paste0(ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]], "*")
+}
+
+```
+
+```{r}
+if (merge.non.GS.Taxa) {
+  gs.taxa          <- unique(taxtab.gs[,t])
+  ps.glom.norm.top.merged <- merge.other.Taxa(ps.glom.norm.top, gs.taxa )
+} else {
+  ps.glom.norm.top.merged <- ps.glom.norm.top
+}
+
+```
+
+### Barplot of abundances
+```{r, Class-level plot, fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+
+
+ggtop20    <- plotfun(
+  ps.glom.norm.top.merged,
+                t=t, fill=t) + 
+  theme(legend.position = 'right') +
+  ggtitle(paste0('Top', top, ' ', t))
+
+ggtop20
+
+if (save.Figs){
+  ggsave(paste0(res.dir, '/', filenames[1], '_Vregions.jpg'), width = fig.width.vr, height = fig.height.vr)
+}
+
+
+
+ps.glom.norm.top.class <- ps.glom.norm.top
+ps.glom.norm.class     <- ps.glom.norm
+ps.glom.top.class      <- ps.glom.top
+ps.glom.class          <- ps.glom
+
+```
+
+
+### Number of Significantly Different Taxa Among *FR*, *H. sapiens* and *C. lupus*
+```{r}
+## 
+
+ps      <- ps.glom.class
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+
+## Run DESeq2 
+de.seq <- phyloseq_to_deseq2(ps, ~source)
+de.seq <- DESeq(de.seq,  test = "Wald", fitType = "parametric", sfType = "poscounts" )
+
+figw = 24
+figh = min(max(nrow(taxtab.DT), 12), 28)
+```
+
+
+```{r}
+#resultsNames(de.seq)
+
+res1 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Homo_sapiens')))
+res1$comparison <- 'FR_VS_Homo_sapiens'
+res1$taxon <- rownames(res1)
+
+res2 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Canis_lupus')))
+res2$comparison <- 'FR_VS_Canis_lupus'
+res2$taxon <- rownames(res2)
+
+res3 <- as.data.frame(results(de.seq, contrast = c('source', 'Homo_sapiens', 'Canis_lupus')))
+res3$comparison <- 'Homo_sapiens_VS_Canis_lupus'
+res3$taxon <- rownames(res3)
+
+res.deseq <- data.table(rbind(res1, res2, res3))
+
+# merge with taxa
+res.deseq <- merge(res.deseq, taxtab.DT, by='taxon', all.x=T)
+
+res.deseq[,is.significant := fifelse(padj <= 0.05 , T, F)]  ## log2FoldChange >= 2 | log2FoldChange <= -2 &
+
+res.deseq$taxon_level <- t
+
+significant_taxa <- res.deseq[is.significant == TRUE]
+sigtaxa_N    <- length(unique(significant_taxa$taxon))
+
+kable(
+  dcast(res.deseq[,.N,by=.(taxon_level, comparison, is.significant)], taxon_level + comparison ~ is.significant, value.var = 'N')
+)
+
+res.deseq.class <- res.deseq
+
+```
+
+
+```{r}
+# Filter results for the relevant comparisons
+res_FR_Hsap <- res.deseq[comparison == "FR_VS_Homo_sapiens"]
+res_FR_Clup <- res.deseq[comparison == "FR_VS_Canis_lupus"]
+
+# Ensure the taxon names match between the two comparisons
+setkey(res_FR_Hsap, taxon)
+setkey(res_FR_Clup, taxon)
+
+# Join the two datasets on taxon
+res_combined <- merge(res_FR_Hsap[, .(taxon, l2fc_Hsap = log2FoldChange)],
+                      res_FR_Clup[, .(taxon, l2fc_Clup = log2FoldChange)],
+                      by = "taxon", all = FALSE)
+
+```
+
+### L2FC of Taxa in *FR* vs *H. sapiens* and in *FR* vs *C. lupus*
+```{r, fig.width=14, fig.height=14}
+
+# Add a column to classify similarity
+res_combined[, similarity := fifelse(abs(l2fc_Hsap) < abs(l2fc_Clup), "Closer to H. sapiens", "Closer to C. lupus")]
+
+# Create the scatter plot
+ggplot(res_combined, aes(x = l2fc_Hsap, y = l2fc_Clup, fill = similarity)) +
+  geom_point(size = 3, alpha = 0.7, shape=21) +
+  #geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "gray") +
+  labs(
+    title = "Similarity of FR Taxa to Homo sapiens and Canis lupus",
+    x = "Log2 Fold Change (FR vs H. sapiens)",
+    y = "Log2 Fold Change (FR vs C. lupus)",
+    color = "Similarity"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  scale_color_manual(values = c("Closer to H. sapiens" = "#00AFBB", "Closer to C. lupus" = "#FC4E07"))
+```
+
+
+### *FR* Taxa that are more similar to *H. sapiens* than to *C. lupus*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Hsap <- res_combined[abs(l2fc_Hsap) < abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+
+DT::datatable(similar_to_Hsap,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+res_FR_Hsap
+
+```
+
+
+### *FR* Taxa that are more similar to *C. lupus* than to *H. sapiens*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Clup <- res_combined[abs(l2fc_Hsap) > abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+DT::datatable(similar_to_Clup,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+similar_to_Clup
+
+```
+
+
+### Heatmap of VST-normalized abundance values
+
+```{r, fig.height=figh, fig.width=figw}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+# Remove lineage, just keep taxon
+vst_normalized_data$taxon <- gsub('.*;', '', vst_normalized_data$taxon)
+
+# Convert to matrix format suitable for pheatmap
+vst_matrix <- as.matrix(vst_normalized_data[, -1, with = FALSE])
+rownames(vst_matrix) <- vst_normalized_data$taxon
+
+# Extract sample information from colData
+sample_info        <- colData(de.seq)$source
+names(sample_info) <- colnames(vst_matrix)
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Define annotation colors
+#annotation_colors <- list(Sample = setNames(rainbow(45), unique(sample_info)))
+
+
+# Define annotation colors using distinct divergent colors
+distinct_colors <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939", "#8c6d31", "#843c39", "#7b4173", "#5254a3", "#9c9ede", "#8ca252", "#bd9e39", "#ad494a", "#a55194", "#6b6ecf", "#b5cf6b", "#e7ba52", "#d6616b", "#ce6dbd", "#9c755f", "#d9d574", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5", "#8c564b", "#ff7f0e", pal_nejm()(5))
+
+annotation_colors <- list(Sample = setNames(distinct_colors[1:length(unique(sample_info))], unique(sample_info)))
+
+
+# Create heatmap with annotation
+pheatmap(vst_matrix, #[rownames(vst_matrix) %in% significant_taxa$taxon, ],
+         color = heatmap_colors,
+         cluster_rows = TRUE,       # Cluster rows (taxa)
+         cluster_cols = TRUE,       # Cluster columns (samples)
+         show_rownames = TRUE,      # Show row names (taxa)
+         show_colnames = TRUE,      # Show column names (samples)
+         labels_col   = colData(de.seq)$sample_name,
+         fontsize_row = 8,          # Font size for row labels
+         fontsize_col = 8,          # Font size for column labels
+         main = "Heatmap of VST-normalized Taxon Abundances",
+         annotation_col = data.frame(Sample = sample_info),
+         annotation_colors = annotation_colors,
+         fontface_row = "italic")
+
+
+```
+
+
+### Heatmap of Log2 FC values
+
+```{r, fig.height=figh, fig.width=figw}
+# Filter for significant taxa
+significant_lfc <- res.deseq #[is.significant == TRUE]
+
+# Reshape data to wide format (taxa as rows, comparisons as columns)
+l2fc_data <- dcast(
+  significant_lfc,
+  taxon ~ comparison,
+  value.var = "log2FoldChange"
+)
+
+# Remove lineage, just keep taxon
+l2fc_data$taxon <- gsub('.*;', '', l2fc_data$taxon)
+
+# Set row names and remove the taxon column
+#l2fc_matrix <- as.matrix(data.frame(l2fc_matrix, row.names = lfc_matrix$taxon)[,-1])
+
+# Convert to matrix format suitable for pheatmap
+l2fc_matrix <- as.matrix(l2fc_data[, -1, with = FALSE])
+rownames(l2fc_matrix) <- l2fc_data$taxon
+
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Create heatmap
+pheatmap(
+  l2fc_matrix,
+  color = heatmap_colors,
+  cluster_rows = T,       # Cluster rows (taxa)
+  cluster_cols = F,       # Cluster columns (comparisons)
+  #clustering_distance_rows = "euclidean", # Distance metric for rows
+  #clustering_distance_cols = "euclidean", # Distance metric for columns
+  #clustering_method = "average",    
+  show_rownames = TRUE,      # Show row names (taxa)
+  show_colnames = TRUE,      # Show column names (comparisons)
+  fontsize_row = 8,          # Font size for row labels
+  fontsize_col = 10,         # Font size for column labels
+  main = "Heatmap of Log2FoldChange Values",
+  fontface_row = "italic"    # Italicize row names (taxa)
+)
+
+```
+
+
+```{r}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+cnames <- c('taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#
+vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+vst_fc_comb_melt <- melt(vst_fc_comb, id.vars = c(1), variable.name = 'sample', value.name = 'abundance_VST')
+
+vst_fc_comb_melt <- merge(vst_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt[,.(mean_abundance_VST = mean(abundance_VST), sd_abundance_VST   = sd(abundance_VST)), 
+                                         by=.(taxon, source)]
+
+vst_fc_comb_melt_sum_merge <- merge(
+  merge(
+   vst_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance_VST = mean_abundance_VST)],
+   vst_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance_VST = mean_abundance_VST)],
+   by = c('taxon')),
+  vst_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance_VST = mean_abundance_VST)],
+  by = c('taxon'))
+
+vst_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance_VST - Hs_mean_abundance_VST][, Cl_diff_to_FR := FR_mean_abundance_VST - Cl_mean_abundance_VST]
+
+vst_fc_comb_melt_sum_merge[,diff_ratio := abs(Hs_diff_to_FR) / abs(Cl_diff_to_FR)]
+
+```
+
+
+```{r}
+vst_fc_comb_melt_sum <- merge(res_combined, vst_fc_comb_melt_sum, by='taxon')
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+vst_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+vst_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+## to this for each chuunk
+```
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on VST-norm. Abundance
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(vst_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance_VST, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance_VST - sd_abundance_VST, ymax = mean_abundance_VST + sd_abundance_VST), position = 'dodge') +
+  geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "VST-normalized taxon abundance",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    strip.text.x = element_text(size = 12, face='italic'),
+    axis.text.x = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_grid(cols=vars(taxon))
+  
+
+
+```
+
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on Relative Abundance
+```{r}
+ps      <- ps.glom.norm.top
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+otutab.DT <- data.table(otutab, taxon=rownames(otutab))
+ps.data.ps.glom.norm.top <- merge(taxtab, otutab, by=0)
+colnames(ps.data.ps.glom.norm.top)[1] <- 'taxon'
+
+#ps.data.glom.top.norm[,-c(1:(n+1))] <- scale(ps.data.glom.top.norm[,-c(1:(n+1))], center = F, scale = colSums(ps.data.glom.top.norm[,-c(1:(n+1))]))
+
+ps.data.ps.glom.norm.top <- data.table(ps.data.ps.glom.norm.top)
+
+# Convert to data.table format for easier manipulation
+#vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+#cnames <- c(t'taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+norm_fc_comb_melt <- melt(ps.data.ps.glom.norm.top, id.vars = c(1:(n+1)), variable.name = 'sample', value.name = 'abundance')
+
+norm_fc_comb_melt <- merge(norm_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+norm_fc_comb_melt <- norm_fc_comb_melt[source %in% c('Homo_sapiens', 'FR', 'Canis_lupus')]
+
+norm_fc_comb_melt_sum <- norm_fc_comb_melt[,.(mean_abundance = mean(abundance), sd_abundance   = sd(abundance)), 
+                                         by=.(taxon, source)]
+
+norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+norm_fc_comb_melt_sum[,taxon := factor(taxon)]
+```
+
+
+```{r}
+norm_fc_comb_melt_sum_merge <- merge(
+  merge(
+   norm_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance = mean_abundance)],
+   norm_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance = mean_abundance)],
+   by = c('taxon')),
+  norm_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance = mean_abundance)],
+  by = c('taxon'))
+
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR_ratio := FR_mean_abundance / Hs_mean_abundance][, Cl_diff_to_FR_ratio := FR_mean_abundance / Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance - Hs_mean_abundance][, Cl_diff_to_FR := FR_mean_abundance - Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[,similarity := fifelse(abs(Hs_diff_to_FR) > abs(Cl_diff_to_FR), 'Closer to C. lupus', 'Closer to H. sapiens')]
+
+
+norm_fc_comb_melt_sum_merge_melt <- melt(norm_fc_comb_melt_sum_merge[,.(taxon, similarity, Hs_diff_to_FR_ratio, Cl_diff_to_FR_ratio)], id.vars = 1:2)
+norm_fc_comb_melt_sum_merge_melt[value == 'Inf', value := NA]
+norm_fc_comb_melt_sum_merge_melt[value == 'NaN', value := NA]
+
+
+norm_fc_comb_melt_sum <- merge(norm_fc_comb_melt_sum, unique(norm_fc_comb_melt_sum_merge_melt[,.(taxon, similarity)]), by=c('taxon'))
+
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+#norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+#norm_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+norm_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+norm_fc_comb_melt_sum_class <- norm_fc_comb_melt_sum
+norm_fc_comb_melt_sum_class[,level := t]
+```
+
+
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(norm_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  geom_text(aes(y = mean_abundance * 1.20, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Taxon abundance (ratio)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  ylim(c(0,NA)) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +  facet_wrap(~taxon, scales = 'free')
+  
+
+
+```
+
+```{r, fig.width=22, fig.height=9, eval=F}
+ggplot(norm_fc_comb_melt_sum_merge_melt, 
+       aes(x = taxon, y = value, fill=variable)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  #geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  #geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Relative Similarity (FR_mean_abundance / mean_abundance)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci[-2]) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_wrap(~taxon, scales = 'free')
+
+
+```
+
+
+
+## Order level
+
+```{r, Glom taxa at Order-level}
+ps <- ps.all
+
+n <- 4
+
+t <- rank_names(ps)[n]
+
+## glomerate at n taxonomic level, regardless of lineage
+ps.glom <- tax_glom_fast(ps, rank_level = n, ignore_lineage = T)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+ top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## get data
+ps.data.glom.top  <- df.from.ps(ps.glom.top,   comb=F)
+ps.data.glom      <- df.from.ps(ps.glom,       comb=F)
+
+## filenames for plots and tables
+filenames <- c(
+  paste0(res.dir, '_top' , top, '_', t, '_ratios'),
+  paste0(res.dir, '_all_', t,           '_ratios') 
+)
+## write tables
+if (writetables){
+ write_tsv(ps.data.glom.top, paste0(res.dir, '/', filenames[1], '.tsv')) 
+ write_tsv(ps.data.glom,     paste0(res.dir, '/', filenames[2], '.tsv')) 
+}
+
+```
+
+```{r}
+
+## Mark GS Taxa with Asterisks
+if (mark.GS.Taxa) {
+  ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]] <- paste0(ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]], "*")
+}
+
+```
+
+```{r}
+if (merge.non.GS.Taxa) {
+  gs.taxa          <- unique(taxtab.gs[,t])
+  ps.glom.norm.top.merged <- merge.other.Taxa(ps.glom.norm.top, gs.taxa )
+} else {
+  ps.glom.norm.top.merged <- ps.glom.norm.top
+}
+
+```
+
+### Barplot of abundances
+```{r, Order-level plot, fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+
+
+ggtop20    <- plotfun(
+  ps.glom.norm.top.merged,
+                t=t, fill=t) + 
+  theme(legend.position = 'right') +
+  ggtitle(paste0('Top', top, ' ', t))
+
+ggtop20
+
+if (save.Figs){
+  ggsave(paste0(res.dir, '/', filenames[1], '_Vregions.jpg'), width = fig.width.vr, height = fig.height.vr)
+}
+
+
+
+ps.glom.norm.top.ord <- ps.glom.norm.top
+ps.glom.norm.ord     <- ps.glom.norm
+ps.glom.top.ord      <- ps.glom.top
+ps.glom.ord          <- ps.glom
+
+```
+
+### Number of Significantly Different Taxa Among *FR*, *H. sapiens* and *C. lupus*
+```{r}
+## 
+
+ps      <- ps.glom.ord
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+
+## Run DESeq2 
+de.seq <- phyloseq_to_deseq2(ps, ~source)
+de.seq <- DESeq(de.seq,  test = "Wald", fitType = "parametric", sfType = "poscounts" )
+
+figw = 24
+figh = min(max(nrow(taxtab.DT), 12), 28)
+```
+
+
+```{r}
+#resultsNames(de.seq)
+
+res1 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Homo_sapiens')))
+res1$comparison <- 'FR_VS_Homo_sapiens'
+res1$taxon <- rownames(res1)
+
+res2 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Canis_lupus')))
+res2$comparison <- 'FR_VS_Canis_lupus'
+res2$taxon <- rownames(res2)
+
+res3 <- as.data.frame(results(de.seq, contrast = c('source', 'Homo_sapiens', 'Canis_lupus')))
+res3$comparison <- 'Homo_sapiens_VS_Canis_lupus'
+res3$taxon <- rownames(res3)
+
+res.deseq <- data.table(rbind(res1, res2, res3))
+
+# merge with taxa
+res.deseq <- merge(res.deseq, taxtab.DT, by='taxon', all.x=T)
+
+res.deseq[,is.significant := fifelse(padj <= 0.05 , T, F)]  ## log2FoldChange >= 2 | log2FoldChange <= -2 &
+
+res.deseq$taxon_level <- t
+
+significant_taxa <- res.deseq[is.significant == TRUE]
+sigtaxa_N    <- length(unique(significant_taxa$taxon))
+
+kable(
+  dcast(res.deseq[,.N,by=.(taxon_level, comparison, is.significant)], taxon_level + comparison ~ is.significant, value.var = 'N')
+)
+
+res.deseq.ord <- res.deseq
+
+```
+
+
+```{r}
+# Filter results for the relevant comparisons
+res_FR_Hsap <- res.deseq[comparison == "FR_VS_Homo_sapiens"]
+res_FR_Clup <- res.deseq[comparison == "FR_VS_Canis_lupus"]
+
+# Ensure the taxon names match between the two comparisons
+setkey(res_FR_Hsap, taxon)
+setkey(res_FR_Clup, taxon)
+
+# Join the two datasets on taxon
+res_combined <- merge(res_FR_Hsap[, .(taxon, l2fc_Hsap = log2FoldChange)],
+                      res_FR_Clup[, .(taxon, l2fc_Clup = log2FoldChange)],
+                      by = "taxon", all = FALSE)
+
+```
+
+### L2FC of Taxa in *FR* vs *H. sapiens* and in *FR* vs *C. lupus*
+```{r, fig.width=14, fig.height=14}
+
+# Add a column to classify similarity
+res_combined[, similarity := fifelse(abs(l2fc_Hsap) < abs(l2fc_Clup), "Closer to H. sapiens", "Closer to C. lupus")]
+
+# Create the scatter plot
+ggplot(res_combined, aes(x = l2fc_Hsap, y = l2fc_Clup, fill = similarity)) +
+  geom_point(size = 3, alpha = 0.7, shape=21) +
+  #geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "gray") +
+  labs(
+    title = "Similarity of FR Taxa to Homo sapiens and Canis lupus",
+    x = "Log2 Fold Change (FR vs H. sapiens)",
+    y = "Log2 Fold Change (FR vs C. lupus)",
+    color = "Similarity"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  scale_color_manual(values = c("Closer to H. sapiens" = "#00AFBB", "Closer to C. lupus" = "#FC4E07"))
+```
+
+
+### *FR* Taxa that are more similar to *H. sapiens* than to *C. lupus*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Hsap <- res_combined[abs(l2fc_Hsap) < abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+
+DT::datatable(similar_to_Hsap,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+res_FR_Hsap
+
+```
+
+
+### *FR* Taxa that are more similar to *C. lupus* than to *H. sapiens*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Clup <- res_combined[abs(l2fc_Hsap) > abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+DT::datatable(similar_to_Clup,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+similar_to_Clup
+
+```
+
+
+### Heatmap of VST-normalized abundance values
+
+```{r, fig.height=figh, fig.width=figw}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+# Remove lineage, just keep taxon
+vst_normalized_data$taxon <- gsub('.*;', '', vst_normalized_data$taxon)
+
+# Convert to matrix format suitable for pheatmap
+vst_matrix <- as.matrix(vst_normalized_data[, -1, with = FALSE])
+rownames(vst_matrix) <- vst_normalized_data$taxon
+
+# Extract sample information from colData
+sample_info        <- colData(de.seq)$source
+names(sample_info) <- colnames(vst_matrix)
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Define annotation colors
+#annotation_colors <- list(Sample = setNames(rainbow(45), unique(sample_info)))
+
+
+# Define annotation colors using distinct divergent colors
+distinct_colors <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939", "#8c6d31", "#843c39", "#7b4173", "#5254a3", "#9c9ede", "#8ca252", "#bd9e39", "#ad494a", "#a55194", "#6b6ecf", "#b5cf6b", "#e7ba52", "#d6616b", "#ce6dbd", "#9c755f", "#d9d574", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5", "#8c564b", "#ff7f0e", pal_nejm()(5))
+
+annotation_colors <- list(Sample = setNames(distinct_colors[1:length(unique(sample_info))], unique(sample_info)))
+
+
+# Create heatmap with annotation
+pheatmap(vst_matrix, #[rownames(vst_matrix) %in% significant_taxa$taxon, ],
+         color = heatmap_colors,
+         cluster_rows = TRUE,       # Cluster rows (taxa)
+         cluster_cols = TRUE,       # Cluster columns (samples)
+         show_rownames = TRUE,      # Show row names (taxa)
+         show_colnames = TRUE,      # Show column names (samples)
+         labels_col   = colData(de.seq)$sample_name,
+         fontsize_row = 8,          # Font size for row labels
+         fontsize_col = 8,          # Font size for column labels
+         main = "Heatmap of VST-normalized Taxon Abundances",
+         annotation_col = data.frame(Sample = sample_info),
+         annotation_colors = annotation_colors,
+         fontface_row = "italic")
+
+
+```
+
+
+### Heatmap of Log2 FC values
+
+```{r, fig.height=figh, fig.width=figw}
+# Filter for significant taxa
+significant_lfc <- res.deseq #[is.significant == TRUE]
+
+# Reshape data to wide format (taxa as rows, comparisons as columns)
+l2fc_data <- dcast(
+  significant_lfc,
+  taxon ~ comparison,
+  value.var = "log2FoldChange"
+)
+
+# Remove lineage, just keep taxon
+l2fc_data$taxon <- gsub('.*;', '', l2fc_data$taxon)
+
+# Set row names and remove the taxon column
+#l2fc_matrix <- as.matrix(data.frame(l2fc_matrix, row.names = lfc_matrix$taxon)[,-1])
+
+# Convert to matrix format suitable for pheatmap
+l2fc_matrix <- as.matrix(l2fc_data[, -1, with = FALSE])
+rownames(l2fc_matrix) <- l2fc_data$taxon
+
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Create heatmap
+pheatmap(
+  l2fc_matrix,
+  color = heatmap_colors,
+  cluster_rows = T,       # Cluster rows (taxa)
+  cluster_cols = F,       # Cluster columns (comparisons)
+  #clustering_distance_rows = "euclidean", # Distance metric for rows
+  #clustering_distance_cols = "euclidean", # Distance metric for columns
+  #clustering_method = "average",    
+  show_rownames = TRUE,      # Show row names (taxa)
+  show_colnames = TRUE,      # Show column names (comparisons)
+  fontsize_row = 8,          # Font size for row labels
+  fontsize_col = 10,         # Font size for column labels
+  main = "Heatmap of Log2FoldChange Values",
+  fontface_row = "italic"    # Italicize row names (taxa)
+)
+
+```
+
+
+```{r}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+cnames <- c('taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#
+vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+vst_fc_comb_melt <- melt(vst_fc_comb, id.vars = c(1), variable.name = 'sample', value.name = 'abundance_VST')
+
+vst_fc_comb_melt <- merge(vst_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt[,.(mean_abundance_VST = mean(abundance_VST), sd_abundance_VST   = sd(abundance_VST)), 
+                                         by=.(taxon, source)]
+
+vst_fc_comb_melt_sum_merge <- merge(
+  merge(
+   vst_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance_VST = mean_abundance_VST)],
+   vst_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance_VST = mean_abundance_VST)],
+   by = c('taxon')),
+  vst_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance_VST = mean_abundance_VST)],
+  by = c('taxon'))
+
+vst_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance_VST - Hs_mean_abundance_VST][, Cl_diff_to_FR := FR_mean_abundance_VST - Cl_mean_abundance_VST]
+
+vst_fc_comb_melt_sum_merge[,diff_ratio := abs(Hs_diff_to_FR) / abs(Cl_diff_to_FR)]
+
+```
+
+
+```{r}
+vst_fc_comb_melt_sum <- merge(res_combined, vst_fc_comb_melt_sum, by='taxon')
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+vst_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+vst_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+## to this for each chuunk
+```
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on VST-norm. Abundance
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(vst_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance_VST, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance_VST - sd_abundance_VST, ymax = mean_abundance_VST + sd_abundance_VST), position = 'dodge') +
+  geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "VST-normalized taxon abundance",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    strip.text.x = element_text(size = 12, face='italic'),
+    axis.text.x = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_grid(cols=vars(taxon))
+  
+
+
+```
+
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on Relative Abundance
+```{r}
+ps      <- ps.glom.norm.top
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+otutab.DT <- data.table(otutab, taxon=rownames(otutab))
+ps.data.ps.glom.norm.top <- merge(taxtab, otutab, by=0)
+colnames(ps.data.ps.glom.norm.top)[1] <- 'taxon'
+
+#ps.data.glom.top.norm[,-c(1:(n+1))] <- scale(ps.data.glom.top.norm[,-c(1:(n+1))], center = F, scale = colSums(ps.data.glom.top.norm[,-c(1:(n+1))]))
+
+ps.data.ps.glom.norm.top <- data.table(ps.data.ps.glom.norm.top)
+
+# Convert to data.table format for easier manipulation
+#vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+#cnames <- c(t'taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+norm_fc_comb_melt <- melt(ps.data.ps.glom.norm.top, id.vars = c(1:(n+1)), variable.name = 'sample', value.name = 'abundance')
+
+norm_fc_comb_melt <- merge(norm_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+norm_fc_comb_melt <- norm_fc_comb_melt[source %in% c('Homo_sapiens', 'FR', 'Canis_lupus')]
+
+norm_fc_comb_melt_sum <- norm_fc_comb_melt[,.(mean_abundance = mean(abundance), sd_abundance   = sd(abundance)), 
+                                         by=.(taxon, source)]
+
+norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+norm_fc_comb_melt_sum[,taxon := factor(taxon)]
+```
+
+
+```{r}
+norm_fc_comb_melt_sum_merge <- merge(
+  merge(
+   norm_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance = mean_abundance)],
+   norm_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance = mean_abundance)],
+   by = c('taxon')),
+  norm_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance = mean_abundance)],
+  by = c('taxon'))
+
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR_ratio := FR_mean_abundance / Hs_mean_abundance][, Cl_diff_to_FR_ratio := FR_mean_abundance / Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance - Hs_mean_abundance][, Cl_diff_to_FR := FR_mean_abundance - Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[,similarity := fifelse(abs(Hs_diff_to_FR) > abs(Cl_diff_to_FR), 'Closer to C. lupus', 'Closer to H. sapiens')]
+
+
+norm_fc_comb_melt_sum_merge_melt <- melt(norm_fc_comb_melt_sum_merge[,.(taxon, similarity, Hs_diff_to_FR_ratio, Cl_diff_to_FR_ratio)], id.vars = 1:2)
+norm_fc_comb_melt_sum_merge_melt[value == 'Inf', value := NA]
+norm_fc_comb_melt_sum_merge_melt[value == 'NaN', value := NA]
+
+
+norm_fc_comb_melt_sum <- merge(norm_fc_comb_melt_sum, unique(norm_fc_comb_melt_sum_merge_melt[,.(taxon, similarity)]), by=c('taxon'))
+
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+#norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+#norm_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+norm_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+
+norm_fc_comb_melt_sum_ord <- norm_fc_comb_melt_sum
+norm_fc_comb_melt_sum_ord[,level := t]
+```
+
+
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(norm_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  geom_text(aes(y = mean_abundance * 1.20, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Taxon abundance (ratio)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  ylim(c(0,NA)) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +  facet_wrap(~taxon, scales = 'free')
+  
+
+
+```
+
+```{r, fig.width=22, fig.height=9, eval=F}
+ggplot(norm_fc_comb_melt_sum_merge_melt, 
+       aes(x = taxon, y = value, fill=variable)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  #geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  #geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Relative Similarity (FR_mean_abundance / mean_abundance)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci[-2]) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_wrap(~taxon, scales = 'free')
+
+
+```
+
+
+## Family level
+
+```{r, Glom taxa at Family-level}
+ps <- ps.all
+
+n <- 5
+
+t <- rank_names(ps)[n]
+
+## glomerate at n taxonomic level, regardless of lineage
+ps.glom <- tax_glom_fast(ps, rank_level = n, ignore_lineage = T)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## get data
+ps.data.glom.top  <- df.from.ps(ps.glom.top,   comb=F)
+ps.data.glom      <- df.from.ps(ps.glom,       comb=F)
+
+## filenames for plots and tables
+filenames <- c(
+  paste0(res.dir, '_top' , top, '_', t, '_ratios'),
+  paste0(res.dir, '_all_', t,           '_ratios') 
+)
+## write tables
+if (writetables){
+ write_tsv(ps.data.glom.top, paste0(res.dir, '/', filenames[1], '.tsv')) 
+ write_tsv(ps.data.glom,     paste0(res.dir, '/', filenames[2], '.tsv')) 
+}
+
+```
+
+```{r}
+
+## Mark GS Taxa with Asterisks
+if (mark.GS.Taxa) {
+  ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]] <- paste0(ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]], "*")
+}
+
+```
+
+```{r}
+if (merge.non.GS.Taxa) {
+  gs.taxa          <- unique(taxtab.gs[,t])
+  ps.glom.norm.top.merged <- merge.other.Taxa(ps.glom.norm.top, gs.taxa )
+} else {
+  ps.glom.norm.top.merged <- ps.glom.norm.top
+}
+
+```
+
+
+### Barplot of abundances
+```{r, Family-level plot, fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+
+ggtop20    <- plotfun(
+  ps.glom.norm.top.merged,
+                t=t, fill=t) + 
+  theme(legend.position = 'right') +
+  ggtitle(paste0('Top', top, ' ', t))
+
+ggtop20
+
+if (save.Figs){
+  ggsave(paste0(res.dir, '/', filenames[1], '_Vregions.jpg'), width = fig.width.vr, height = fig.height.vr)
+}
+
+
+
+ps.glom.norm.top.fam <- ps.glom.norm.top
+ps.glom.norm.fam     <- ps.glom.norm
+ps.glom.top.fam      <- ps.glom.top
+ps.glom.fam          <- ps.glom
+
+```
+
+### Number of Significantly Different Taxa Among *FR*, *H. sapiens* and *C. lupus*
+```{r}
+## 
+
+ps      <- ps.glom.fam
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+
+## Run DESeq2 
+de.seq <- phyloseq_to_deseq2(ps, ~source)
+de.seq <- DESeq(de.seq,  test = "Wald", fitType = "parametric", sfType = "poscounts" )
+
+figw = 24
+figh = min(max(nrow(taxtab.DT), 12), 28)
+```
+
+
+```{r}
+#resultsNames(de.seq)
+
+res1 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Homo_sapiens')))
+res1$comparison <- 'FR_VS_Homo_sapiens'
+res1$taxon <- rownames(res1)
+
+res2 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Canis_lupus')))
+res2$comparison <- 'FR_VS_Canis_lupus'
+res2$taxon <- rownames(res2)
+
+res3 <- as.data.frame(results(de.seq, contrast = c('source', 'Homo_sapiens', 'Canis_lupus')))
+res3$comparison <- 'Homo_sapiens_VS_Canis_lupus'
+res3$taxon <- rownames(res3)
+
+res.deseq <- data.table(rbind(res1, res2, res3))
+
+# merge with taxa
+res.deseq <- merge(res.deseq, taxtab.DT, by='taxon', all.x=T)
+
+res.deseq[,is.significant := fifelse(padj <= 0.05 , T, F)]  ## log2FoldChange >= 2 | log2FoldChange <= -2 &
+
+res.deseq$taxon_level <- t
+
+significant_taxa <- res.deseq[is.significant == TRUE]
+sigtaxa_N    <- length(unique(significant_taxa$taxon))
+
+kable(
+  dcast(res.deseq[,.N,by=.(taxon_level, comparison, is.significant)], taxon_level + comparison ~ is.significant, value.var = 'N')
+)
+
+res.deseq.fam <- res.deseq
+
+```
+
+
+```{r}
+# Filter results for the relevant comparisons
+res_FR_Hsap <- res.deseq[comparison == "FR_VS_Homo_sapiens"]
+res_FR_Clup <- res.deseq[comparison == "FR_VS_Canis_lupus"]
+
+# Ensure the taxon names match between the two comparisons
+setkey(res_FR_Hsap, taxon)
+setkey(res_FR_Clup, taxon)
+
+# Join the two datasets on taxon
+res_combined <- merge(res_FR_Hsap[, .(taxon, l2fc_Hsap = log2FoldChange)],
+                      res_FR_Clup[, .(taxon, l2fc_Clup = log2FoldChange)],
+                      by = "taxon", all = FALSE)
+
+```
+
+### L2FC of Taxa in *FR* vs *H. sapiens* and in *FR* vs *C. lupus*
+```{r, fig.width=14, fig.height=14}
+
+# Add a column to classify similarity
+res_combined[, similarity := fifelse(abs(l2fc_Hsap) < abs(l2fc_Clup), "Closer to H. sapiens", "Closer to C. lupus")]
+
+# Create the scatter plot
+ggplot(res_combined, aes(x = l2fc_Hsap, y = l2fc_Clup, fill = similarity)) +
+  geom_point(size = 3, alpha = 0.7, shape=21) +
+  #geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "gray") +
+  labs(
+    title = "Similarity of FR Taxa to Homo sapiens and Canis lupus",
+    x = "Log2 Fold Change (FR vs H. sapiens)",
+    y = "Log2 Fold Change (FR vs C. lupus)",
+    color = "Similarity"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  scale_color_manual(values = c("Closer to H. sapiens" = "#00AFBB", "Closer to C. lupus" = "#FC4E07"))
+```
+
+
+### *FR* Taxa that are more similar to *H. sapiens* than to *C. lupus*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Hsap <- res_combined[abs(l2fc_Hsap) < abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+
+DT::datatable(similar_to_Hsap,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+res_FR_Hsap
+
+```
+
+
+### *FR* Taxa that are more similar to *C. lupus* than to *H. sapiens*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Clup <- res_combined[abs(l2fc_Hsap) > abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+DT::datatable(similar_to_Clup,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+similar_to_Clup
+
+```
+
+
+### Heatmap of VST-normalized abundance values
+
+```{r, fig.height=figh, fig.width=figw}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+# Remove lineage, just keep taxon
+vst_normalized_data$taxon <- gsub('.*;', '', vst_normalized_data$taxon)
+
+# Convert to matrix format suitable for pheatmap
+vst_matrix <- as.matrix(vst_normalized_data[, -1, with = FALSE])
+rownames(vst_matrix) <- vst_normalized_data$taxon
+
+# Extract sample information from colData
+sample_info        <- colData(de.seq)$source
+names(sample_info) <- colnames(vst_matrix)
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Define annotation colors
+#annotation_colors <- list(Sample = setNames(rainbow(45), unique(sample_info)))
+
+
+# Define annotation colors using distinct divergent colors
+distinct_colors <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939", "#8c6d31", "#843c39", "#7b4173", "#5254a3", "#9c9ede", "#8ca252", "#bd9e39", "#ad494a", "#a55194", "#6b6ecf", "#b5cf6b", "#e7ba52", "#d6616b", "#ce6dbd", "#9c755f", "#d9d574", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5", "#8c564b", "#ff7f0e", pal_nejm()(5))
+
+annotation_colors <- list(Sample = setNames(distinct_colors[1:length(unique(sample_info))], unique(sample_info)))
+
+
+# Create heatmap with annotation
+pheatmap(vst_matrix, #[rownames(vst_matrix) %in% significant_taxa$taxon, ],
+         color = heatmap_colors,
+         cluster_rows = TRUE,       # Cluster rows (taxa)
+         cluster_cols = TRUE,       # Cluster columns (samples)
+         show_rownames = TRUE,      # Show row names (taxa)
+         show_colnames = TRUE,      # Show column names (samples)
+         labels_col   = colData(de.seq)$sample_name,
+         fontsize_row = 8,          # Font size for row labels
+         fontsize_col = 8,          # Font size for column labels
+         main = "Heatmap of VST-normalized Taxon Abundances",
+         annotation_col = data.frame(Sample = sample_info),
+         annotation_colors = annotation_colors,
+         fontface_row = "italic")
+
+
+```
+
+
+
+### Heatmap of Log2 FC values
+
+```{r, fig.height=figh, fig.width=figw}
+# Filter for significant taxa
+significant_lfc <- res.deseq #[is.significant == TRUE]
+
+# Reshape data to wide format (taxa as rows, comparisons as columns)
+l2fc_data <- dcast(
+  significant_lfc,
+  taxon ~ comparison,
+  value.var = "log2FoldChange"
+)
+
+# Remove lineage, just keep taxon
+l2fc_data$taxon <- gsub('.*;', '', l2fc_data$taxon)
+
+# Set row names and remove the taxon column
+#l2fc_matrix <- as.matrix(data.frame(l2fc_matrix, row.names = lfc_matrix$taxon)[,-1])
+
+# Convert to matrix format suitable for pheatmap
+l2fc_matrix <- as.matrix(l2fc_data[, -1, with = FALSE])
+rownames(l2fc_matrix) <- l2fc_data$taxon
+
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Create heatmap
+pheatmap(
+  l2fc_matrix,
+  color = heatmap_colors,
+  cluster_rows = T,       # Cluster rows (taxa)
+  cluster_cols = F,       # Cluster columns (comparisons)
+  #clustering_distance_rows = "euclidean", # Distance metric for rows
+  #clustering_distance_cols = "euclidean", # Distance metric for columns
+  #clustering_method = "average",    
+  show_rownames = TRUE,      # Show row names (taxa)
+  show_colnames = TRUE,      # Show column names (comparisons)
+  fontsize_row = 8,          # Font size for row labels
+  fontsize_col = 10,         # Font size for column labels
+  main = "Heatmap of Log2FoldChange Values",
+  fontface_row = "italic"    # Italicize row names (taxa)
+)
+
+```
+
+
+```{r}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+cnames <- c('taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#
+vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+vst_fc_comb_melt <- melt(vst_fc_comb, id.vars = c(1), variable.name = 'sample', value.name = 'abundance_VST')
+
+vst_fc_comb_melt <- merge(vst_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt[,.(mean_abundance_VST = mean(abundance_VST), sd_abundance_VST   = sd(abundance_VST)), 
+                                         by=.(taxon, source)]
+
+vst_fc_comb_melt_sum_merge <- merge(
+  merge(
+   vst_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance_VST = mean_abundance_VST)],
+   vst_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance_VST = mean_abundance_VST)],
+   by = c('taxon')),
+  vst_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance_VST = mean_abundance_VST)],
+  by = c('taxon'))
+
+vst_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance_VST - Hs_mean_abundance_VST][, Cl_diff_to_FR := FR_mean_abundance_VST - Cl_mean_abundance_VST]
+
+vst_fc_comb_melt_sum_merge[,diff_ratio := abs(Hs_diff_to_FR) / abs(Cl_diff_to_FR)]
+
+```
+
+
+```{r}
+vst_fc_comb_melt_sum <- merge(res_combined, vst_fc_comb_melt_sum, by='taxon')
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+vst_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+vst_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+## to this for each chuunk
+```
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on VST-norm. Abundance
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(vst_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance_VST, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance_VST - sd_abundance_VST, ymax = mean_abundance_VST + sd_abundance_VST), position = 'dodge') +
+  geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "VST-normalized taxon abundance",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    strip.text.x = element_text(size = 12, face='italic'),
+    axis.text.x = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_grid(cols=vars(taxon))
+  
+
+
+```
+
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on Relative Abundance
+```{r}
+ps      <- ps.glom.norm.top
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+otutab.DT <- data.table(otutab, taxon=rownames(otutab))
+ps.data.ps.glom.norm.top <- merge(taxtab, otutab, by=0)
+colnames(ps.data.ps.glom.norm.top)[1] <- 'taxon'
+
+#ps.data.glom.top.norm[,-c(1:(n+1))] <- scale(ps.data.glom.top.norm[,-c(1:(n+1))], center = F, scale = colSums(ps.data.glom.top.norm[,-c(1:(n+1))]))
+
+ps.data.ps.glom.norm.top <- data.table(ps.data.ps.glom.norm.top)
+
+# Convert to data.table format for easier manipulation
+#vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+#cnames <- c(t'taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+norm_fc_comb_melt <- melt(ps.data.ps.glom.norm.top, id.vars = c(1:(n+1)), variable.name = 'sample', value.name = 'abundance')
+
+norm_fc_comb_melt <- merge(norm_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+norm_fc_comb_melt <- norm_fc_comb_melt[source %in% c('Homo_sapiens', 'FR', 'Canis_lupus')]
+
+norm_fc_comb_melt_sum <- norm_fc_comb_melt[,.(mean_abundance = mean(abundance), sd_abundance   = sd(abundance)), 
+                                         by=.(taxon, source)]
+
+norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+norm_fc_comb_melt_sum[,taxon := factor(taxon)]
+```
+
+
+```{r}
+norm_fc_comb_melt_sum_merge <- merge(
+  merge(
+   norm_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance = mean_abundance)],
+   norm_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance = mean_abundance)],
+   by = c('taxon')),
+  norm_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance = mean_abundance)],
+  by = c('taxon'))
+
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR_ratio := FR_mean_abundance / Hs_mean_abundance][, Cl_diff_to_FR_ratio := FR_mean_abundance / Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance - Hs_mean_abundance][, Cl_diff_to_FR := FR_mean_abundance - Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[,similarity := fifelse(abs(Hs_diff_to_FR) > abs(Cl_diff_to_FR), 'Closer to C. lupus', 'Closer to H. sapiens')]
+
+
+norm_fc_comb_melt_sum_merge_melt <- melt(norm_fc_comb_melt_sum_merge[,.(taxon, similarity, Hs_diff_to_FR_ratio, Cl_diff_to_FR_ratio)], id.vars = 1:2)
+norm_fc_comb_melt_sum_merge_melt[value == 'Inf', value := NA]
+norm_fc_comb_melt_sum_merge_melt[value == 'NaN', value := NA]
+
+
+norm_fc_comb_melt_sum <- merge(norm_fc_comb_melt_sum, unique(norm_fc_comb_melt_sum_merge_melt[,.(taxon, similarity)]), by=c('taxon'))
+
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+#norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+#norm_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+norm_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+
+norm_fc_comb_melt_sum_fam <- norm_fc_comb_melt_sum
+norm_fc_comb_melt_sum_fam[,level := t]
+```
+
+
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(norm_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  geom_text(aes(y = mean_abundance * 1.20, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Taxon abundance (ratio)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  ylim(c(0,NA)) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +  facet_wrap(~taxon, scales = 'free')
+  
+
+
+```
+
+```{r, fig.width=22, fig.height=9, eval=F}
+ggplot(norm_fc_comb_melt_sum_merge_melt, 
+       aes(x = taxon, y = value, fill=variable)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  #geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  #geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Relative Similarity (FR_mean_abundance / mean_abundance)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci[-2]) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_wrap(~taxon, scales = 'free')
+
+
+```
+
+
+
+## Genus level
+
+```{r, Glom taxa at Genus-level}
+ps <- ps.all
+
+n <- 6
+
+t <- rank_names(ps)[n]
+
+## glomerate at n taxonomic level, regardless of lineage
+ps.glom <- tax_glom_fast(ps, rank_level = n, ignore_lineage = T)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## get data
+ps.data.glom.top  <- df.from.ps(ps.glom.top,   comb=F)
+ps.data.glom      <- df.from.ps(ps.glom,       comb=F)
+
+## filenames for plots and tables
+filenames <- c(
+  paste0(res.dir, '_top' , top, '_', t, '_ratios'),
+  paste0(res.dir, '_all_', t,           '_ratios') 
+)
+## write tables
+if (writetables){
+ write_tsv(ps.data.glom.top, paste0(res.dir, '/', filenames[1], '.tsv')) 
+ write_tsv(ps.data.glom,     paste0(res.dir, '/', filenames[2], '.tsv')) 
+}
+
+```
+
+```{r}
+
+## Mark GS Taxa with Asterisks
+if (mark.GS.Taxa) {
+  ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]] <- paste0(ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]], "*")
+}
+
+```
+
+```{r}
+if (merge.non.GS.Taxa) {
+  gs.taxa          <- unique(taxtab.gs[,t])
+  ps.glom.norm.top.merged <- merge.other.Taxa(ps.glom.norm.top, gs.taxa )
+} else {
+  ps.glom.norm.top.merged <- ps.glom.norm.top
+}
+
+```
+
+### Barplot of abundances
+```{r, Genus-level plot, fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+
+ggtop20    <- plotfun(
+  ps.glom.norm.top.merged,
+                t=t, fill=t) + 
+  theme(legend.position = 'right') +
+  ggtitle(paste0('Top', top, ' ', t))
+
+ggtop20
+
+if (save.Figs){
+  ggsave(paste0(res.dir, '/', filenames[1], '_Vregions.jpg'), width = fig.width.vr, height = fig.height.vr)
+}
+
+
+
+ps.glom.norm.top.gen <- ps.glom.norm.top
+ps.glom.norm.gen     <- ps.glom.norm
+ps.glom.top.gen      <- ps.glom.top
+ps.glom.gen          <- ps.glom
+
+```
+
+
+### Number of Significantly Different Taxa Among *FR*, *H. sapiens* and *C. lupus*
+```{r}
+## 
+
+ps      <- ps.glom.gen
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+
+## Run DESeq2 
+de.seq <- phyloseq_to_deseq2(ps, ~source)
+de.seq <- DESeq(de.seq,  test = "Wald", fitType = "parametric", sfType = "poscounts" )
+
+figw = 24
+figh = min(max(nrow(taxtab.DT), 12), 28)
+```
+
+
+```{r}
+#resultsNames(de.seq)
+
+res1 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Homo_sapiens')))
+res1$comparison <- 'FR_VS_Homo_sapiens'
+res1$taxon <- rownames(res1)
+
+res2 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Canis_lupus')))
+res2$comparison <- 'FR_VS_Canis_lupus'
+res2$taxon <- rownames(res2)
+
+res3 <- as.data.frame(results(de.seq, contrast = c('source', 'Homo_sapiens', 'Canis_lupus')))
+res3$comparison <- 'Homo_sapiens_VS_Canis_lupus'
+res3$taxon <- rownames(res3)
+
+res.deseq <- data.table(rbind(res1, res2, res3))
+
+# merge with taxa
+res.deseq <- merge(res.deseq, taxtab.DT, by='taxon', all.x=T)
+
+res.deseq[,is.significant := fifelse(padj <= 0.05 , T, F)]  ## log2FoldChange >= 2 | log2FoldChange <= -2 &
+
+res.deseq$taxon_level <- t
+
+significant_taxa <- res.deseq[is.significant == TRUE]
+sigtaxa_N    <- length(unique(significant_taxa$taxon))
+
+kable(
+  dcast(res.deseq[,.N,by=.(taxon_level, comparison, is.significant)], taxon_level + comparison ~ is.significant, value.var = 'N')
+)
+
+res.deseq.phy <- res.deseq
+
+```
+
+
+```{r}
+# Filter results for the relevant comparisons
+res_FR_Hsap <- res.deseq[comparison == "FR_VS_Homo_sapiens"]
+res_FR_Clup <- res.deseq[comparison == "FR_VS_Canis_lupus"]
+
+# Ensure the taxon names match between the two comparisons
+setkey(res_FR_Hsap, taxon)
+setkey(res_FR_Clup, taxon)
+
+# Join the two datasets on taxon
+res_combined <- merge(res_FR_Hsap[, .(taxon, l2fc_Hsap = log2FoldChange)],
+                      res_FR_Clup[, .(taxon, l2fc_Clup = log2FoldChange)],
+                      by = "taxon", all = FALSE)
+
+```
+
+
+### L2FC of Taxa in *FR* vs *H. sapiens* and in *FR* vs *C. lupus*
+```{r, fig.width=14, fig.height=14}
+
+# Add a column to classify similarity
+res_combined[, similarity := fifelse(abs(l2fc_Hsap) < abs(l2fc_Clup), "Closer to H. sapiens", "Closer to C. lupus")]
+
+# Create the scatter plot
+ggplot(res_combined, aes(x = l2fc_Hsap, y = l2fc_Clup, fill = similarity)) +
+  geom_point(size = 3, alpha = 0.7, shape=21) +
+  #geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "gray") +
+  labs(
+    title = "Similarity of FR Taxa to Homo sapiens and Canis lupus",
+    x = "Log2 Fold Change (FR vs H. sapiens)",
+    y = "Log2 Fold Change (FR vs C. lupus)",
+    color = "Similarity"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  scale_color_manual(values = c("Closer to H. sapiens" = "#00AFBB", "Closer to C. lupus" = "#FC4E07"))
+```
+
+### *FR* Taxa that are more similar to *H. sapiens* than to *C. lupus*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Hsap <- res_combined[abs(l2fc_Hsap) < abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+
+DT::datatable(similar_to_Hsap,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+res_FR_Hsap
+
+```
+
+
+### *FR* Taxa that are more similar to *C. lupus* than to *H. sapiens*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Clup <- res_combined[abs(l2fc_Hsap) > abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+DT::datatable(similar_to_Clup,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+similar_to_Clup
+
+```
+
+
+### Heatmap of VST-normalized abundance values
+
+```{r, fig.height=figh, fig.width=figw}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+# Remove lineage, just keep taxon
+vst_normalized_data$taxon <- gsub('.*;', '', vst_normalized_data$taxon)
+
+# Convert to matrix format suitable for pheatmap
+vst_matrix <- as.matrix(vst_normalized_data[, -1, with = FALSE])
+rownames(vst_matrix) <- vst_normalized_data$taxon
+
+# Extract sample information from colData
+sample_info        <- colData(de.seq)$source
+names(sample_info) <- colnames(vst_matrix)
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Define annotation colors
+#annotation_colors <- list(Sample = setNames(rainbow(45), unique(sample_info)))
+
+
+# Define annotation colors using distinct divergent colors
+distinct_colors <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939", "#8c6d31", "#843c39", "#7b4173", "#5254a3", "#9c9ede", "#8ca252", "#bd9e39", "#ad494a", "#a55194", "#6b6ecf", "#b5cf6b", "#e7ba52", "#d6616b", "#ce6dbd", "#9c755f", "#d9d574", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5", "#8c564b", "#ff7f0e", pal_nejm()(5))
+
+annotation_colors <- list(Sample = setNames(distinct_colors[1:length(unique(sample_info))], unique(sample_info)))
+
+
+# Create heatmap with annotation
+pheatmap(vst_matrix, #[rownames(vst_matrix) %in% significant_taxa$taxon, ],
+         color = heatmap_colors,
+         cluster_rows = TRUE,       # Cluster rows (taxa)
+         cluster_cols = TRUE,       # Cluster columns (samples)
+         show_rownames = TRUE,      # Show row names (taxa)
+         show_colnames = TRUE,      # Show column names (samples)
+         labels_col   = colData(de.seq)$sample_name,
+         fontsize_row = 8,          # Font size for row labels
+         fontsize_col = 8,          # Font size for column labels
+         main = "Heatmap of VST-normalized Taxon Abundances",
+         annotation_col = data.frame(Sample = sample_info),
+         annotation_colors = annotation_colors,
+         fontface_row = "italic")
+
+
+```
+
+
+
+### Heatmap of Log2 FC values
+
+```{r, fig.height=figh, fig.width=figw}
+# Filter for significant taxa
+significant_lfc <- res.deseq #[is.significant == TRUE]
+
+# Reshape data to wide format (taxa as rows, comparisons as columns)
+l2fc_data <- dcast(
+  significant_lfc,
+  taxon ~ comparison,
+  value.var = "log2FoldChange"
+)
+
+# Remove lineage, just keep taxon
+l2fc_data$taxon <- gsub('.*;', '', l2fc_data$taxon)
+
+# Set row names and remove the taxon column
+#l2fc_matrix <- as.matrix(data.frame(l2fc_matrix, row.names = lfc_matrix$taxon)[,-1])
+
+# Convert to matrix format suitable for pheatmap
+l2fc_matrix <- as.matrix(l2fc_data[, -1, with = FALSE])
+rownames(l2fc_matrix) <- l2fc_data$taxon
+
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Create heatmap
+pheatmap(
+  l2fc_matrix,
+  color = heatmap_colors,
+  cluster_rows = T,       # Cluster rows (taxa)
+  cluster_cols = F,       # Cluster columns (comparisons)
+  #clustering_distance_rows = "euclidean", # Distance metric for rows
+  #clustering_distance_cols = "euclidean", # Distance metric for columns
+  #clustering_method = "average",    
+  show_rownames = TRUE,      # Show row names (taxa)
+  show_colnames = TRUE,      # Show column names (comparisons)
+  fontsize_row = 8,          # Font size for row labels
+  fontsize_col = 10,         # Font size for column labels
+  main = "Heatmap of Log2FoldChange Values",
+  fontface_row = "italic"    # Italicize row names (taxa)
+)
+
+```
+
+
+```{r}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+cnames <- c('taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#
+vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+vst_fc_comb_melt <- melt(vst_fc_comb, id.vars = c(1), variable.name = 'sample', value.name = 'abundance_VST')
+
+vst_fc_comb_melt <- merge(vst_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt[,.(mean_abundance_VST = mean(abundance_VST), sd_abundance_VST   = sd(abundance_VST)), 
+                                         by=.(taxon, source)]
+
+vst_fc_comb_melt_sum_merge <- merge(
+  merge(
+   vst_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance_VST = mean_abundance_VST)],
+   vst_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance_VST = mean_abundance_VST)],
+   by = c('taxon')),
+  vst_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance_VST = mean_abundance_VST)],
+  by = c('taxon'))
+
+vst_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance_VST - Hs_mean_abundance_VST][, Cl_diff_to_FR := FR_mean_abundance_VST - Cl_mean_abundance_VST]
+
+vst_fc_comb_melt_sum_merge[,diff_ratio := abs(Hs_diff_to_FR) / abs(Cl_diff_to_FR)]
+
+```
+
+
+```{r}
+vst_fc_comb_melt_sum <- merge(res_combined, vst_fc_comb_melt_sum, by='taxon')
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+vst_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+vst_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+## to this for each chuunk
+```
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on VST-norm. Abundance
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(vst_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance_VST, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance_VST - sd_abundance_VST, ymax = mean_abundance_VST + sd_abundance_VST), position = 'dodge') +
+  geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "VST-normalized taxon abundance",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    strip.text.x = element_text(size = 12, face='italic'),
+    axis.text.x = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_grid(cols=vars(taxon))
+  
+
+
+```
+
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on Relative Abundance
+```{r}
+ps      <- ps.glom.norm.top
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+otutab.DT <- data.table(otutab, taxon=rownames(otutab))
+ps.data.ps.glom.norm.top <- merge(taxtab, otutab, by=0)
+colnames(ps.data.ps.glom.norm.top)[1] <- 'taxon'
+
+#ps.data.glom.top.norm[,-c(1:(n+1))] <- scale(ps.data.glom.top.norm[,-c(1:(n+1))], center = F, scale = colSums(ps.data.glom.top.norm[,-c(1:(n+1))]))
+
+ps.data.ps.glom.norm.top <- data.table(ps.data.ps.glom.norm.top)
+
+# Convert to data.table format for easier manipulation
+#vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+#cnames <- c(t'taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+norm_fc_comb_melt <- melt(ps.data.ps.glom.norm.top, id.vars = c(1:(n+1)), variable.name = 'sample', value.name = 'abundance')
+
+norm_fc_comb_melt <- merge(norm_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+norm_fc_comb_melt <- norm_fc_comb_melt[source %in% c('Homo_sapiens', 'FR', 'Canis_lupus')]
+
+norm_fc_comb_melt_sum <- norm_fc_comb_melt[,.(mean_abundance = mean(abundance), sd_abundance   = sd(abundance)), 
+                                         by=.(taxon, source)]
+
+norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+norm_fc_comb_melt_sum[,taxon := factor(taxon)]
+```
+
+
+```{r}
+norm_fc_comb_melt_sum_merge <- merge(
+  merge(
+   norm_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance = mean_abundance)],
+   norm_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance = mean_abundance)],
+   by = c('taxon')),
+  norm_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance = mean_abundance)],
+  by = c('taxon'))
+
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR_ratio := FR_mean_abundance / Hs_mean_abundance][, Cl_diff_to_FR_ratio := FR_mean_abundance / Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance - Hs_mean_abundance][, Cl_diff_to_FR := FR_mean_abundance - Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[,similarity := fifelse(abs(Hs_diff_to_FR) > abs(Cl_diff_to_FR), 'Closer to C. lupus', 'Closer to H. sapiens')]
+
+
+norm_fc_comb_melt_sum_merge_melt <- melt(norm_fc_comb_melt_sum_merge[,.(taxon, similarity, Hs_diff_to_FR_ratio, Cl_diff_to_FR_ratio)], id.vars = 1:2)
+norm_fc_comb_melt_sum_merge_melt[value == 'Inf', value := NA]
+norm_fc_comb_melt_sum_merge_melt[value == 'NaN', value := NA]
+
+
+norm_fc_comb_melt_sum <- merge(norm_fc_comb_melt_sum, unique(norm_fc_comb_melt_sum_merge_melt[,.(taxon, similarity)]), by=c('taxon'))
+
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+#norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+#norm_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+norm_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+
+norm_fc_comb_melt_sum_gen <- norm_fc_comb_melt_sum
+norm_fc_comb_melt_sum_gen[,level := t]
+```
+
+
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(norm_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  geom_text(aes(y = mean_abundance * 1.20, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Taxon abundance (ratio)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  ylim(c(0,NA)) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +  facet_wrap(~taxon, scales = 'free')
+  
+
+
+```
+
+```{r, fig.width=22, fig.height=9, eval=F}
+ggplot(norm_fc_comb_melt_sum_merge_melt, 
+       aes(x = taxon, y = value, fill=variable)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  #geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  #geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Relative Similarity (FR_mean_abundance / mean_abundance)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci[-2]) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_wrap(~taxon, scales = 'free')
+
+
+```
+
+
+
+## Species level
+
+```{r, Glom taxa at Species-level}
+ps <- ps.all
+
+n <- 7
+
+t <- rank_names(ps)[n]
+
+## glomerate at n taxonomic level, regardless of lineage
+#if (!all(taxa_names(ps) == data.frame(ps@tax_table$species))) {
+  ps.glom <- tax_glom_fast(ps, rank_level = n, ignore_lineage = T)  
+#} else {
+#  ps.glom <- ps
+#}
+
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## normalize PS object per taxon sums
+ps.glom.norm       <- norm.ps(ps.glom, 'sum')
+
+## top20 taxa from the glomerated at specific tax level
+top.taxa           <- names(sort(taxa_sums(ps.glom.norm), decreasing=TRUE))[1:top]
+
+## add all Gold standard taxa?
+if (add.GS.taxa) {
+  top.taxa  <- unique(c(top.taxa, taxtab.gs[,t]))
+}
+
+## prune normalized taxa
+ps.glom.norm.top   <- prune_taxa(top.taxa, ps.glom.norm)
+## prune taxa
+ps.glom.top        <- prune_taxa(top.taxa, ps.glom)
+
+## get data
+ps.data.glom.top  <- df.from.ps(ps.glom.top,   comb=F)
+ps.data.glom      <- df.from.ps(ps.glom,       comb=F)
+
+## filenames for plots and tables
+filenames <- c(
+  paste0(res.dir, '_top' , top, '_', t, '_ratios'),
+  paste0(res.dir, '_all_', t,           '_ratios') 
+)
+## write tables
+if (writetables){
+ write_tsv(ps.data.glom.top, paste0(res.dir, '/', filenames[1], '.tsv')) 
+ write_tsv(ps.data.glom,     paste0(res.dir, '/', filenames[2], '.tsv')) 
+}
+
+```
+
+```{r}
+
+## Mark GS Taxa with Asterisks
+if (mark.GS.Taxa) {
+  ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]] <- paste0(ps.glom.norm.top@tax_table[,t][ps.glom.norm.top@tax_table[,t] %in% taxtab.gs[,t]], "*")
+}
+
+```
+
+```{r}
+if (merge.non.GS.Taxa) {
+  gs.taxa          <- unique(taxtab.gs[,t])
+  ps.glom.norm.top.merged <- merge.other.Taxa(ps.glom.norm.top, gs.taxa )
+} else {
+  ps.glom.norm.top.merged <- ps.glom.norm.top
+}
+
+```
+
+### Barplot of abundances
+
+```{r, Species-level plot, fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+
+ggtop20    <- plotfun(
+  ps.glom.norm.top.merged,
+                t=t, fill=t) + 
+  theme(legend.position = 'right') +
+  ggtitle(paste0('Top', top, ' ', t))
+
+ggtop20
+
+if (save.Figs){
+  ggsave(paste0(res.dir, '/', filenames[1], '_Vregions.jpg'), width = fig.width.vr, height = fig.height.vr)
+}
+
+
+
+ps.glom.norm.top.spec <- ps.glom.norm.top
+ps.glom.norm.spec     <- ps.glom.norm
+ps.glom.top.spec      <- ps.glom.top
+ps.glom.spec          <- ps.glom
+
+```
+ 
+### Number of Significantly Different Taxa Among *FR*, *H. sapiens* and *C. lupus*
+
+```{r}
+## 
+
+ps      <- ps.glom.spec
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+
+## Run DESeq2 
+de.seq <- phyloseq_to_deseq2(ps, ~source)
+de.seq <- DESeq(de.seq,  test = "Wald", fitType = "parametric", sfType = "poscounts" )
+
+figw = 24
+figh = min(max(nrow(taxtab.DT), 12), 28)
+```
+
+
+```{r}
+#resultsNames(de.seq)
+
+res1 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Homo_sapiens')))
+res1$comparison <- 'FR_VS_Homo_sapiens'
+res1$taxon <- rownames(res1)
+
+res2 <- as.data.frame(results(de.seq, contrast = c('source', 'FR', 'Canis_lupus')))
+res2$comparison <- 'FR_VS_Canis_lupus'
+res2$taxon <- rownames(res2)
+
+res3 <- as.data.frame(results(de.seq, contrast = c('source', 'Homo_sapiens', 'Canis_lupus')))
+res3$comparison <- 'Homo_sapiens_VS_Canis_lupus'
+res3$taxon <- rownames(res3)
+
+res.deseq <- data.table(rbind(res1, res2, res3))
+
+# merge with taxa
+res.deseq <- merge(res.deseq, taxtab.DT, by='taxon', all.x=T)
+
+res.deseq[,is.significant := fifelse(padj <= 0.05 , T, F)]  ## log2FoldChange >= 2 | log2FoldChange <= -2 &
+
+res.deseq$taxon_level <- t
+
+significant_taxa <- res.deseq[is.significant == TRUE]
+sigtaxa_N    <- length(unique(significant_taxa$taxon))
+
+kable(
+  dcast(res.deseq[,.N,by=.(taxon_level, comparison, is.significant)], taxon_level + comparison ~ is.significant, value.var = 'N')
+)
+
+res.deseq.spec <- res.deseq
+```
+
+
+```{r}
+# Filter results for the relevant comparisons
+res_FR_Hsap <- res.deseq[comparison == "FR_VS_Homo_sapiens"]
+res_FR_Clup <- res.deseq[comparison == "FR_VS_Canis_lupus"]
+
+# Ensure the taxon names match between the two comparisons
+setkey(res_FR_Hsap, taxon)
+setkey(res_FR_Clup, taxon)
+
+# Join the two datasets on taxon
+res_combined <- merge(res_FR_Hsap[, .(taxon, l2fc_Hsap = log2FoldChange)],
+                      res_FR_Clup[, .(taxon, l2fc_Clup = log2FoldChange)],
+                      by = "taxon", all = FALSE)
+
+```
+
+### L2FC of Taxa in *FR* vs *H. sapiens* and in *FR* vs *C. lupus*
+```{r, fig.width=14, fig.height=14}
+
+# Add a column to classify similarity
+res_combined[, similarity := fifelse(abs(l2fc_Hsap) < abs(l2fc_Clup), "Closer to H. sapiens", "Closer to C. lupus")]
+
+# Create the scatter plot
+ggplot(res_combined, aes(x = l2fc_Hsap, y = l2fc_Clup, fill = similarity)) +
+  geom_point(size = 3, alpha = 0.7, shape=21) +
+  #geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "gray") +
+  labs(
+    title = "Similarity of FR Taxa to Homo sapiens and Canis lupus",
+    x = "Log2 Fold Change (FR vs H. sapiens)",
+    y = "Log2 Fold Change (FR vs C. lupus)",
+    color = "Similarity"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  scale_color_manual(values = c("Closer to H. sapiens" = "#00AFBB", "Closer to C. lupus" = "#FC4E07"))
+```
+
+
+### *FR* Taxa that are more similar to *H. sapiens* than to *C. lupus*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Hsap <- res_combined[abs(l2fc_Hsap) < abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+
+DT::datatable(similar_to_Hsap,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+res_FR_Hsap
+
+```
+
+
+### *FR* Taxa that are more similar to *C. lupus* than to *H. sapiens*
+```{r}
+# Filter for taxa where FR is more similar to H sapiens than C lupus
+similar_to_Clup <- res_combined[abs(l2fc_Hsap) > abs(l2fc_Clup)]
+```
+
+```{r, eval=FALSE}
+# for .html
+DT::datatable(similar_to_Clup,
+              options = list(pageLength = 10,
+                             autoWidth = TRUE,
+                             dom = 'ftip',
+                             scrollX = TRUE),
+              rownames = FALSE,
+              class = 'table table-striped table-bordered')
+```
+
+```{r}
+## for .pdf 
+similar_to_Clup
+
+```
+
+
+### Heatmap of VST-normalized abundance values
+
+```{r, fig.height=figh, fig.width=figw}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+# Remove lineage, just keep taxon
+vst_normalized_data$taxon <- gsub('.*;', '', vst_normalized_data$taxon)
+
+# Convert to matrix format suitable for pheatmap
+vst_matrix <- as.matrix(vst_normalized_data[, -1, with = FALSE])
+rownames(vst_matrix) <- vst_normalized_data$taxon
+
+# Extract sample information from colData
+sample_info        <- colData(de.seq)$source
+names(sample_info) <- colnames(vst_matrix)
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Define annotation colors
+#annotation_colors <- list(Sample = setNames(rainbow(45), unique(sample_info)))
+
+
+# Define annotation colors using distinct divergent colors
+distinct_colors <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939", "#8c6d31", "#843c39", "#7b4173", "#5254a3", "#9c9ede", "#8ca252", "#bd9e39", "#ad494a", "#a55194", "#6b6ecf", "#b5cf6b", "#e7ba52", "#d6616b", "#ce6dbd", "#9c755f", "#d9d574", "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5", "#8c564b", "#ff7f0e", pal_nejm()(5))
+
+annotation_colors <- list(Sample = setNames(distinct_colors[1:length(unique(sample_info))], unique(sample_info)))
+
+
+# Create heatmap with annotation
+pheatmap(vst_matrix, #[rownames(vst_matrix) %in% significant_taxa$taxon, ],
+         color = heatmap_colors,
+         cluster_rows = TRUE,       # Cluster rows (taxa)
+         cluster_cols = TRUE,       # Cluster columns (samples)
+         show_rownames = TRUE,      # Show row names (taxa)
+         show_colnames = TRUE,      # Show column names (samples)
+         labels_col   = colData(de.seq)$sample_name,
+         fontsize_row = 8,          # Font size for row labels
+         fontsize_col = 8,          # Font size for column labels
+         main = "Heatmap of VST-normalized Taxon Abundances",
+         annotation_col = data.frame(Sample = sample_info),
+         annotation_colors = annotation_colors,
+         fontface_row = "italic")
+
+
+```
+
+
+
+### Heatmap of Log2 FC values
+
+```{r, fig.height=figh, fig.width=figw}
+# Filter for significant taxa
+significant_lfc <- res.deseq #[is.significant == TRUE]
+
+# Reshape data to wide format (taxa as rows, comparisons as columns)
+l2fc_data <- dcast(
+  significant_lfc,
+  taxon ~ comparison,
+  value.var = "log2FoldChange"
+)
+
+# Remove lineage, just keep taxon
+l2fc_data$taxon <- gsub('.*;', '', l2fc_data$taxon)
+
+# Set row names and remove the taxon column
+#l2fc_matrix <- as.matrix(data.frame(l2fc_matrix, row.names = lfc_matrix$taxon)[,-1])
+
+# Convert to matrix format suitable for pheatmap
+l2fc_matrix <- as.matrix(l2fc_data[, -1, with = FALSE])
+rownames(l2fc_matrix) <- l2fc_data$taxon
+
+
+# Define color palette for the heatmap
+heatmap_colors <- colorRampPalette(c("#00AFBB", "white", "#FC4E07"))(100)
+
+# Create heatmap
+pheatmap(
+  l2fc_matrix,
+  color = heatmap_colors,
+  cluster_rows = T,       # Cluster rows (taxa)
+  cluster_cols = F,       # Cluster columns (comparisons)
+  #clustering_distance_rows = "euclidean", # Distance metric for rows
+  #clustering_distance_cols = "euclidean", # Distance metric for columns
+  #clustering_method = "average",    
+  show_rownames = TRUE,      # Show row names (taxa)
+  show_colnames = TRUE,      # Show column names (comparisons)
+  fontsize_row = 8,          # Font size for row labels
+  fontsize_col = 10,         # Font size for column labels
+  main = "Heatmap of Log2FoldChange Values",
+  fontface_row = "italic"    # Italicize row names (taxa)
+)
+
+```
+
+
+```{r}
+# Get VST-normalized matrix from DESeq2 object
+vst_normalized_data <- getVarianceStabilizedData(de.seq)
+
+# Convert to data.table format for easier manipulation
+vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+cnames <- c('taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#
+vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+vst_fc_comb_melt <- melt(vst_fc_comb, id.vars = c(1), variable.name = 'sample', value.name = 'abundance_VST')
+
+vst_fc_comb_melt <- merge(vst_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt[,.(mean_abundance_VST = mean(abundance_VST), sd_abundance_VST   = sd(abundance_VST)), 
+                                         by=.(taxon, source)]
+
+vst_fc_comb_melt_sum_merge <- merge(
+  merge(
+   vst_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance_VST = mean_abundance_VST)],
+   vst_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance_VST = mean_abundance_VST)],
+   by = c('taxon')),
+  vst_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance_VST = mean_abundance_VST)],
+  by = c('taxon'))
+
+vst_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance_VST - Hs_mean_abundance_VST][, Cl_diff_to_FR := FR_mean_abundance_VST - Cl_mean_abundance_VST]
+
+vst_fc_comb_melt_sum_merge[,diff_ratio := abs(Hs_diff_to_FR) / abs(Cl_diff_to_FR)]
+
+```
+
+
+```{r}
+vst_fc_comb_melt_sum <- merge(res_combined, vst_fc_comb_melt_sum, by='taxon')
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+vst_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+vst_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+
+vst_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+vst_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+## to this for each chuunk
+```
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on VST-norm. Abundance
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(vst_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance_VST, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance_VST - sd_abundance_VST, ymax = mean_abundance_VST + sd_abundance_VST), position = 'dodge') +
+  geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "VST-normalized taxon abundance",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    strip.text.x = element_text(size = 12, face='italic'),
+    axis.text.x = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_grid(cols=vars(taxon))
+  
+
+
+```
+
+
+
+### Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on Relative Abundance
+```{r}
+ps      <- ps.glom.norm.top
+taxtab  <- data.frame(ps@tax_table)
+otutab  <- data.frame(ps@otu_table)
+sampdat <- data.frame(ps@sam_data)
+
+taxtab.DT <- data.table(taxtab, taxon=rownames(taxtab))
+otutab.DT <- data.table(otutab, taxon=rownames(otutab))
+ps.data.ps.glom.norm.top <- merge(taxtab, otutab, by=0)
+colnames(ps.data.ps.glom.norm.top)[1] <- 'taxon'
+
+#ps.data.glom.top.norm[,-c(1:(n+1))] <- scale(ps.data.glom.top.norm[,-c(1:(n+1))], center = F, scale = colSums(ps.data.glom.top.norm[,-c(1:(n+1))]))
+
+ps.data.ps.glom.norm.top <- data.table(ps.data.ps.glom.norm.top)
+
+# Convert to data.table format for easier manipulation
+#vst_normalized_data <- data.table(as.data.frame(vst_normalized_data), keep.rownames = "taxon")
+
+#cnames <- c(t'taxon', grep('human|canis|FR', colnames(vst_normalized_data), value = T))
+
+#vst_fc_comb      <- vst_normalized_data[,..cnames]
+
+norm_fc_comb_melt <- melt(ps.data.ps.glom.norm.top, id.vars = c(1:(n+1)), variable.name = 'sample', value.name = 'abundance')
+
+norm_fc_comb_melt <- merge(norm_fc_comb_melt, metadata[,c('sample', 'name', 'source')], by='sample')
+
+norm_fc_comb_melt <- norm_fc_comb_melt[source %in% c('Homo_sapiens', 'FR', 'Canis_lupus')]
+
+norm_fc_comb_melt_sum <- norm_fc_comb_melt[,.(mean_abundance = mean(abundance), sd_abundance   = sd(abundance)), 
+                                         by=.(taxon, source)]
+
+norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+norm_fc_comb_melt_sum[,taxon := factor(taxon)]
+```
+
+
+```{r}
+norm_fc_comb_melt_sum_merge <- merge(
+  merge(
+   norm_fc_comb_melt_sum[source == 'FR', .(taxon, FR_mean_abundance = mean_abundance)],
+   norm_fc_comb_melt_sum[source == 'Homo_sapiens', .(taxon, Hs_mean_abundance = mean_abundance)],
+   by = c('taxon')),
+  norm_fc_comb_melt_sum[source == 'Canis_lupus', .(taxon, Cl_mean_abundance = mean_abundance)],
+  by = c('taxon'))
+
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR_ratio := FR_mean_abundance / Hs_mean_abundance][, Cl_diff_to_FR_ratio := FR_mean_abundance / Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[, Hs_diff_to_FR := FR_mean_abundance - Hs_mean_abundance][, Cl_diff_to_FR := FR_mean_abundance - Cl_mean_abundance]
+
+norm_fc_comb_melt_sum_merge[,similarity := fifelse(abs(Hs_diff_to_FR) > abs(Cl_diff_to_FR), 'Closer to C. lupus', 'Closer to H. sapiens')]
+
+
+norm_fc_comb_melt_sum_merge_melt <- melt(norm_fc_comb_melt_sum_merge[,.(taxon, similarity, Hs_diff_to_FR_ratio, Cl_diff_to_FR_ratio)], id.vars = 1:2)
+norm_fc_comb_melt_sum_merge_melt[value == 'Inf', value := NA]
+norm_fc_comb_melt_sum_merge_melt[value == 'NaN', value := NA]
+
+
+norm_fc_comb_melt_sum <- merge(norm_fc_comb_melt_sum, unique(norm_fc_comb_melt_sum_merge_melt[,.(taxon, similarity)]), by=c('taxon'))
+
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to C. lupus'   & source == 'FR',  'Cl', '')]
+norm_fc_comb_melt_sum[,text := fifelse(similarity == 'Closer to H. sapiens' & source == 'FR', 'Hs', text)]
+
+#norm_fc_comb_melt_sum[,source := factor(source, levels = c('Homo_sapiens', 'FR', 'Canis_lupus'))]
+#norm_fc_comb_melt_sum <- vst_fc_comb_melt_sum[taxon %in% na.omit(top.taxa)]
+
+norm_fc_comb_melt_sum[,taxon := gsub('.*;', '', taxon)]
+
+norm_fc_comb_melt_sum_spec <- norm_fc_comb_melt_sum
+norm_fc_comb_melt_sum_spec[,level := t]
+```
+
+
+```{r, fig.width=22, fig.height=9}
+# Create the scatter plot
+
+ggplot(norm_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  geom_text(aes(y = mean_abundance * 1.20, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Taxon abundance (ratio)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  ylim(c(0,NA)) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +  facet_wrap(~taxon, scales = 'free')
+  
+
+
+```
+
+```{r, fig.width=22, fig.height=9, eval=F}
+ggplot(norm_fc_comb_melt_sum_merge_melt, 
+       aes(x = taxon, y = value, fill=variable)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  #geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  #geom_text(aes(y = mean_abundance_VST + 2, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Relative Similarity (FR_mean_abundance / mean_abundance)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci[-2]) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  facet_wrap(~taxon, scales = 'free')
+
+
+```
+
+
+## Summary of Similarity of *FR* Taxa to *Homo sapiens* and *Canis lupus* based on Relative Abundance
+
+```{r}
+norm_fc_comb_melt_sum <- rbind(fill=TRUE,
+  norm_fc_comb_melt_sum_phy,
+  norm_fc_comb_melt_sum_class,
+  norm_fc_comb_melt_sum_ord,
+  norm_fc_comb_melt_sum_fam,
+  norm_fc_comb_melt_sum_gen,
+  norm_fc_comb_melt_sum_spec
+)
+
+
+
+ggplot(norm_fc_comb_melt_sum, 
+       aes(x = source, y = mean_abundance, fill = source)) +
+  #geom_point(size = 3, alpha = 0.7, shape=21) +
+  geom_col(position = 'dodge', color='black') +
+  geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance), position = 'dodge') +
+  geom_text(aes(y = mean_abundance * 1.20, label = text), position = 'dodge', size = 5, fontface='bold') +
+  labs(
+    title = NULL,# "",
+    x = NULL, #"Log2 Fold Change (FR vs H. sapiens)",
+    y = "Taxon abundance (ratio)",
+    color = "Similarity"
+  ) +
+  scale_fill_manual(values = pal.gigasci) +
+  ylim(c(0,NA)) +
+  coord_flip() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text =  element_text(size = 12, face='italic'),
+    strip.text.x = element_text(size = 14, face='italic'),
+    axis.text.y = element_blank(),
+    text = element_text(size = 12),
+    plot.title = element_text(hjust = 0.5)
+  ) +  facet_wrap(~level, scales = 'free')
+```
+
+
+```{r}
+
+
+fwrite(norm_fc_comb_melt_sum, paste0(res.dir, '/abund.glom.norm.top.all.ranks.tsv'), sep = '\t')
+
+```
+
+
+
+
+
+
+# B-diversity Analysis using sample-wise *Bray-Curtis* distances
+
+
+## Non-metric Multi-Dimensional Scaling *(NMDS)* {.tabset}
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+####
+distance <- "bray" #"robust.aitchison"
+norm     <-  NA # 'sum' # NA #
+
+
+samples.to.keep <- plyr::rbind.fill(rownames(
+  metadata[#!grepl('NovaSeq', metadata$sample) &
+           #metadata$workflow == 'minitax'   &
+           #metadata$db       == 'all_NCBI_genomes', 
+           ]
+  
+))
+
+ps <- prune_samples(samples.to.keep, ps.all)
+
+
+### 
+ps.prop <- norm.ps(ps, norm = norm) ## rlog normalized species counts
+## no prior normalization (before distance calculation, there is a normalization)
+
+invisible(
+  capture.output(
+    suppressWarnings(
+      suppressMessages(
+        ord.nmds.bray <- ordinate(ps.prop, method = "NMDS", distance = distance)
+      )
+    )
+  )
+)
+
+#nmds.envfit  <- envfit(ord.nmds.bray, sampdat, permutations = 999) # this fits environmental vectors
+#nmds.spp.fit <- envfit(ord.nmds.bray, otutab_t, permutations = 999) # this fits species vectors
+
+
+bray.df <- plot_ordination(ps.prop, ord.nmds.bray, label="sample", title="Bray NMDS", 
+                           justDF = T)
+bray.df$sample_ID <- paste(bray.df$sample_name, bray.df$platform, sep='_')
+bray.df$group     <- paste(bray.df$Vregion,     bray.df$platform, sep='_')
+```
+
+
+### NMDS v1: color = DNA_isolation_method; shape = Vregion
+```{r, fig.width=12, fig.height=9}
+scatplot <- function(bray.df) {
+  ggplot(bray.df, 
+         aes(NMDS1, NMDS2)) +
+    geom_point(aes(shape      = source, #sequencing_date,
+                   color      = primer), size=2) +
+    geom_text_repel(aes(label = sample_name, color=primer)) +     
+    #theme_ipsum() 
+    theme_bw() 
+} 
+
+pn1 <- scatplot(bray.df[,])
+pn1
+
+```
+
+### NMDS v2: color = Vregion; shape = DNA_isolation_method
+```{r, fig.width=12, fig.height=9}
+scatplot <- function(bray.df) {
+  ggplot(bray.df, 
+         aes(NMDS1, NMDS2)) +
+    geom_point(aes(shape      = primer, #sequencing_date,
+                   color      = source), size=2) +
+    geom_text_repel(aes(label = sample_name, color=source)) +     
+    #theme_ipsum() 
+    theme_bw()
+} 
+
+pn2 <- scatplot(bray.df[,])
+pn2
+```
+
+
+
+
+
+
+
+```{r}
+save.image(paste0(res.dir, '.RData'))
+```
+
+

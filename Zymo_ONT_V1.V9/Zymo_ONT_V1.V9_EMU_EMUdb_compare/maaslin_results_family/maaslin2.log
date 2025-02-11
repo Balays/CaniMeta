@@ -1,0 +1,262 @@
+2025-01-24 15:03:57.194677 INFO::Writing function arguments to log file
+2025-01-24 15:03:57.195831 DEBUG::Function arguments
+2025-01-24 15:03:57.196855 DEBUG::Output folder: Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family
+2025-01-24 15:03:57.198169 DEBUG::Min Abundance: 0.001000
+2025-01-24 15:03:57.199793 DEBUG::Min Prevalence: 0.000000
+2025-01-24 15:03:57.200516 DEBUG::Normalization: TSS
+2025-01-24 15:03:57.201189 DEBUG::Transform: LOG
+2025-01-24 15:03:57.201796 DEBUG::Analysis method: LM
+2025-01-24 15:03:57.202583 DEBUG::Max significance: 0.250000
+2025-01-24 15:03:57.20342 DEBUG::Random effects:
+2025-01-24 15:03:57.204237 DEBUG::Fixed effects: source
+2025-01-24 15:03:57.205047 DEBUG::Correction method: BH
+2025-01-24 15:03:57.206079 DEBUG::Standardize: TRUE
+2025-01-24 15:03:57.20698 DEBUG::Cores: 1
+2025-01-24 15:03:57.207795 INFO::Verifying options selected are valid
+2025-01-24 15:03:57.208688 INFO::Determining format of input files
+2025-01-24 15:03:57.209577 INFO::Input format is data samples as rows and metadata samples as rows
+2025-01-24 15:03:57.211219 DEBUG::A total of 27 samples were found in both the data and metadata
+2025-01-24 15:03:57.211781 DEBUG::Reordering data/metadata to use same sample ordering
+2025-01-24 15:03:57.212826 INFO::Formula for fixed effects: expr ~  source
+2025-01-24 15:03:57.213843 INFO::Filter data based on min abundance and min prevalence
+2025-01-24 15:03:57.214876 INFO::Total samples in data: 27
+2025-01-24 15:03:57.21606 INFO::Min samples required with min abundance for a feature not to be filtered: 0.000000
+2025-01-24 15:03:57.217907 INFO::Total filtered features: 0
+2025-01-24 15:03:57.218926 INFO::Filtered feature names from abundance and prevalence filtering:
+2025-01-24 15:03:57.224126 INFO::Total filtered features with variance filtering: 1
+2025-01-24 15:03:57.225073 INFO::Filtered feature names from variance filtering: ID
+2025-01-24 15:03:57.226031 INFO::Running selected normalization method: TSS
+2025-01-24 15:03:57.227472 INFO::Applying z-score to standardize continuous metadata
+2025-01-24 15:03:57.230347 INFO::Running selected transform method: LOG
+2025-01-24 15:03:57.232135 INFO::Running selected analysis method: LM
+2025-01-24 15:03:57.233194 INFO::Fitting model to feature number 1, Bacteria.Actinobacteria.Actinobacteria.Bifidobacteriales.Bifidobacteriaceae
+2025-01-24 15:03:57.235374 INFO::Fitting model to feature number 2, Bacteria.Actinobacteria.Actinobacteria.Corynebacteriales.Segniliparaceae
+2025-01-24 15:03:57.23733 INFO::Fitting model to feature number 3, Bacteria.Actinobacteria.Actinobacteria.Micrococcales.Cellulomonadaceae
+2025-01-24 15:03:57.239163 INFO::Fitting model to feature number 4, Bacteria.Actinobacteria.Actinobacteria.Propionibacteriales.Propionibacteriaceae
+2025-01-24 15:03:57.240991 INFO::Fitting model to feature number 5, Bacteria.Actinobacteria.Actinobacteria.Streptomycetales.Streptomycetaceae
+2025-01-24 15:03:57.242805 INFO::Fitting model to feature number 6, Bacteria.Actinobacteria.Coriobacteriia.Coriobacteriales.Atopobiaceae
+2025-01-24 15:03:57.244602 INFO::Fitting model to feature number 7, Bacteria.Actinobacteria.Coriobacteriia.Coriobacteriales.Coriobacteriaceae
+2025-01-24 15:03:57.246405 INFO::Fitting model to feature number 8, Bacteria.Actinobacteria.Coriobacteriia.Eggerthellales.Eggerthellaceae
+2025-01-24 15:03:57.248264 INFO::Fitting model to feature number 9, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Bacteroidaceae
+2025-01-24 15:03:57.250075 INFO::Fitting model to feature number 10, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Barnesiellaceae
+2025-01-24 15:03:57.251871 INFO::Fitting model to feature number 11, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Muribaculaceae
+2025-01-24 15:03:57.253738 INFO::Fitting model to feature number 12, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Odoribacteraceae
+2025-01-24 15:03:57.255535 INFO::Fitting model to feature number 13, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Porphyromonadaceae
+2025-01-24 15:03:57.257339 INFO::Fitting model to feature number 14, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Prevotellaceae
+2025-01-24 15:03:57.259156 INFO::Fitting model to feature number 15, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Rikenellaceae
+2025-01-24 15:03:57.260948 INFO::Fitting model to feature number 16, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Tannerellaceae
+2025-01-24 15:03:57.262749 INFO::Fitting model to feature number 17, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.missing
+2025-01-24 15:03:57.264583 INFO::Fitting model to feature number 18, Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.unassigned
+2025-01-24 15:03:57.266405 INFO::Fitting model to feature number 19, Bacteria.Candidatus.Melainabacteria.unassigned.Vampirovibrionales.unassigned
+2025-01-24 15:03:57.268198 INFO::Fitting model to feature number 20, Bacteria.Cyanobacteria.Gloeobacteria.Gloeobacterales.Gloeobacteraceae
+2025-01-24 15:03:57.269999 INFO::Fitting model to feature number 21, Bacteria.Cyanobacteria.unassigned.Oscillatoriales.Oscillatoriaceae
+2025-01-24 15:03:57.271791 INFO::Fitting model to feature number 22, Bacteria.Deferribacteres.Deferribacteres.Deferribacterales.Deferribacteraceae
+2025-01-24 15:03:57.27358 INFO::Fitting model to feature number 23, Bacteria.Firmicutes.Bacilli.Bacillales.Bacillaceae
+2025-01-24 15:03:57.275791 INFO::Fitting model to feature number 24, Bacteria.Firmicutes.Bacilli.Bacillales.Listeriaceae
+2025-01-24 15:03:57.277629 INFO::Fitting model to feature number 25, Bacteria.Firmicutes.Bacilli.Bacillales.Paenibacillaceae
+2025-01-24 15:03:57.279448 INFO::Fitting model to feature number 26, Bacteria.Firmicutes.Bacilli.Bacillales.Planococcaceae
+2025-01-24 15:03:57.281252 INFO::Fitting model to feature number 27, Bacteria.Firmicutes.Bacilli.Bacillales.Staphylococcaceae
+2025-01-24 15:03:57.283168 INFO::Fitting model to feature number 28, Bacteria.Firmicutes.Bacilli.Bacillales.Thermoactinomycetaceae
+2025-01-24 15:03:57.285098 INFO::Fitting model to feature number 29, Bacteria.Firmicutes.Bacilli.Lactobacillales.Enterococcaceae
+2025-01-24 15:03:57.286932 INFO::Fitting model to feature number 30, Bacteria.Firmicutes.Bacilli.Lactobacillales.Lactobacillaceae
+2025-01-24 15:03:57.288766 INFO::Fitting model to feature number 31, Bacteria.Firmicutes.Bacilli.Lactobacillales.Streptococcaceae
+2025-01-24 15:03:57.290605 INFO::Fitting model to feature number 32, Bacteria.Firmicutes.Clostridia.Clostridiales.Caldicoprobacteraceae
+2025-01-24 15:03:57.292532 INFO::Fitting model to feature number 33, Bacteria.Firmicutes.Clostridia.Clostridiales.Catabacteriaceae
+2025-01-24 15:03:57.294336 INFO::Fitting model to feature number 34, Bacteria.Firmicutes.Clostridia.Clostridiales.Christensenellaceae
+2025-01-24 15:03:57.296133 INFO::Fitting model to feature number 35, Bacteria.Firmicutes.Clostridia.Clostridiales.Clostridiaceae
+2025-01-24 15:03:57.298015 INFO::Fitting model to feature number 36, Bacteria.Firmicutes.Clostridia.Clostridiales.Clostridiales.Family.XII..Incertae.Sedis
+2025-01-24 15:03:57.299942 INFO::Fitting model to feature number 37, Bacteria.Firmicutes.Clostridia.Clostridiales.Clostridiales.Family.XIII..Incertae.Sedis
+2025-01-24 15:03:57.301775 INFO::Fitting model to feature number 38, Bacteria.Firmicutes.Clostridia.Clostridiales.Defluviitaleaceae
+2025-01-24 15:03:57.303581 INFO::Fitting model to feature number 39, Bacteria.Firmicutes.Clostridia.Clostridiales.Eubacteriaceae
+2025-01-24 15:03:57.305568 INFO::Fitting model to feature number 40, Bacteria.Firmicutes.Clostridia.Clostridiales.Gracilibacteraceae
+2025-01-24 15:03:57.307578 INFO::Fitting model to feature number 41, Bacteria.Firmicutes.Clostridia.Clostridiales.Hungateiclostridiaceae
+2025-01-24 15:03:57.309388 INFO::Fitting model to feature number 42, Bacteria.Firmicutes.Clostridia.Clostridiales.Lachnospiraceae
+2025-01-24 15:03:57.311233 INFO::Fitting model to feature number 43, Bacteria.Firmicutes.Clostridia.Clostridiales.Oscillospiraceae
+2025-01-24 15:03:57.313155 INFO::Fitting model to feature number 44, Bacteria.Firmicutes.Clostridia.Clostridiales.Peptococcaceae
+2025-01-24 15:03:57.31505 INFO::Fitting model to feature number 45, Bacteria.Firmicutes.Clostridia.Clostridiales.Peptostreptococcaceae
+2025-01-24 15:03:57.316972 INFO::Fitting model to feature number 46, Bacteria.Firmicutes.Clostridia.Clostridiales.Ruminococcaceae
+2025-01-24 15:03:57.318926 INFO::Fitting model to feature number 47, Bacteria.Firmicutes.Clostridia.Clostridiales.Vallitaleaceae
+2025-01-24 15:03:57.320769 INFO::Fitting model to feature number 48, Bacteria.Firmicutes.Clostridia.Clostridiales.missing
+2025-01-24 15:03:57.322585 INFO::Fitting model to feature number 49, Bacteria.Firmicutes.Clostridia.Clostridiales.unassigned
+2025-01-24 15:03:57.32518 INFO::Fitting model to feature number 50, Bacteria.Firmicutes.Clostridia.Thermoanaerobacterales.Thermoanaerobacterales.Family.IV..Incertae.Sedis
+2025-01-24 15:03:57.32706 INFO::Fitting model to feature number 51, Bacteria.Firmicutes.Erysipelotrichia.Erysipelotrichales.Erysipelotrichaceae
+2025-01-24 15:03:57.329057 INFO::Fitting model to feature number 52, Bacteria.Firmicutes.Negativicutes.Acidaminococcales.Acidaminococcaceae
+2025-01-24 15:03:57.330969 INFO::Fitting model to feature number 53, Bacteria.Firmicutes.Negativicutes.Selenomonadales.Selenomonadaceae
+2025-01-24 15:03:57.333854 INFO::Fitting model to feature number 54, Bacteria.Firmicutes.Negativicutes.Selenomonadales.Sporomusaceae
+2025-01-24 15:03:57.335866 INFO::Fitting model to feature number 55, Bacteria.Firmicutes.Negativicutes.Veillonellales.Veillonellaceae
+2025-01-24 15:03:57.337807 INFO::Fitting model to feature number 56, Bacteria.Firmicutes.Tissierellia.Tissierellales.Gottschalkiaceae
+2025-01-24 15:03:57.339719 INFO::Fitting model to feature number 57, Bacteria.Firmicutes.unassigned.unassigned.unassigned
+2025-01-24 15:03:57.341541 INFO::Fitting model to feature number 58, Bacteria.Fusobacteria.Fusobacteriia.Fusobacteriales.Fusobacteriaceae
+2025-01-24 15:03:57.343366 INFO::Fitting model to feature number 59, Bacteria.Lentisphaerae.Lentisphaeria.Victivallales.Victivallaceae
+2025-01-24 15:03:57.345186 INFO::Fitting model to feature number 60, Bacteria.Lentisphaerae.Lentisphaeria.Victivallales.unassigned
+2025-01-24 15:03:57.346989 INFO::Fitting model to feature number 61, Bacteria.Proteobacteria.Alphaproteobacteria.Caulobacterales.Caulobacteraceae
+2025-01-24 15:03:57.349171 INFO::Fitting model to feature number 62, Bacteria.Proteobacteria.Alphaproteobacteria.Kiloniellales.Kiloniellaceae
+2025-01-24 15:03:57.351054 INFO::Fitting model to feature number 63, Bacteria.Proteobacteria.Alphaproteobacteria.Rhizobiales.Aurantimonadaceae
+2025-01-24 15:03:57.352871 INFO::Fitting model to feature number 64, Bacteria.Proteobacteria.Alphaproteobacteria.Rhizobiales.Cohaesibacteraceae
+2025-01-24 15:03:57.354747 INFO::Fitting model to feature number 65, Bacteria.Proteobacteria.Alphaproteobacteria.Rhizobiales.Methylocystaceae
+2025-01-24 15:03:57.356596 INFO::Fitting model to feature number 66, Bacteria.Proteobacteria.Alphaproteobacteria.Rhizobiales.Rhizobiaceae
+2025-01-24 15:03:57.358595 INFO::Fitting model to feature number 67, Bacteria.Proteobacteria.Alphaproteobacteria.Rhodobacterales.Rhodobacteraceae
+2025-01-24 15:03:57.360436 INFO::Fitting model to feature number 68, Bacteria.Proteobacteria.Alphaproteobacteria.Rhodospirillales.Acetobacteraceae
+2025-01-24 15:03:57.362242 INFO::Fitting model to feature number 69, Bacteria.Proteobacteria.Alphaproteobacteria.Rhodospirillales.Rhodospirillaceae
+2025-01-24 15:03:57.364186 INFO::Fitting model to feature number 70, Bacteria.Proteobacteria.Alphaproteobacteria.Sneathiellales.Sneathiellaceae
+2025-01-24 15:03:57.366565 INFO::Fitting model to feature number 71, Bacteria.Proteobacteria.Betaproteobacteria.Burkholderiales.Oxalobacteraceae
+2025-01-24 15:03:57.368594 INFO::Fitting model to feature number 72, Bacteria.Proteobacteria.Betaproteobacteria.Burkholderiales.Sutterellaceae
+2025-01-24 15:03:57.370425 INFO::Fitting model to feature number 73, Bacteria.Proteobacteria.Deltaproteobacteria.Bradymonadales.unassigned
+2025-01-24 15:03:57.372249 INFO::Fitting model to feature number 74, Bacteria.Proteobacteria.Deltaproteobacteria.Desulfobacterales.Desulfobacteraceae
+2025-01-24 15:03:57.374137 INFO::Fitting model to feature number 75, Bacteria.Proteobacteria.Deltaproteobacteria.Desulfovibrionales.Desulfovibrionaceae
+2025-01-24 15:03:57.375979 INFO::Fitting model to feature number 76, Bacteria.Proteobacteria.Epsilonproteobacteria.Campylobacterales.Campylobacteraceae
+2025-01-24 15:03:57.37779 INFO::Fitting model to feature number 77, Bacteria.Proteobacteria.Gammaproteobacteria.Aeromonadales.Succinivibrionaceae
+2025-01-24 15:03:57.379674 INFO::Fitting model to feature number 78, Bacteria.Proteobacteria.Gammaproteobacteria.Enterobacterales.Enterobacteriaceae
+2025-01-24 15:03:57.381905 INFO::Fitting model to feature number 79, Bacteria.Proteobacteria.Gammaproteobacteria.Pasteurellales.Pasteurellaceae
+2025-01-24 15:03:57.38389 INFO::Fitting model to feature number 80, Bacteria.Proteobacteria.Gammaproteobacteria.Pseudomonadales.Pseudomonadaceae
+2025-01-24 15:03:57.385804 INFO::Fitting model to feature number 81, Bacteria.Synergistetes.Synergistia.Synergistales.Synergistaceae
+2025-01-24 15:03:57.387623 INFO::Fitting model to feature number 82, Bacteria.Tenericutes.Mollicutes.Acholeplasmatales.Acholeplasmataceae
+2025-01-24 15:03:57.389437 INFO::Fitting model to feature number 83, Bacteria.Tenericutes.Mollicutes.Anaeroplasmatales.Anaeroplasmataceae
+2025-01-24 15:03:57.391227 INFO::Fitting model to feature number 84, Bacteria.Tenericutes.Mollicutes.Mycoplasmatales.Mycoplasmataceae
+2025-01-24 15:03:57.393006 INFO::Fitting model to feature number 85, Bacteria.Verrucomicrobia.Verrucomicrobiae.Verrucomicrobiales.Akkermansiaceae
+2025-01-24 15:03:57.400741 INFO::Counting total values for each feature
+2025-01-24 15:03:57.404924 INFO::Writing filtered data to file Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/features/filtered_data.tsv
+2025-01-24 15:03:57.410194 INFO::Writing filtered, normalized data to file Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/features/filtered_data_norm.tsv
+2025-01-24 15:03:57.415528 INFO::Writing filtered, normalized, transformed data to file Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/features/filtered_data_norm_transformed.tsv
+2025-01-24 15:03:57.421685 WARNING::Deleting existing residuals file: Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/fits/residuals.rds
+2025-01-24 15:03:57.422888 INFO::Writing residuals to file Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/fits/residuals.rds
+2025-01-24 15:03:57.424562 WARNING::Deleting existing fitted file: Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/fits/fitted.rds
+2025-01-24 15:03:57.425749 INFO::Writing fitted values to file Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/fits/fitted.rds
+2025-01-24 15:03:57.427112 INFO::Writing all results to file (ordered by increasing q-values): Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/all_results.tsv
+2025-01-24 15:03:57.430666 INFO::Writing the significant results (those which are less than or equal to the threshold of 0.250000 ) to file (ordered by increasing q-values): Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/significant_results.tsv
+2025-01-24 15:03:57.434149 INFO::Writing heatmap of significant results to file: Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family/heatmap.pdf
+2025-01-24 15:03:57.481037 INFO::Writing association plots (one for each significant association) to output folder: Zymo_ONT_V1.V9_EMU_EMUdb_compare/maaslin_results_family
+2025-01-24 15:03:57.483843 INFO::Plotting associations from most to least significant, grouped by metadata
+2025-01-24 15:03:57.484943 INFO::Plotting data for metadata number 1, source
+2025-01-24 15:03:57.486487 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Christensenellaceae
+2025-01-24 15:03:57.558735 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Christensenellaceae
+2025-01-24 15:03:57.63659 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.missing
+2025-01-24 15:03:57.706343 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Lactobacillales.Streptococcaceae
+2025-01-24 15:03:57.778054 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Clostridiales.Family.XIII..Incertae.Sedis
+2025-01-24 15:03:57.851323 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Hungateiclostridiaceae
+2025-01-24 15:03:57.922612 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Oscillospiraceae
+2025-01-24 15:03:58.002718 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Vallitaleaceae
+2025-01-24 15:03:58.08442 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Vallitaleaceae
+2025-01-24 15:03:58.155897 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Hungateiclostridiaceae
+2025-01-24 15:03:58.228248 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Catabacteriaceae
+2025-01-24 15:03:58.301186 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Peptostreptococcaceae
+2025-01-24 15:03:58.378241 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Negativicutes.Selenomonadales.Selenomonadaceae
+2025-01-24 15:03:58.447922 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Lactobacillales.Lactobacillaceae
+2025-01-24 15:03:58.517673 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.unassigned
+2025-01-24 15:03:58.58695 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Ruminococcaceae
+2025-01-24 15:03:58.65971 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Rikenellaceae
+2025-01-24 15:03:58.740585 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Lachnospiraceae
+2025-01-24 15:03:58.812534 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Oscillospiraceae
+2025-01-24 15:03:58.884788 INFO::Creating boxplot for categorical data, source vs Bacteria.Candidatus.Melainabacteria.unassigned.Vampirovibrionales.unassigned
+2025-01-24 15:03:58.959445 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Catabacteriaceae
+2025-01-24 15:03:59.031696 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Negativicutes.Acidaminococcales.Acidaminococcaceae
+2025-01-24 15:03:59.11051 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Negativicutes.Acidaminococcales.Acidaminococcaceae
+2025-01-24 15:03:59.181105 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Peptococcaceae
+2025-01-24 15:03:59.252214 INFO::Creating boxplot for categorical data, source vs Bacteria.Candidatus.Melainabacteria.unassigned.Vampirovibrionales.unassigned
+2025-01-24 15:03:59.324491 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Odoribacteraceae
+2025-01-24 15:03:59.400406 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.missing
+2025-01-24 15:03:59.481238 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Peptostreptococcaceae
+2025-01-24 15:03:59.553429 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Eubacteriaceae
+2025-01-24 15:03:59.627669 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Tannerellaceae
+2025-01-24 15:03:59.699733 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Betaproteobacteria.Burkholderiales.Oxalobacteraceae
+2025-01-24 15:03:59.770625 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Betaproteobacteria.Burkholderiales.Oxalobacteraceae
+2025-01-24 15:03:59.848364 INFO::Creating boxplot for categorical data, source vs Bacteria.Fusobacteria.Fusobacteriia.Fusobacteriales.Fusobacteriaceae
+2025-01-24 15:03:59.919606 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Lactobacillales.Enterococcaceae
+2025-01-24 15:03:59.992258 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Lactobacillales.Lactobacillaceae
+2025-01-24 15:04:00.066345 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Epsilonproteobacteria.Campylobacterales.Campylobacteraceae
+2025-01-24 15:04:00.138736 INFO::Creating boxplot for categorical data, source vs Bacteria.Synergistetes.Synergistia.Synergistales.Synergistaceae
+2025-01-24 15:04:00.217495 INFO::Creating boxplot for categorical data, source vs Bacteria.Synergistetes.Synergistia.Synergistales.Synergistaceae
+2025-01-24 15:04:00.288191 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Barnesiellaceae
+2025-01-24 15:04:00.357501 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Peptococcaceae
+2025-01-24 15:04:00.429498 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Gracilibacteraceae
+2025-01-24 15:04:00.5022 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Gracilibacteraceae
+2025-01-24 15:04:00.580873 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.unassigned
+2025-01-24 15:04:00.651375 INFO::Creating boxplot for categorical data, source vs Bacteria.Lentisphaerae.Lentisphaeria.Victivallales.unassigned
+2025-01-24 15:04:00.719587 INFO::Creating boxplot for categorical data, source vs Bacteria.Lentisphaerae.Lentisphaeria.Victivallales.unassigned
+2025-01-24 15:04:00.79345 INFO::Creating boxplot for categorical data, source vs Bacteria.Deferribacteres.Deferribacteres.Deferribacterales.Deferribacteraceae
+2025-01-24 15:04:00.870535 INFO::Creating boxplot for categorical data, source vs Bacteria.Verrucomicrobia.Verrucomicrobiae.Verrucomicrobiales.Akkermansiaceae
+2025-01-24 15:04:00.940546 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.unassigned
+2025-01-24 15:04:01.011755 INFO::Creating boxplot for categorical data, source vs Bacteria.Tenericutes.Mollicutes.Acholeplasmatales.Acholeplasmataceae
+2025-01-24 15:04:01.084226 INFO::Creating boxplot for categorical data, source vs Bacteria.Tenericutes.Mollicutes.Acholeplasmatales.Acholeplasmataceae
+2025-01-24 15:04:01.155287 INFO::Creating boxplot for categorical data, source vs Bacteria.Verrucomicrobia.Verrucomicrobiae.Verrucomicrobiales.Akkermansiaceae
+2025-01-24 15:04:01.234416 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Lachnospiraceae
+2025-01-24 15:04:01.307774 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Tannerellaceae
+2025-01-24 15:04:01.377967 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhizobiales.Cohaesibacteraceae
+2025-01-24 15:04:01.450899 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Ruminococcaceae
+2025-01-24 15:04:01.523627 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Erysipelotrichia.Erysipelotrichales.Erysipelotrichaceae
+2025-01-24 15:04:01.603911 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.missing
+2025-01-24 15:04:01.673966 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Negativicutes.Selenomonadales.Selenomonadaceae
+2025-01-24 15:04:01.744128 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Kiloniellales.Kiloniellaceae
+2025-01-24 15:04:01.81397 INFO::Creating boxplot for categorical data, source vs Bacteria.Tenericutes.Mollicutes.Anaeroplasmatales.Anaeroplasmataceae
+2025-01-24 15:04:01.887088 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Clostridiaceae
+2025-01-24 15:04:01.966406 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Bacteroidaceae
+2025-01-24 15:04:02.039447 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Barnesiellaceae
+2025-01-24 15:04:02.119162 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Lactobacillales.Streptococcaceae
+2025-01-24 15:04:02.191932 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Prevotellaceae
+2025-01-24 15:04:02.263716 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Rikenellaceae
+2025-01-24 15:04:02.38038 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Prevotellaceae
+2025-01-24 15:04:02.455341 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Clostridiaceae
+2025-01-24 15:04:02.526227 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Bacteroidaceae
+2025-01-24 15:04:02.596757 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhizobiales.Methylocystaceae
+2025-01-24 15:04:02.672577 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Gammaproteobacteria.Aeromonadales.Succinivibrionaceae
+2025-01-24 15:04:02.758216 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Betaproteobacteria.Burkholderiales.Sutterellaceae
+2025-01-24 15:04:02.831817 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Clostridiales.Family.XIII..Incertae.Sedis
+2025-01-24 15:04:02.903869 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.missing
+2025-01-24 15:04:02.97384 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Deltaproteobacteria.Desulfovibrionales.Desulfovibrionaceae
+2025-01-24 15:04:03.044419 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhodospirillales.Rhodospirillaceae
+2025-01-24 15:04:03.126858 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.unassigned.unassigned.unassigned
+2025-01-24 15:04:03.198602 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.unassigned.unassigned.unassigned
+2025-01-24 15:04:03.268834 INFO::Creating boxplot for categorical data, source vs Bacteria.Lentisphaerae.Lentisphaeria.Victivallales.Victivallaceae
+2025-01-24 15:04:03.337949 INFO::Creating boxplot for categorical data, source vs Bacteria.Lentisphaerae.Lentisphaeria.Victivallales.Victivallaceae
+2025-01-24 15:04:03.407533 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Sneathiellales.Sneathiellaceae
+2025-01-24 15:04:03.494899 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Negativicutes.Veillonellales.Veillonellaceae
+2025-01-24 15:04:03.570767 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Odoribacteraceae
+2025-01-24 15:04:03.644224 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Tissierellia.Tissierellales.Gottschalkiaceae
+2025-01-24 15:04:03.717164 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Thermoanaerobacterales.Thermoanaerobacterales.Family.IV..Incertae.Sedis
+2025-01-24 15:04:03.790363 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Thermoanaerobacterales.Thermoanaerobacterales.Family.IV..Incertae.Sedis
+2025-01-24 15:04:03.861983 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Caldicoprobacteraceae
+2025-01-24 15:04:03.946928 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Caldicoprobacteraceae
+2025-01-24 15:04:04.020227 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Tissierellia.Tissierellales.Gottschalkiaceae
+2025-01-24 15:04:04.092601 INFO::Creating boxplot for categorical data, source vs Bacteria.Actinobacteria.Actinobacteria.Propionibacteriales.Propionibacteriaceae
+2025-01-24 15:04:04.163 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhizobiales.Aurantimonadaceae
+2025-01-24 15:04:04.233138 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Clostridia.Clostridiales.Eubacteriaceae
+2025-01-24 15:04:04.320898 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Caulobacterales.Caulobacteraceae
+2025-01-24 15:04:04.393422 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Caulobacterales.Caulobacteraceae
+2025-01-24 15:04:04.469799 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Deltaproteobacteria.Desulfobacterales.Desulfobacteraceae
+2025-01-24 15:04:04.543577 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Deltaproteobacteria.Desulfobacterales.Desulfobacteraceae
+2025-01-24 15:04:04.61556 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Gammaproteobacteria.Pseudomonadales.Pseudomonadaceae
+2025-01-24 15:04:04.697682 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Erysipelotrichia.Erysipelotrichales.Erysipelotrichaceae
+2025-01-24 15:04:04.772272 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhizobiales.Rhizobiaceae
+2025-01-24 15:04:04.846456 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Kiloniellales.Kiloniellaceae
+2025-01-24 15:04:04.917756 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Bacillales.Paenibacillaceae
+2025-01-24 15:04:04.99181 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Bacillales.Paenibacillaceae
+2025-01-24 15:04:05.077802 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Deltaproteobacteria.Bradymonadales.unassigned
+2025-01-24 15:04:05.151679 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Deltaproteobacteria.Bradymonadales.unassigned
+2025-01-24 15:04:05.225032 INFO::Creating boxplot for categorical data, source vs Bacteria.Tenericutes.Mollicutes.Mycoplasmatales.Mycoplasmataceae
+2025-01-24 15:04:05.295343 INFO::Creating boxplot for categorical data, source vs Bacteria.Tenericutes.Mollicutes.Mycoplasmatales.Mycoplasmataceae
+2025-01-24 15:04:05.367263 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Muribaculaceae
+2025-01-24 15:04:05.446655 INFO::Creating boxplot for categorical data, source vs Bacteria.Actinobacteria.Coriobacteriia.Coriobacteriales.Coriobacteriaceae
+2025-01-24 15:04:05.521299 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Gammaproteobacteria.Pseudomonadales.Pseudomonadaceae
+2025-01-24 15:04:05.592802 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Gammaproteobacteria.Pasteurellales.Pasteurellaceae
+2025-01-24 15:04:05.662601 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Gammaproteobacteria.Pasteurellales.Pasteurellaceae
+2025-01-24 15:04:05.73325 INFO::Creating boxplot for categorical data, source vs Bacteria.Cyanobacteria.Gloeobacteria.Gloeobacterales.Gloeobacteraceae
+2025-01-24 15:04:05.803909 INFO::Creating boxplot for categorical data, source vs Bacteria.Cyanobacteria.Gloeobacteria.Gloeobacterales.Gloeobacteraceae
+2025-01-24 15:04:05.889063 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhodospirillales.Acetobacteraceae
+2025-01-24 15:04:05.963037 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Betaproteobacteria.Burkholderiales.Sutterellaceae
+2025-01-24 15:04:06.036121 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Negativicutes.Veillonellales.Veillonellaceae
+2025-01-24 15:04:06.109877 INFO::Creating boxplot for categorical data, source vs Bacteria.Fusobacteria.Fusobacteriia.Fusobacteriales.Fusobacteriaceae
+2025-01-24 15:04:06.183725 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhodospirillales.Rhodospirillaceae
+2025-01-24 15:04:06.269572 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Negativicutes.Selenomonadales.Sporomusaceae
+2025-01-24 15:04:06.342519 INFO::Creating boxplot for categorical data, source vs Bacteria.Cyanobacteria.unassigned.Oscillatoriales.Oscillatoriaceae
+2025-01-24 15:04:06.415594 INFO::Creating boxplot for categorical data, source vs Bacteria.Cyanobacteria.unassigned.Oscillatoriales.Oscillatoriaceae
+2025-01-24 15:04:06.487715 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Bacillales.Planococcaceae
+2025-01-24 15:04:06.559567 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhodobacterales.Rhodobacteraceae
+2025-01-24 15:04:06.64564 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhodobacterales.Rhodobacteraceae
+2025-01-24 15:04:06.718449 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Bacillales.Staphylococcaceae
+2025-01-24 15:04:06.792402 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Porphyromonadaceae
+2025-01-24 15:04:06.865376 INFO::Creating boxplot for categorical data, source vs Bacteria.Bacteroidetes.Bacteroidia.Bacteroidales.Porphyromonadaceae
+2025-01-24 15:04:06.939133 INFO::Creating boxplot for categorical data, source vs Bacteria.Actinobacteria.Coriobacteriia.Coriobacteriales.Atopobiaceae
+2025-01-24 15:04:07.025713 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Alphaproteobacteria.Rhizobiales.Rhizobiaceae
+2025-01-24 15:04:07.100037 INFO::Creating boxplot for categorical data, source vs Bacteria.Actinobacteria.Coriobacteriia.Eggerthellales.Eggerthellaceae
+2025-01-24 15:04:07.173972 INFO::Creating boxplot for categorical data, source vs Bacteria.Proteobacteria.Gammaproteobacteria.Enterobacterales.Enterobacteriaceae
+2025-01-24 15:04:07.247103 INFO::Creating boxplot for categorical data, source vs Bacteria.Firmicutes.Bacilli.Bacillales.Listeriaceae

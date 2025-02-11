@@ -1,0 +1,65 @@
+81.50	49121000	0	D		Bacteria
+18.50	11148999	11148999	U		unclassified
+59.17	35660000	0	P		Bacteroidetes
+10.45	6297999	0	P		Firmicutes
+10.18	6137000	0	P		Fusobacteria
+1.70	1026000	0	P		Proteobacteria
+59.17	35660000	0	C		Bacteroidia
+10.18	6137000	0	C		Fusobacteriia
+5.82	3505999	0	C		Negativicutes
+3.64	2191000	0	C		Clostridia
+1.35	813000	0	C		Betaproteobacteria
+0.83	498000	0	C		Erysipelotrichia
+0.35	213000	0	C		Epsilonproteobacteria
+59.17	35660000	0	O		Bacteroidales
+10.18	6137000	0	O		Fusobacteriales
+5.82	3505999	0	O		Selenomonadales
+3.64	2191000	0	O		Eubacteriales
+1.35	813000	0	O		Burkholderiales
+0.83	498000	0	O		Erysipelotrichales
+0.35	213000	0	O		Campylobacterales
+59.17	35660000	0	F		Bacteroidaceae
+10.18	6137000	0	F		Fusobacteriaceae
+5.82	3505999	0	F		Selenomonadaceae
+2.78	1673000	0	F		Oscillospiraceae
+1.35	813000	0	F		Sutterellaceae
+0.55	332000	0	F		Erysipelotrichaceae
+0.51	306000	0	F		Lachnospiraceae
+0.35	212000	0	F		Eubacteriaceae
+0.28	166000	0	F		Coprobacillaceae
+0.22	134000	0	F		Campylobacteraceae
+0.13	79000	0	F		Helicobacteraceae
+55.20	33272000	0	G		Phocaeicola
+9.80	5905000	0	G		Fusobacterium
+5.82	3505999	0	G		Megamonas
+3.96	2388000	0	G		Bacteroides
+2.78	1673000	0	G		Faecalibacterium
+1.35	813000	0	G		Sutterella
+0.35	212000	0	G		Eubacterium
+0.28	166000	0	G		Mediterraneibacter
+0.28	166000	0	G		Catenibacterium
+0.22	134000	0	G		Campylobacter
+0.13	80000	0	G		Amedibacillus
+0.13	79000	0	G		Helicobacter
+55.20	33272000	33272000	S		Phocaeicola vulgatus
+8.17	4924000	4924000	S		uncultured Fusobacterium sp.
+4.82	2907000	2907000	S		Megamonas sp.
+3.70	2233000	2233000	S		uncultured Bacteroides sp.
+2.78	1673000	1673000	S		uncultured Faecalibacterium sp.
+1.19	715000	715000	S		Sutterella wadsworthensis
+1.01	611000	611000	S		Fusobacterium sp.
+0.61	370000	370000	S		Fusobacterium perfoetens
+0.42	252000	252000	S		Erysipelotrichaceae bacterium
+0.35	212000	212000	S		uncultured Eubacterium sp.
+0.79	474000	474000	S		Megamonas funiformis
+0.28	166000	166000	S		[Ruminococcus] gnavus
+0.38	232000	232000	S		Fusobacteriaceae bacterium
+0.28	166000	166000	S		Catenibacterium sp. BIOML-A1
+0.23	140000	140000	S		uncultured Lachnospiraceae bacterium
+0.22	134000	134000	S		Campylobacter upsaliensis
+0.17	103000	103000	S		Firmicutes bacterium
+0.16	98000	98000	S		uncultured Sutterella sp.
+0.13	80000	80000	S		Amedibacillus dolichus
+0.21	125000	125000	S		Megamonas rupellensis
+0.13	79000	79000	S		Helicobacter canis
+0.26	155000	155000	S		Bacteroides fragilis

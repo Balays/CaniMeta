@@ -1,0 +1,5 @@
+superkingdom	WGS_kraken2_kraken2_standard_ONT_Z1	WGS_kraken2_kraken2_standard_NovaSeq_Z1	WGS_kraken2_kraken2_standard_MySeq_Z4	WGS_kraken2_kraken2_standard_MySeq_Z3	WGS_kraken2_kraken2_standard_MySeq_Z2	WGS_kraken2_kraken2_standard_MySeq_Z1	WGS_kraken2_kraken2_standard_MySeq_Q4	WGS_kraken2_kraken2_standard_MySeq_Q3	WGS_kraken2_kraken2_standard_MySeq_Q2	WGS_kraken2_kraken2_standard_MySeq_Q1	WGS_kraken2_kraken2_standard_MySeq_MN4	WGS_kraken2_kraken2_standard_MySeq_MN3	WGS_kraken2_kraken2_standard_MySeq_MN2	WGS_kraken2_kraken2_standard_MySeq_MN1	WGS_kraken2_kraken2_standard_MySeq_I4	WGS_kraken2_kraken2_standard_MySeq_I3	WGS_kraken2_kraken2_standard_MySeq_I2	WGS_kraken2_kraken2_standard_MySeq_I1
+Archaea	1017	2231	157	227	204	246	64	72	56	93	252	249	378	676	290	292	752	326
+Bacteria	1669625	6079425	358016	552703	556290	599275	482044	733680	429749	508726	417215	401448	808181	1143473	489593	512267	1334763	627726
+Eukaryota	23419	6517	372	502	570	513	998	1096	891	1286	935	983	1476	1957	1241	1469	3088	1327
+Viruses	132	283	31	45	40	34	23	24	23	32	28	28	41	73	47	37	104	41
