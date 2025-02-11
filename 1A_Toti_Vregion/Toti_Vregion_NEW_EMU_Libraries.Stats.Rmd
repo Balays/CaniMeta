@@ -254,7 +254,7 @@ ggplot(permanova.full, aes(x=group, y=R2, fill=group)) +
 
 ```{r}
 pal.gigasci <- c(
-  "DNA_isolation_method"  = 
+  "DNA Isolation Method"  = 
     "#71BF44",
   "Residual" = 
    "#7E7E7E",
@@ -290,7 +290,9 @@ gg <- ggplot(plot.data, aes(x=group, y=R2, fill=group)) +
 
 gg
 
-ggsave(paste0('Article_Figures/', 'SuppFig_1.png'), width = 5, height = 6)
+SF_S1A <- gg
+
+ggsave(paste0('Article_Figures/', 'SuppFig_S1A.png'), width = 5, height = 6)
 ```
 The R2 values indicate the proportion of variation explained by the groups. A higher R2 suggests that the grouping factor explains a larger proportion of the variation in the data.  
 In this case, the DNA isolation method and the Library preparation protocol explains the same amount.
@@ -610,7 +612,7 @@ ggplot(permanova.full, aes(x=group, y=R2, fill=group)) +
 
 ```{r}
 pal.gigasci <- c(
-  "DNA_isolation_method"  = 
+  "DNA Isolation Method"  = 
     "#71BF44",
   "Residual" = 
    "#7E7E7E",
@@ -646,7 +648,23 @@ gg <- ggplot(plot.data, aes(x=group, y=R2, fill=group)) +
 
 gg
 
-ggsave(paste0('Article_Figures/', 'SuppFig_1_woQ.png'), width = 5, height = 6)
+SF_S1B <- gg
+
+ggsave(paste0('Article_Figures/', 'SuppFig_S1B.png'), width = 5, height = 6)
+```
+
+
+### Supp Fig S1
+```{r}
+
+gg <- cowplot::plot_grid(
+  SF_S1A + ggtitle('A'),
+  SF_S1B + ggtitle('B'),
+  ncol = 1)
+
+
+ggsave(paste0('Article_Figures/', 'SuppFig_S1.png'), gg, width = 5, height = 10)
+
 ```
 The R2 values indicate the proportion of variation explained by the groups. A higher R2 suggests that the grouping factor explains a larger proportion of the variation in the data.  
 In this case, the DNA isolation method and the Library preparation protocol explains the same amount.

@@ -1370,7 +1370,7 @@ ggtop20    <- plotfun(
                 t=t, fill=t) + 
   theme(legend.position = 'right', 
         panel.grid.major.x = element_blank(),
-        axis.line.x  = element_blank()) 
+        axis.text.x  = element_blank()) 
   # + ggtitle(paste0('Top', top, ' ', t))
 
 ggtop20
@@ -1387,7 +1387,7 @@ ps.glom.top.spec      <- ps.glom.top
 ps.glom.spec          <- ps.glom
 
 dir.create('Article_Figures')
-ggsave(paste0('Article_Figures', '/', 'SuppFigure_3.png'), ggtop20, width = 12, height = 16)
+ggsave(paste0('Article_Figures', '/', 'SuppFigure_2.png'), ggtop20, width = 14, height = 16)
 
 ```
 

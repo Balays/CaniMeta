@@ -2660,6 +2660,8 @@ correl_data_all[,ID   := name]
 correl_data_all[,name := gsub('SRTP_', '', name)]
 
 correl_data_sum  <- unique(correl_data_all[,c('sample_r2', 'sample_mean_r2', 'sample_sd_r2', 'taxon_level', group_vars), with=F])
+
+
 ```
 
 ### Barplot
@@ -2703,6 +2705,9 @@ ggplot(correl_data_sum, aes(x=taxon_level, y=sample_r2, fill=name)) +
   facet_nested_wrap(~source, scales = 'fixed', ncol = 2) 
 
 ggsave(paste0(res.dir, '/Correlation_Sum_Lineplot.png'), width = 10, height = 16)
+
+dir.create('Article Figures')
+ggsave(paste0('Article Figures/Figure_4.png'), width = 10, height = 16)
 ```
 
 
@@ -2718,6 +2723,12 @@ permanova_res_all <- rbind(fill=TRUE,
 
 
 permanova_res_all[,level := factor(level, levels = ranks)]
+
+## Format
+
+permanova_res_all[,group := fifelse(group == 'dna.isolation.methods', 'DNA Isolation Method', 
+                                    fifelse(group == 'sex', 'Sex', 
+                                            fifelse(group == 'date', 'Date', group)))]
 
 ggplot(permanova_res_all[!group %in% c('Total', 'Residual'),], 
        aes(x=group, y=R2)) + 
@@ -2759,6 +2770,12 @@ ggplot(permanova_res_all[!group %in% c('Total', 'Residual'),],
   facet_nested_wrap(~ level,  strip.position = c("top"), nrow=1)
 
 ggsave(paste0(res.dir, '/PERMANOVA_Sum_Barplot.png'), width = 14, height = 8)
+
+
+dir.create('Article Figures')
+ggsave(paste0('Article Figures/Figure_5.png'), width = 10, height = 16)
+
+
 ```
 
 ```{r}
