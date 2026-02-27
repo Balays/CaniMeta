@@ -1,0 +1,1164 @@
+---
+title: "Zymo FR D6323 V1-V9 ONT EMU on EMU database"
+author: "Balázs Kakuk"
+date: "2024-10-20"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+  pdf_document:
+    toc: true
+
+---
+
+```{css, echo=FALSE}
+    body .main-container {
+      max-width: 90% !important;
+      width: 90% !important;
+    }
+    body {
+      max-width: 90% !important;
+      margin-left: auto;
+      margin-right: auto;
+    }
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.align = 'center', fig.height = 10, fig.width = 30, warning = F, message = F, error = F)
+library(tidyverse)
+library(ggpubr)
+library(factoextra)
+library(FactoMineR)
+library(ggrepel)
+library(phyloseq, quietly = T)
+library(DESeq2)
+library(data.table)
+library(ggsci)
+library(hrbrthemes)
+library(ggh4x)
+library(RColorBrewer)
+library(stringr); library(stringi)
+library("ape")
+library("ggtree")
+library(Biostrings)
+library(dplyr)
+library(UpSetR)
+library(ComplexHeatmap)
+library(genefilter)
+library(viridis)
+
+## Own functions <<- SET PATH !!!
+misc.dir    <- 'C:/GitHub/Rlyeh/R'
+minitax.dir <- 'C:/GitHub/minitax/R'
+
+if (.Platform$OS.type!="windows") {
+  
+  misc.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', misc.dir))),
+                      stri_replace_first_regex(misc.dir, '.*:\\/', '')
+  )
+  
+  minitax.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', minitax.dir))),
+                         stri_replace_first_regex(minitax.dir, '.*:\\/', '')
+  )
+  
+}
+
+for(f in list.files(misc.dir,    '*.R', full.names = T)) { try({message(f); source(f)}) }
+for(f in list.files(minitax.dir, '*.R', full.names = T)) { try({message(f); source(f)}) }
+
+bam.flags           <- fread(paste0(misc.dir, '/bam.flags.tsv'))
+gff_compare_classes <- fread(paste0(misc.dir, '/gff_compare.txt'))
+nproc <- 32
+
+
+```
+
+# Settings
+```{r}
+# -----------------------------
+# 2) Publication theme
+# -----------------------------
+theme_pub <- function(base_size = 10) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title.position = "plot",
+      plot.title = element_text(face = "bold"),
+      axis.title = element_text(face = "plain"),
+      legend.position = "none",
+      axis.text.x = element_text(face = "bold")
+    )
+}
+
+```
+
+
+# Toti 
+
+```{r}
+out_dir <- '1B-C_Toti_WGS'
+```
+
+## Illumina WGS
+
+```{r}
+
+```
+
+
+
+## ONT WGS : Toti MinION LSK-114 WGS (Zymo)
+```{r}
+
+```
+
+
+## Comb
+```{r, message=T}
+files   <- list.files('D:/ENA/PRJEB75753/.fastq_read_stats', recursive = T, full.names = T)
+
+i <- 1
+
+file <- files[i]
+
+mapfun <- function(i, files) { 
+  file <- files[i]
+  sample_name <- gsub('.meanQ.tsv', '', gsub('D:/ENA/PRJEB75753/.fastq_read_stats/', '', file) )
+  dt <- fread(file)
+  dt[, sample := sample_name]
+  return(dt)
+}
+
+proj_stats_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
+
+fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'PRJEB75753_stats.tsv.gz', sep = '\t')
+```
+
+
+```{r, message=T}
+proj_stats_dt <- fread('PRJEB75753_stats.tsv.gz')
+
+proj_stats_dt[, project := 'PRJEB75753']
+
+ena_mt <- fread('ENA/PRJEB75753/filereport_read_run_PRJEB75753.tsv')
+
+PRJEB75753_st <- merge(proj_stats_dt, 
+                       ena_mt[,.(run_accession, study_accession, sample_accession, secondary_sample_accession, sample_title, instrument_platform)], 
+                       by.x = c('sample', 'project'), by.y = c('run_accession', 'study_accession')
+                       #, all = T
+                       )
+
+if(nrow(proj_stats_dt) == nrow(PRJEB75753_st)) {
+  message('ok! every sample matches with the metadata!')
+  PRJEB75753_stats <- PRJEB75753_st; rm(PRJEB75753_st)
+} else {
+  stop('ERROR! Some samples have not been downloaded and/or imported!')
+}
+
+PRJEB75753_stats[,.N, sample_title]
+```
+
+```{r, eval=F}
+PRJEB82097_meta <- fread('2_40dogs_ZHMW_vs_ZMB/metadata.tsv')
+PRJEB82097_meta[, sample  := gsub('_rel-abundance.tsv', '', filename)]
+
+PRJEB82097_stats <- merge(PRJEB82097_stats, PRJEB82097_meta, by = 'sample', all.x=T)
+
+# the metadata table contains samples that were not uploaded to ENA!
+
+# also, the ENA files contain samples that are not published in this article
+
+# so we filter them to the actual 40 dogs sample
+
+SuppTab_S4 <- fread('2_40dogs_ZHMW_vs_ZMB/Supplementary Table S4.txt')
+
+PRJEB82097_st <- PRJEB82097_stats[sample %in% SuppTab_S4$file_name, ]
+
+PRJEB82097_st[,.N,sample]
+
+## ok!
+
+PRJEB82097_stats <- PRJEB82097_st; rm(PRJEB82097_st)
+
+```
+
+
+## Summary
+```{r}
+library(data.table)
+
+# all_stats_uni <- fread('all_stats_uni.tsv.gz')
+
+# Make sure it's data.table
+setDT(PRJEB75753_stats)
+
+# Keep only rows with defined isolation method
+dt <- PRJEB75753_stats[!is.na(instrument_platform)]
+
+# Ensure numeric
+dt[, length := as.numeric(length)]
+dt[, mean_Q := as.numeric(mean_Q)]
+
+# ---- N50 function
+n50 <- function(x) {
+  x <- x[is.finite(x) & x > 0]
+  x <- sort(x, decreasing = TRUE)
+  x[which(cumsum(x) >= sum(x)/2)[1]]
+}
+
+# =========================
+# 1️⃣ Per-sample summary
+# =========================
+
+sample_summary <- dt[, .(
+  n_reads = .N,
+  total_bases = sum(length, na.rm = TRUE),
+  mean_len = mean(length, na.rm = TRUE),
+  median_len = median(length, na.rm = TRUE),
+  n50_len = n50(length),
+  mean_Q = mean(mean_Q, na.rm = TRUE),
+  median_Q = median(mean_Q, na.rm = TRUE)
+), by = .(sample, instrument_platform)]
+
+# Save
+fwrite(sample_summary, "1B-C_Toti_WGS/Toti_sample_QC_summary.tsv", sep = '\t')
+
+# =========================
+# 2️⃣ Per-source summary (across samples)
+# =========================
+
+platform_summary <- sample_summary[, .(
+  n_samples = .N,
+  mean_reads = mean(n_reads),
+  sd_reads = sd(n_reads),
+  mean_total_bases = mean(total_bases),
+  sd_total_bases = sd(total_bases),
+  mean_read_length = mean(mean_len),
+  sd_read_length = sd(mean_len),
+  mean_Q = mean(mean_Q),
+  sd_Q = sd(mean_Q)
+), by = .(instrument_platform)]
+
+fwrite(platform_summary, "1B-C_Toti_WGS/Toti_platform_QC_summary.tsv", sep = '\t')
+
+sample_summary
+platform_summary
+
+```
+
+
+## Plots
+
+```{r}
+dt_plot <- copy(PRJEB75753_stats)
+
+dt_plot[,log_len := log10(length)]
+
+dt_plot <- dt_plot[sample(.N)]  # randomize draw order if you keep any point layers
+
+library(ggpubr)
+library(cowplot)
+library(ggrastr)
+library(scales)
+
+my_pal <- pal_npg()(10)[]
+gc()
+```
+
+
+```{r}
+# Marginal density plot of x (top panel) and y (right panel)
+xplot <- ggdensity(dt_plot, "length", fill = "instrument_platform",
+                   palette = "npg") +
+  ggpubr::rotate()
+
+yplot <- ggdensity(dt_plot, "mean_Q", fill = "instrument_platform", 
+                   palette = "npg") +
+  ggpubr::rotate()
+
+
+
+sp <- ggplot(dt_plot, aes(length, mean_Q)) +
+  geom_point_rast(aes(fill = instrument_platform), alpha = 0.8, shape = 21, color = 'black', size = 3) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(labels = label_comma()) +
+  labs(
+    #title = "Read quality comparison between extraction methods",
+    x = "Read count per sample",
+    y = "Mean Q-score per sample"
+  ) +
+  theme_pub()
+
+
+
+# Cleaning the plots
+sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
+yplot <- yplot + clean_theme() + rremove("legend")
+xplot <- xplot + clean_theme() + rremove("legend")
+
+# Arranging the plot using cowplot
+p_count_q <- plot_grid(xplot, NULL, 
+                       sp, yplot, 
+                       ncol = 2, align = "hv",
+                       rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+
+out_prefix <- "Platform_comparison_QC_Fig1"
+
+ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height = 30, bg = 'white')
+#p_count_q
+#save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
+
+```
+
+
+```{r}
+
+sp2 <- ggplot(dt_plot,
+             aes(x = log_len, y = mean_qscore_template)
+             ) +
+  geom_point_rast(aes(fill = sample),
+             shape = 21, color = "grey20", #color = "transparent", 
+             size = 0.35, alpha = 0.4, stroke = 0.4) +
+  scale_fill_npg() +
+  theme_pubr()
+
+
+sp <- sp2 +  
+  geom_vline(data = platform_summary, aes(xintercept = mean_read_length, colour = sample), linewidth = 1) +
+  geom_hline(yintercept = mean(dt_passfail$min_pass_Qscore), colour = 'grey30', linewidth = 1 ) +
+  geom_hline(data = platform_summary, aes(yintercept = mean_q, colour = sample), linewidth = 1) +
+  
+  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean Q = ', round(mean_q, 3)), fill = sample, y = mean_q, x = 1), color = "grey20") +
+  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean read length = ', round(mean_read_length, 3)), fill = sample, y = 18, x = log10(n50_len)), color = "grey20") +
+  
+  labs(#title = paste0(sample_name, ": read length distribution (capped)"),
+       x = "Read length ( log10(bp) )", y = "Read mean Q-score", fill = NULL) +
+  
+  guides(colour = "none") +
+  
+  theme(legend.position = 'bottom') +
+  
+  ggpubr::border()                                       
+
+
+xplot <- ggplot(dt_plot, aes(log_len)) +
+  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot, aes(mean_Q)) +
+  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+# Arranging the plot using cowplot
+p_count_q <- plot_grid(xplot, NULL, 
+                       sp, yplot, 
+                       ncol = 2, align = "hv",
+                       rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+out_prefix <- "Platform_comparison_QC_Fig1B"
+
+ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height = 30, bg = 'white')
+
+#save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
+```
+
+
+# SertePerti MinION V1-V9 Sequencing Summary
+
+## Import Data
+```{r, message=T}
+files   <- list.files('ENA/PRJEB82097/.fastq_read_stats', recursive = T, full.names = T)
+
+i <- 1
+
+file <- files[i]
+
+mapfun <- function(i, files) { 
+  file <- files[i]
+  sample_name <- gsub('.meanQ.tsv', '', gsub('ENA/PRJEB82097/.fastq_read_stats/', '', file) )
+  dt <- fread(file)
+  dt[, sample := sample_name]
+  return(dt)
+}
+
+proj_stats_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
+
+fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'PRJEB82097_stats.tsv.gz', sep = '\t')
+```
+
+
+```{r, message=T}
+proj_stats_dt <- fread('PRJEB82097_stats.tsv.gz')
+
+proj_stats_dt[, project := 'PRJEB82097']
+
+ena_mt <- fread('ENA/PRJEB82097/filereport_read_run_PRJEB82097.tsv')
+
+PRJEB82097_st <- merge(proj_stats_dt, 
+                       ena_mt[,.(run_accession, study_accession, sample_accession, secondary_sample_accession, sample_title)], 
+                       by.x = c('sample', 'project'), by.y = c('run_accession', 'study_accession')
+                       #, all = T
+                       )
+
+if(nrow(proj_stats_dt) == nrow(PRJEB82097_st)) {
+  message('ok! every sample matches with the metadata!')
+  PRJEB82097_stats <- PRJEB82097_st; rm(PRJEB82097_st)
+} else {
+  stop('ERROR! Some samples have not been downloaded and/or imported!')
+}
+
+```
+
+```{r}
+PRJEB82097_meta <- fread('2_40dogs_ZHMW_vs_ZMB/metadata.tsv')
+PRJEB82097_meta[, sample  := gsub('_rel-abundance.tsv', '', filename)]
+
+PRJEB82097_stats <- merge(PRJEB82097_stats, PRJEB82097_meta, by = 'sample', all.x=T)
+
+# the metadata table contains samples that were not uploaded to ENA!
+
+# also, the ENA files contain samples that are not published in this article
+
+# so we filter them to the actual 40 dogs sample
+
+SuppTab_S4 <- fread('2_40dogs_ZHMW_vs_ZMB/Supplementary Table S4.txt')
+
+PRJEB82097_st <- PRJEB82097_stats[sample %in% SuppTab_S4$file_name, ]
+
+PRJEB82097_st[,.N,sample]
+
+## ok!
+
+PRJEB82097_stats <- PRJEB82097_st; rm(PRJEB82097_st)
+
+```
+
+
+```{r, eval=F}
+miss <- PRJEB85714_stats[is.na(read_id), .N, sample][,sample]
+
+cmd <- fread('D:/ENA/PRJEB82097/ena-file-download-read_run-PRJEB82097-fastq_ftp-20260224-1621.sh', header = F)
+
+cmd[, sample_name := gsub('.*\\/', '', gsub('.fastq.gz', '', V3) ) ]
+  
+cmd <- cmd[sample_name %in% miss, ]
+
+fwrite(cmd, eol = '\n', col.names = F,
+       'D:/ENA/PRJEB82097/ena-file-download-read_run-PRJEB82097-fastq_ftp-20260224-1621_miss.sh', 
+       sep = ' ')
+
+```
+
+## Summary
+```{r}
+library(data.table)
+
+# Make sure it's data.table
+setDT(PRJEB82097_stats)
+
+# Keep only rows with defined isolation method
+dt <- PRJEB82097_stats[!is.na(dna.isolation.methods)]
+
+# Ensure numeric
+dt[, length := as.numeric(length)]
+dt[, mean_Q := as.numeric(mean_Q)]
+
+# ---- N50 function
+n50 <- function(x) {
+  x <- x[is.finite(x) & x > 0]
+  x <- sort(x, decreasing = TRUE)
+  x[which(cumsum(x) >= sum(x)/2)[1]]
+}
+
+# =========================
+# 1️⃣ Per-sample summary
+# =========================
+
+sample_summary <- dt[, .(
+  n_reads = .N,
+  total_bases = sum(length, na.rm = TRUE),
+  mean_len = mean(length, na.rm = TRUE),
+  median_len = median(length, na.rm = TRUE),
+  n50_len = n50(length),
+  mean_Q = mean(mean_Q, na.rm = TRUE),
+  median_Q = median(mean_Q, na.rm = TRUE)
+), by = .(sample, dna.isolation.methods)]
+
+# Save
+fwrite(sample_summary, "2_40dogs_ZHMW_vs_ZMB/Serteperti_sample_QC_summary.tsv", sep = '\t')
+
+# =========================
+# 2️⃣ Per-method summary (across samples)
+# =========================
+
+method_summary <- sample_summary[, .(
+  n_samples = .N,
+  mean_reads = mean(n_reads),
+  sd_reads = sd(n_reads),
+  mean_total_bases = mean(total_bases),
+  sd_total_bases = sd(total_bases),
+  mean_read_length = mean(mean_len),
+  sd_read_length = sd(mean_len),
+  mean_Q = mean(mean_Q),
+  sd_Q = sd(mean_Q)
+), by = dna.isolation.methods]
+
+fwrite(method_summary, "2_40dogs_ZHMW_vs_ZMB/Serteperti_method_QC_summary.tsv", sep = '\t')
+
+sample_summary
+method_summary
+
+```
+
+```{r}
+# Publication-ready multi-panel QC figure:
+# Compare read length + read quality between ZHMW vs ZMB
+#  (A) group-level distribution of per-sample mean read length
+#  (B) group-level distribution of per-sample mean Q
+#  (C) paired comparison (same biological sample extracted with both methods) using ggpaired
+#
+# Inputs:
+#  - PRJEB82097_stats (per-read table) OR, preferably,
+#  - sample_summary (per-sample summary table you already computed)
+#
+# Output:
+#  - Serteperti_ZHMW_vs_ZMB_QC_Fig.pdf + .png
+
+suppressPackageStartupMessages({
+  library(data.table)
+  library(ggplot2)
+  library(ggpubr)     # ggpaired
+  library(patchwork)  # combine panels
+  library(scales)
+})
+
+# -----------------------------
+# 0) Use sample_summary if it exists; otherwise build it quickly
+# -----------------------------
+if (!exists("sample_summary")) {
+  stop("sample_summary not found. Please run your aggregation step first (per-sample QC).")
+}
+
+setDT(sample_summary)
+
+# Expect columns:
+# sample, dna.isolation.methods, n_reads, total_bases, mean_len, median_len, n50_len, mean_Q, median_Q
+
+# -----------------------------
+# 1) Create a pairing ID (strip the method suffix from sample name)
+# -----------------------------
+sample_summary[, method := dna.isolation.methods]
+sample_summary[, pair_id := gsub("_(ZHMW|ZMB)$", "", sample)]
+
+# Keep only pairs that exist in BOTH methods
+pair_counts <- sample_summary[, .N, by = .(pair_id)]
+paired_ids <- pair_counts[N == 2, pair_id]
+ss <- sample_summary[pair_id %in% paired_ids]
+
+# Ensure consistent ordering
+ss[, method := factor(method, levels = c("ZHMW", "ZMB"))]
+
+
+# -----------------------------
+# 3) Panel A: group-level mean read length distribution (per sample)
+# -----------------------------
+pA <- ggplot(ss, aes(x = method, y = mean_len)) +
+  geom_violin(trim = TRUE, alpha = 0.6, width = 0.85) +
+  geom_boxplot(width = 0.18, outlier.shape = NA) +
+  geom_point(position = position_jitter(width = 0.08, height = 0), size = 1.2, alpha = 0.8) +
+  scale_y_continuous(labels = label_comma()) +
+  labs(
+    title = "Read length (per-sample means)",
+    x = NULL,
+    y = "Mean read length (bp)"
+  ) +
+  theme_pub()
+
+# -----------------------------
+# 4) Panel B: group-level mean Q distribution (per sample)
+# -----------------------------
+pB <- ggplot(ss, aes(x = method, y = mean_Q)) +
+  geom_violin(trim = TRUE, alpha = 0.6, width = 0.85) +
+  geom_boxplot(width = 0.18, outlier.shape = NA) +
+  geom_point(position = position_jitter(width = 0.08, height = 0), size = 1.2, alpha = 0.8) +
+  labs(
+    title = "Read quality (per-sample means)",
+    x = NULL,
+    y = "Mean Q-score"
+  ) +
+  theme_pub()
+
+# -----------------------------
+# 5) Panel C: paired comparison using ggpaired
+#    We'll do BOTH metrics in one panel via long-format + facet
+# -----------------------------
+long <- melt(
+  ss,
+  id.vars = c("pair_id", "method"),
+  measure.vars = c("mean_len", "mean_Q"),
+  variable.name = "metric",
+  value.name = "value"
+)
+
+long[, metric := factor(metric,
+                        levels = c("mean_len", "mean_Q"),
+                        labels = c("Mean read length (bp)", "Mean Q-score"))]
+
+pC <- ggpaired(
+  long,
+  x = "method",
+  y = "value",
+  id = "pair_id",
+  line.color = "grey60",
+  line.size = 0.4,
+  point.size = 1.4
+) +
+  facet_wrap(~ metric, scales = "free_y", ncol = 2) +
+  labs(
+    title = "Paired comparison (same sample, two extraction methods)",
+    x = NULL,
+    y = NULL
+  ) +
+  theme_pub() +
+  theme(
+    strip.background = element_blank(),
+    strip.text = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    legend.position = "none"
+  )
+
+# -----------------------------
+# 6) Assemble into a 3-panel figure
+# -----------------------------
+# Layout: A | B on top, C across bottom
+fig <- (pA | pB) / pC +
+  plot_annotation(tag_levels = "A")
+
+# -----------------------------
+# 7) Save
+# -----------------------------
+out_prefix <- "Serteperti_ZHMW_vs_ZMB_QC_Fig"
+ggsave(paste0(out_prefix, ".pdf"), fig, width = 180, height = 160, units = "mm", device = cairo_pdf)
+ggsave(paste0(out_prefix, ".png"), fig, width = 180, height = 160, units = "mm", dpi = 600)
+
+# Print to viewer
+fig
+
+```
+
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(ggpubr)
+library(scales)
+
+setDT(sample_summary)
+
+# Create pairing ID
+sample_summary[, method := dna.isolation.methods]
+sample_summary[, pair_id := gsub("_(ZHMW|ZMB)$", "", sample)]
+
+# Keep only fully paired samples
+paired_ids <- sample_summary[, .N, by = pair_id][N == 2, pair_id]
+ss <- sample_summary[pair_id %in% paired_ids]
+
+# Ensure order
+ss[, method := factor(method, levels = c("ZHMW", "ZMB"))]
+
+theme_pub <- function() {
+  theme_pubr(base_size = 11) +
+    theme(
+      plot.title = element_text(face = "bold"),
+      axis.text.x = element_text(face = "bold"),
+      legend.position = "none"
+    )
+}
+
+# Plot
+p_reads <- ggplot(ss, aes(x = method, y = n_reads, fill = dna.isolation.methods)) +
+  
+  # Violin
+  #geom_violin(trim = TRUE, alpha = 0.4, width = 0.85) +
+  scale_fill_manual(values = my_pal[-c(1:2)]) +
+  # Boxplot
+  geom_boxplot(width = 0.15, outlier.shape = NA, alpha = 0.5) +
+  
+  # Paired lines
+  geom_line(aes(group = pair_id),
+            color = "grey60",
+            linewidth = 0.4,
+            alpha = 0.7) +
+  
+  # Points
+  geom_point(size = 2.5, shape=21, color = 'grey20') +
+  
+  scale_y_continuous(labels = label_comma()) +
+  
+  labs(
+    title = "Read count comparison between extraction methods",
+    x = NULL,
+    y = "Read count per sample"
+  ) +
+  
+  theme_pub()
+
+p_reads
+
+
+p_q <- ggplot(ss, aes(x = method, y = mean_Q, fill = dna.isolation.methods)) +
+  # Violin
+  #geom_violin(trim = TRUE, alpha = 0.4, width = 0.85) +
+  scale_fill_manual(values = my_pal[-c(1:2)]) +
+  # Box
+  geom_boxplot(width = 0.15, outlier.shape = NA, alpha = 0.5) +
+  # Paired lines
+  geom_line(aes(group = pair_id),
+            color = "grey60",
+            linewidth = 0.4,
+            alpha = 0.7) +
+  # Points
+  geom_point(size = 2.5, shape=21, color = 'grey20') +
+  labs(
+    title = "Read quality comparison between extraction methods",
+    x = NULL,
+    y = "Mean Q-score per sample"
+  ) +
+  theme_pub()
+
+p_q
+```
+
+
+```{r}
+# Layout: A | B on top, C across bottom
+fig <- cowplot::plot_grid(p_reads, p_q, rel_widths = c(1,1), labels = c('A', 'B'))
+
+out_dir    <- "2_40dogs_ZHMW_vs_ZMB"
+out_prefix <- "Serteperti_ZHMW_vs_ZMB_QC_Fig"
+
+save_plot(fig, out_dir, out_prefix, w = 350, h = 250)
+
+# Print to viewer
+fig
+
+```
+
+
+
+## Plots
+```{r}
+dt_plot <- copy(dt)
+
+library(ggpubr)
+library(cowplot)
+library(ggrastr)
+
+my_pal <- pal_npg()(10)
+
+
+# Marginal density plot of x (top panel) and y (right panel)
+xplot <- ggdensity(sample_summary, "n_reads", fill = "dna.isolation.methods",
+                   palette = "npg") +
+  ggpubr::rotate()
+
+yplot <- ggdensity(dt_plot, "mean_Q", fill = "dna.isolation.methods", 
+                   palette = "npg") +
+  ggpubr::rotate()
+
+
+
+sp <- ggplot(sample_summary, aes(n_reads, mean_Q)) +
+  geom_point(aes(fill = dna.isolation.methods), alpha = 0.8, shape = 21, color = 'black', size = 3) +
+  scale_fill_manual(values = my_pal[-c(1:2)]) +
+  scale_x_continuous(labels = label_comma()) +
+  labs(
+    #title = "Read quality comparison between extraction methods",
+    x = "Read count per sample",
+    y = "Mean Q-score per sample"
+  ) +
+  theme_pub()
+
+
+xplot <- ggplot(sample_summary, aes(n_reads)) +
+  geom_density(aes(fill = dna.isolation.methods), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal[-c(1:2)]) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot, aes(mean_Q)) +
+  geom_density(aes(fill = dna.isolation.methods), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal[-c(1:2)]) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+
+# Cleaning the plots
+#sp <- sp #+ rremove("legend")
+yplot <- yplot + clean_theme() + rremove("legend")
+xplot <- xplot + clean_theme() + rremove("legend")
+
+
+
+# Arranging the plot using cowplot
+fig <- plot_grid(plot_grid(p_reads + ggtitle(NULL), xplot + ggpubr::rotate(), nrow = 1, align = "hv", rel_widths = c(2,1)), 
+                 NULL,
+                 plot_grid(p_q     + ggtitle(NULL), yplot, nrow = 1, align = "hv", rel_widths = c(2,1)), 
+                 nrow = 1, align = "hv",
+                 rel_widths = c(3,1,3), 
+                 labels = c('A', '', 'B'))
+
+out_dir    <- "2_40dogs_ZHMW_vs_ZMB"
+out_prefix <- "Serteperti_ZHMW_vs_ZMB_QC_Fig1"
+
+save_plot(fig, out_dir, out_prefix, w = 500, h = 200, bg = 'white')
+
+# Print to viewer
+fig
+
+
+
+
+# Cleaning the plots
+sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
+yplot <- yplot + clean_theme() + rremove("legend")
+xplot <- xplot + clean_theme() + rremove("legend")
+
+# Arranging the plot using cowplot
+p_count_q <- plot_grid(xplot, NULL, 
+                       sp, yplot, 
+                       ncol = 2, align = "hv",
+                       rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+p_count_q
+
+out_prefix <- "Serteperti_ZHMW_vs_ZMB_QC_Fig2"
+
+save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
+
+```
+
+
+
+
+
+# Primeres 
+
+
+## PRJEB85714 (human samples)
+
+```{r}
+
+files   <- list.files('ENA/PRJEB85714/.fastq_read_stats', recursive = T, full.names = T)
+
+i <- 1
+
+file <- files[i]
+
+mapfun <- function(i, files) { 
+  file <- files[i]
+  sample_name <- gsub('.meanQ.tsv', '', gsub('ENA/PRJEB85714/.fastq_read_stats/', '', file) )
+  dt <- fread(file)
+  dt[, sample := sample_name]
+  return(dt)
+}
+
+proj_stats_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
+
+fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'PRJEB85714_stats.tsv.gz', sep = '\t')
+```
+
+
+```{r, message=T}
+proj_stats_dt <- fread('PRJEB85714_stats.tsv.gz')
+
+proj_stats_dt[, project := 'PRJEB85714']
+
+ena_mt <- fread('ENA/PRJEB85714/filereport_read_run_PRJEB85714.tsv')
+
+PRJEB85714_st <- merge(proj_stats_dt, 
+                       ena_mt[,.(run_accession, study_accession, sample_accession, secondary_sample_accession, sample_title)], 
+                       by.x = c('sample', 'project'), by.y = c('run_accession', 'study_accession')
+                       #, all = T
+                       )
+
+if(nrow(proj_stats_dt) == nrow(PRJEB85714_st)) {
+  message('ok! every sample matches with the metadata!')
+  PRJEB85714_stats <- PRJEB85714_st; rm(PRJEB85420_st)
+} else {
+  stop('ERROR! Some samples have not been downloaded and/or imported!')
+}
+
+```
+
+```{r, message=T}
+PRJEB85714_meta <- fread('3_Primer_comparison/metadata.tsv')
+
+## trim off date and barcode
+PRJEB85714_meta[, sample  := gsub('_bc.*', '', filename)]
+PRJEB85714_meta[, sample  := gsub('_20.*', '', sample  )]
+
+PRJEB85714_stats[, sample_title  := gsub('_20.*', '', sample_title  )]
+
+## merge with metadata
+PRJEB85714_st <- merge(PRJEB85714_stats, 
+                       PRJEB85714_meta, 
+                       by.x = 'sample_title', by.y = 'sample',
+                       all.x=T)
+
+
+if(nrow(PRJEB85714_stats) == nrow(PRJEB85714_st)) {
+  message('ok! every sample matches with the metadata!')
+  PRJEB85714_stats <- PRJEB85714_st; rm(PRJEB85714_st)
+} else {
+  stop('ERROR! Some samples have not been downloaded and/or imported!')
+}
+
+setnames(PRJEB85714_stats, c('sample_title', 'sample'), c('sample', 'biosample'))
+
+```
+
+
+
+## PRJEB85420 (synthetic and canine samples) 
+
+```{r}
+
+files   <- list.files('ENA/PRJEB85420/.fastq_read_stats', recursive = T, full.names = T)
+
+i <- 1
+
+file <- files[i]
+
+mapfun <- function(i, files) { 
+  file <- files[i]
+  sample_name <- gsub('.meanQ.tsv', '', gsub('ENA/PRJEB85420/.fastq_read_stats/', '', file) )
+  dt <- fread(file)
+  dt[, sample := sample_name]
+  return(dt)
+}
+
+proj_stats_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
+
+fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'PRJEB85420_stats.tsv.gz', sep = '\t')
+```
+
+
+```{r, message=T}
+proj_stats_dt <- fread('PRJEB85420_stats.tsv.gz')
+
+proj_stats_dt[, project := 'PRJEB85420']
+
+ena_mt <- fread('ENA/PRJEB85420/filereport_read_run_PRJEB85420.tsv')
+
+PRJEB85420_st <- merge(proj_stats_dt, 
+                       ena_mt[,.(run_accession, study_accession, sample_accession, secondary_sample_accession, sample_title)], 
+                       by.x = c('sample', 'project'), by.y = c('run_accession', 'study_accession')
+                       #, all = T
+                       )
+
+if(nrow(proj_stats_dt) == nrow(PRJEB85420_st)) {
+  message('ok! every sample matches with the metadata!')
+  PRJEB85420_stats <- PRJEB85420_st; rm(PRJEB85420_st)
+} else {
+  stop('ERROR! Some samples have not been downloaded and/or imported!')
+}
+
+```
+
+```{r, message=T}
+PRJEB85420_meta <- fread('3_Primer_comparison/metadata.tsv')
+
+## trim off date and barcode
+PRJEB85420_meta[, sample  := gsub('_bc.*', '', filename)]
+PRJEB85420_meta[, sample  := gsub('_20.*', '', sample  )]
+
+PRJEB85420_stats[, sample_title  := gsub('_20.*', '', sample_title  )]
+
+## merge with metadata
+PRJEB85420_st <- merge(PRJEB85420_stats, 
+                       PRJEB85420_meta, 
+                       by.x = 'sample_title', by.y = 'sample',
+                       all.x=T)
+
+
+if(nrow(PRJEB85420_stats) == nrow(PRJEB85420_st)) {
+  message('ok! every sample is downloaded and imported!')
+  PRJEB85420_stats <- PRJEB85420_st; rm(PRJEB85420_st)
+} else {
+  stop('ERROR! Some samples have not been downloaded and/or imported!')
+}
+
+
+setnames(PRJEB85420_stats, c('sample_title', 'sample'), c('sample', 'biosample'))
+
+
+```
+
+
+## Combine
+
+```{r}
+all_stats_dt <- rbind( PRJEB85420_stats, PRJEB85714_stats )
+
+all_stats_dt[,.N, project]
+
+all_stats_uni <- all_stats_dt[,.(sample, source, primer, rep, name, project, read_id, length, mean_Q)]
+
+rm(all_stats_dt, PRJEB85420_stats, PRJEB85714_stats )
+
+gc()
+
+fwrite(all_stats_uni, 'all_stats_uni.tsv.gz', sep = '\t')
+```
+
+## Summary
+```{r}
+library(data.table)
+
+# all_stats_uni <- fread('all_stats_uni.tsv.gz')
+
+# Make sure it's data.table
+setDT(all_stats_uni)
+
+# Keep only rows with defined isolation method
+dt <- all_stats_uni[!is.na(source) & !is.na(primer)]
+
+# Ensure numeric
+dt[, length := as.numeric(length)]
+dt[, mean_Q := as.numeric(mean_Q)]
+
+# ---- N50 function
+n50 <- function(x) {
+  x <- x[is.finite(x) & x > 0]
+  x <- sort(x, decreasing = TRUE)
+  x[which(cumsum(x) >= sum(x)/2)[1]]
+}
+
+# =========================
+# 1️⃣ Per-sample summary
+# =========================
+
+sample_summary <- dt[, .(
+  n_reads = .N,
+  total_bases = sum(length, na.rm = TRUE),
+  mean_len = mean(length, na.rm = TRUE),
+  median_len = median(length, na.rm = TRUE),
+  n50_len = n50(length),
+  mean_Q = mean(mean_Q, na.rm = TRUE),
+  median_Q = median(mean_Q, na.rm = TRUE)
+), by = .(sample, source, primer)]
+
+# Save
+fwrite(sample_summary, "3_Primer_comparison/Primer_sample_QC_summary.tsv", sep = '\t')
+
+# =========================
+# 2️⃣ Per-source summary (across samples)
+# =========================
+
+source_summary <- sample_summary[, .(
+  n_samples = .N,
+  mean_reads = mean(n_reads),
+  sd_reads = sd(n_reads),
+  mean_total_bases = mean(total_bases),
+  sd_total_bases = sd(total_bases),
+  mean_read_length = mean(mean_len),
+  sd_read_length = sd(mean_len),
+  mean_Q = mean(mean_Q),
+  sd_Q = sd(mean_Q)
+), by = .(source, primer)]
+
+fwrite(method_summary, "3_Primer_comparison/Primer_source_QC_summary.tsv", sep = '\t')
+
+sample_summary
+source_summary
+
+```
+
+## Plots
+
+```{r}
+dt_plot <- copy(all_stats_uni)
+
+library(ggpubr)
+library(cowplot)
+library(ggrastr)
+
+my_pal <- pal_npg()(10)[-c(1:4)]
+
+
+# Marginal density plot of x (top panel) and y (right panel)
+xplot <- ggdensity(sample_summary, "n_reads", fill = "source",
+                   palette = "npg") +
+  ggpubr::rotate()
+
+yplot <- ggdensity(dt_plot, "mean_Q", fill = "source", 
+                   palette = "npg") +
+  ggpubr::rotate()
+
+
+
+sp <- ggplot(sample_summary, aes(n_reads, mean_Q)) +
+  geom_point(aes(fill = source), alpha = 0.8, shape = 21, color = 'black', size = 3) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(labels = label_comma()) +
+  labs(
+    #title = "Read quality comparison between extraction methods",
+    x = "Read count per sample",
+    y = "Mean Q-score per sample"
+  ) +
+  theme_pub()
+
+
+xplot <- ggplot(sample_summary, aes(n_reads)) +
+  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot, aes(mean_Q)) +
+  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+
+
+# Cleaning the plots
+sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
+yplot <- yplot + clean_theme() + rremove("legend")
+xplot <- xplot + clean_theme() + rremove("legend")
+
+# Arranging the plot using cowplot
+p_count_q <- plot_grid(xplot, NULL, 
+                       sp, yplot, 
+                       ncol = 2, align = "hv",
+                       rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+p_count_q
+
+out_prefix <- "Primer_comparison_QC_Fig3B"
+
+save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
+
+```
+

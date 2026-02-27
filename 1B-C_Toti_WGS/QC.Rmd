@@ -1,0 +1,347 @@
+---
+title: "Zymo FR D6323 V1-V9 ONT EMU on EMU database"
+author: "Balázs Kakuk"
+date: "2024-10-20"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+  pdf_document:
+    toc: true
+
+---
+
+```{css, echo=FALSE}
+    body .main-container {
+      max-width: 90% !important;
+      width: 90% !important;
+    }
+    body {
+      max-width: 90% !important;
+      margin-left: auto;
+      margin-right: auto;
+    }
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.align = 'center', fig.height = 10, fig.width = 30, warning = F, message = F, error = F)
+library(tidyverse)
+library(ggpubr)
+library(factoextra)
+library(FactoMineR)
+library(ggrepel)
+library(phyloseq, quietly = T)
+library(DESeq2)
+library(data.table)
+library(ggsci)
+library(hrbrthemes)
+library(ggh4x)
+library(RColorBrewer)
+library(stringr); library(stringi)
+library("ape")
+library("ggtree")
+library(Biostrings)
+library(dplyr)
+library(UpSetR)
+library(ComplexHeatmap)
+library(genefilter)
+library(viridis)
+
+## Own functions <<- SET PATH !!!
+misc.dir    <- 'C:/GitHub/Rlyeh/R'
+minitax.dir <- 'C:/GitHub/minitax/R'
+
+if (.Platform$OS.type!="windows") {
+  
+  misc.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', misc.dir))),
+                      stri_replace_first_regex(misc.dir, '.*:\\/', '')
+  )
+  
+  minitax.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', minitax.dir))),
+                         stri_replace_first_regex(minitax.dir, '.*:\\/', '')
+  )
+  
+}
+
+for(f in list.files(misc.dir,    '*.R', full.names = T)) { try({message(f); source(f)}) }
+for(f in list.files(minitax.dir, '*.R', full.names = T)) { try({message(f); source(f)}) }
+
+bam.flags           <- fread(paste0(misc.dir, '/bam.flags.tsv'))
+gff_compare_classes <- fread(paste0(misc.dir, '/gff_compare.txt'))
+nproc <- 32
+
+
+```
+
+
+# Toti 
+```{r}
+out_dir <- '1B-C_Toti_WGS'
+```
+
+## Illumina WGS
+
+### Import fastp JSON
+
+```{r}
+
+```
+
+
+
+## ONT WGS : Toti MinION LSK-114 WGS
+
+### QC Script
+```{r}
+
+source('SeqSum_QC.R')
+
+```
+
+
+### Import Zymo Sequencing Summary
+
+```{r}
+Toti_ONT_WGS_ZymoMB <- fread('D:/data/Gemini/Toti_WGS/Toti_ONT_WGS/sequencing_summaries/Toti_ZymoMagBead_sequencing_summary_APG882_e7a07245_433ea235.txt')
+setnames(Toti_ONT_WGS_ZymoMB, 'sample_id', 'sample')
+```
+
+```{r}
+Toti_ONT_WGS_ZymoMB_res <- summarize_ont_run(Toti_ONT_WGS_ZymoMB, out_dir="1B-C_Toti_WGS/ONT_QC_Toti_ZymoHMW_LSK114", sample_name="Dog_M0 ... ZymoHMW")
+```
+
+
+```{r, eval=F}
+Toti_ONT_WGS        <- Toti_ONT_WGS_ZymoMB
+
+# total reads
+n_total <- nrow(Toti_ONT_WGS)
+
+# pass rate
+table(Toti_ONT_WGS$passes_filtering)
+
+# mean read length
+mean(Toti_ONT_WGS$sequence_length_template)
+
+# median read length
+median(Toti_ONT_WGS$sequence_length_template)
+
+# total bases
+sum(Toti_ONT_WGS$sequence_length_template)
+
+# mean Q score
+mean(Toti_ONT_WGS$mean_qscore_template)
+
+# N50
+library(ShortRead)
+N50 <- {
+  lengths <- sort(Toti_ONT_WGS$sequence_length_template, decreasing = TRUE)
+  cumsum_len <- cumsum(lengths)
+  lengths[which(cumsum_len >= sum(lengths)/2)[1]]
+}
+
+```
+
+
+### Import Invitrogen Sequencing Summary
+
+```{r}
+Toti_ONT_WGS_Inv    <- fread('D:/data/Gemini/Toti_WGS/Toti_ONT_WGS/sequencing_summaries/Toti_Invintrogen_sequencing_summary_APK618_b1716c7c_5586255f.txt')
+setnames(Toti_ONT_WGS_Inv, 'sample_id', 'sample')
+```
+
+```{r}
+Toti_ONT_WGS_Inv_res <- summarize_ont_run(Toti_ONT_WGS_Inv, out_dir="1B-C_Toti_WGS/ONT_QC_Toti_Inv_LSK114", sample_name="Dog_M0 ... Invitrogen")
+```
+
+
+```{r, eval=F}
+Toti_ONT_WGS        <- Toti_ONT_WGS_Inv
+
+# total reads
+n_total <- nrow(Toti_ONT_WGS)
+
+# pass rate
+table(Toti_ONT_WGS$passes_filtering)
+
+# mean read length
+mean(Toti_ONT_WGS$sequence_length_template)
+
+# median read length
+median(Toti_ONT_WGS$sequence_length_template)
+
+# total bases
+sum(Toti_ONT_WGS$sequence_length_template)
+
+# mean Q score
+mean(Toti_ONT_WGS$mean_qscore_template)
+
+# N50
+library(ShortRead)
+N50 <- {
+  lengths <- sort(Toti_ONT_WGS$sequence_length_template, decreasing = TRUE)
+  cumsum_len <- cumsum(lengths)
+  lengths[which(cumsum_len >= sum(lengths)/2)[1]]
+}
+
+```
+
+
+### Combined QC
+
+```{r}
+Toti_ONT_WGS <- rbind(Toti_ONT_WGS_Inv,
+                      Toti_ONT_WGS_ZymoMB
+                      )
+```
+
+
+```{r}
+Toti_ONT_WGS_res <- summarize_ont_run(Toti_ONT_WGS, out_dir="1B-C_Toti_WGS/ONT_QC_Toti_LSK114", sample_name="ONT_QC_Toti_LSK114")
+```
+
+```{r}
+
+dt_plot    <- Toti_ONT_WGS_res$dt_plot
+
+dt_passfail <- Toti_ONT_WGS_res$by_passfail
+
+dt_sample   <- Toti_ONT_WGS_res$overall
+
+dt_passfail <- merge(dt_passfail, dt_plot[passes_filtering == T, .(min_pass_Qscore = min(mean_qscore_template)), by = sample], by = c('sample'))
+
+dt_plot[,log_len := log10(len_plot)]
+
+dt_plot[,.N,sample]
+```
+
+```{r, eval=F}
+p_len_q <- ggplot(dt_plot[is.finite(len_plot) & len_plot > 0
+                      & is.finite(mean_qscore_template)], 
+                aes(x = log10(len_plot), y = mean_qscore_template, color = sample)) +
+  geom_point(alpha = 0.4, size = 1) +
+  scale_x_continuous(labels = label_comma()) +
+  scale_y_continuous(labels = label_comma()) +
+  labs(#title = paste0(sample_name, ": read length distribution (capped)"),
+       x = "Read length (bp)", y = "Mean Q-score", fill = NULL) +
+  theme_pub() # + facet_nested_wrap(~sample, nrow = 1)
+
+p_len_q
+
+save_plot(p_len_q, out_dir, paste0(sample_name, "_read_length_vs_meanQ_scatter"), w = 170, h = 170)
+```
+
+
+```{r, fig.width=15, fig.height=12}
+library(ggpubr)
+library(cowplot)
+library(ggrastr)
+
+
+                
+dt_plot <- dt_plot[sample(.N)]  # randomize draw order if you keep any point layers
+
+
+# Scatter plot colored by DNA Isolation Kits
+sp1 <- ggscatter(dt_plot, x = "log_len", y = "mean_qscore_template",
+                color = "sample", palette = "npg",
+                size = 1, alpha = 0.4)
+
+
+sp2 <- ggplot(dt_plot,
+             aes(x = log_len, y = mean_qscore_template)
+             ) +
+  geom_point_rast(aes(fill = sample),
+             shape = 21, color = "grey20", #color = "transparent", 
+             size = 0.35, alpha = 0.4, stroke = 0.4) +
+  scale_fill_npg() +
+  theme_pubr()
+
+sp3 <- ggplot(dt_plot, aes(log_len, mean_qscore_template)) +
+  # overall density (ignores sample)
+  stat_binhex(bins = 120, aes(fill = after_stat(log10(count)))) +
+  scale_fill_continuous(name = "log10(n)") +
+  # per-sample structure (no filling wars, just outlines)
+  stat_density_2d(aes(color = sample),
+                  linewidth = 0.6,
+                  bins = 8)
+
+sp4 <- ggplot(dt_plot,
+             aes(x = log_len, y = mean_qscore_template)
+             ) +
+  geom_count(aes(fill = sample),
+             shape = 21, color = "grey20", #color = "transparent", 
+             #size = 0.5,
+             alpha = 0.4, stroke = 0.4) +
+  scale_fill_npg() +
+  theme_pubr()
+
+
+sp <- sp2 +  
+  geom_vline(data = dt_passfail[pass_fail == 'pass', ], aes(xintercept = log10(mean_len), colour = sample), linewidth = 1) +
+  geom_hline(yintercept = mean(dt_passfail$min_pass_Qscore), colour = 'grey30', linewidth = 1 ) +
+  geom_hline(data = dt_passfail[pass_fail == 'pass', ], aes(yintercept = mean_q, colour = sample), linewidth = 1) +
+  
+  geom_label_repel(data = dt_passfail[pass_fail == 'pass', ], aes(label = paste0('Overall mean Q = ', round(mean_q, 3)), fill = sample, y = mean_q, x = 1), color = "grey20") +
+  geom_label_repel(data = dt_passfail[pass_fail == 'pass', ], aes(label = paste0('Overall mean read length = ', round(mean_len, 3)), fill = sample, y = 18, x = log10(n50_len)), color = "grey20") +
+  
+  labs(#title = paste0(sample_name, ": read length distribution (capped)"),
+       x = "Read length ( log10(bp) )", y = "Read mean Q-score", fill = NULL) +
+  
+  guides(colour = "none") +
+  
+  theme(legend.position = 'bottom') +
+  
+  ggpubr::border()                                       
+
+# Marginal density plot of x (top panel) and y (right panel)
+xplot <- ggdensity(dt_plot, "log_len", fill = "sample",
+                   palette = "npg")
+yplot <- ggdensity(dt_plot, "mean_qscore_template", fill = "sample", 
+                   palette = "npg") +
+  ggpubr::rotate()
+
+
+# Cleaning the plots
+sp <- sp #+ rremove("legend")
+yplot <- yplot + clean_theme() + rremove("legend")
+xplot <- xplot + clean_theme() + rremove("legend")
+
+# Arranging the plot using cowplot
+p_len_q <- plot_grid(xplot, NULL, sp, yplot, ncol = 2, align = "hv",
+                     rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+p_len_q
+
+save_plot(p_len_q, out_dir, paste0(sample_name, "_read_length_vs_meanQ_comb"), w = 350, h = 250)
+
+```
+
+
+```{r}
+p_len_q <- ggplot(dt_plot[is.finite(len_plot) & len_plot > 0
+                      & is.finite(mean_qscore_template)], 
+                aes(x = log10(len_plot), y = mean_qscore_template, color = pass_fail)) +
+  geom_hex(alpha = 0.6) +
+  scale_x_continuous(labels = label_comma()) +
+  scale_y_continuous(labels = label_comma()) +
+  labs(#title = paste0(sample_name, ": read length distribution (capped)"),
+       x = "Read length (bp)", y = "Mean Q-score", fill = NULL) +
+  theme_pub() 
+  facet_nested_wrap(~sample, nrow = 1)
+
+p_len_q
+  
+save_plot(p_len_q, out_dir, paste0(sample_name, "_read_length_vs_meanQ_hexbin"), w = 170, h = 170)
+
+```
+
+
+
+

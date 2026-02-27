@@ -669,7 +669,7 @@ gg.glom.norm.top.spec.hsapiens <- ggtop20
 
 
 
-## Figure 5
+## Figure 6
 ```{r, fig.height = fig.height.vr*3, fig.width = fig.width.vr+8, eval=T}
 
 res.dir <- 'Article_Figures'; dir.create(res.dir)
@@ -687,7 +687,7 @@ ggsave(file.path(res.dir, 'Figure_6.png'), gg.glom.norm.top.spec.all, height = 1
 ```
 
 
-## Figure 6
+## Figure 7
 ```{r, fig.height = fig.height.vr*3, fig.width = fig.width.vr+8, eval=T}
 
 res.dir <- 'Article_Figures'; dir.create(res.dir)
@@ -706,7 +706,16 @@ ggsave(file.path(res.dir, 'Figure_7.png'), gg.glom.norm.top.spec.all, height = 2
 ```
 
 
+
 ```{r}
+
+fwrite(df.from.ps(ps.glom.norm.top.spec.d6300, comb=F),    'd6300.norm.top.spec.tsv',    sep ='\t')
+fwrite(df.from.ps(ps.glom.norm.top.spec.d6331, comb=F),    'd6331.norm.top.spec.tsv',    sep ='\t')
+fwrite(df.from.ps(ps.glom.norm.top.spec.d6323, comb=F),    'd6323.norm.top.spec.tsv',    sep ='\t')
+fwrite(df.from.ps(ps.glom.norm.top.spec.hsapiens, comb=F), 'hsapiens.norm.top.spec.tsv', sep ='\t')
+fwrite(df.from.ps(ps.glom.norm.top.spec.clupus, comb=F),   'clupus.norm.top.spec.tsv',   sep ='\t')
+
+
 save.image(paste0(res.dir, '.RData'))
 ```
 

@@ -1,0 +1,287 @@
+---
+title: "Zymo FR D6323 V1-V9 ONT EMU on EMU database"
+author: "Balázs Kakuk"
+date: "2024-10-20"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+  pdf_document:
+    toc: true
+
+---
+
+```{css, echo=FALSE}
+    body .main-container {
+      max-width: 90% !important;
+      width: 90% !important;
+    }
+    body {
+      max-width: 90% !important;
+      margin-left: auto;
+      margin-right: auto;
+    }
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.align = 'center', fig.height = 10, fig.width = 30, warning = F, message = F, error = F)
+library(tidyverse)
+library(ggpubr)
+library(factoextra)
+library(FactoMineR)
+library(ggrepel)
+library(phyloseq, quietly = T)
+library(DESeq2)
+library(data.table)
+library(ggsci)
+library(hrbrthemes)
+library(ggh4x)
+library(RColorBrewer)
+library(stringr); library(stringi)
+library("ape")
+library("ggtree")
+library(Biostrings)
+library(dplyr)
+library(UpSetR)
+library(ComplexHeatmap)
+library(genefilter)
+library(viridis)
+
+## Own functions <<- SET PATH !!!
+misc.dir    <- 'C:/GitHub/Rlyeh/R'
+minitax.dir <- 'C:/GitHub/minitax/R'
+
+if (.Platform$OS.type!="windows") {
+  
+  misc.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', misc.dir))),
+                      stri_replace_first_regex(misc.dir, '.*:\\/', '')
+  )
+  
+  minitax.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', minitax.dir))),
+                         stri_replace_first_regex(minitax.dir, '.*:\\/', '')
+  )
+  
+}
+
+for(f in list.files(misc.dir,    '*.R', full.names = T)) { try({message(f); source(f)}) }
+for(f in list.files(minitax.dir, '*.R', full.names = T)) { try({message(f); source(f)}) }
+
+bam.flags           <- fread(paste0(misc.dir, '/bam.flags.tsv'))
+gff_compare_classes <- fread(paste0(misc.dir, '/gff_compare.txt'))
+nproc <- 32
+
+
+```
+
+# Illumina WGS
+
+### Import fastp JSON
+
+
+
+# ONT WGS
+
+### QC Script
+```{r}
+
+source('SeqSum_QC.R')
+
+```
+
+
+
+### Import MinION LSK-114 WGS Sequencing Summary
+
+```{r}
+Toti_ONT_WGS_ZymoMB <- fread('D:/data/Gemini/Toti_WGS/Toti_ONT_WGS/sequencing_summaries/Toti_ZymoMagBead_sequencing_summary_APG882_e7a07245_433ea235.txt')
+```
+
+
+```{r}
+summarize_ont_run(Toti_ONT_WGS_ZymoMB, out_dir="1B-C_Toti_WGS/ONT_QC_Toti_ZymoHMW_LSK114", sample_name="Dog_M0 ... ZymoHMW")
+```
+
+
+```{r, eval=F}
+Toti_ONT_WGS        <- Toti_ONT_WGS_ZymoMB
+
+# total reads
+n_total <- nrow(Toti_ONT_WGS)
+
+# pass rate
+table(Toti_ONT_WGS$passes_filtering)
+
+# mean read length
+mean(Toti_ONT_WGS$sequence_length_template)
+
+# median read length
+median(Toti_ONT_WGS$sequence_length_template)
+
+# total bases
+sum(Toti_ONT_WGS$sequence_length_template)
+
+# mean Q score
+mean(Toti_ONT_WGS$mean_qscore_template)
+
+# N50
+library(ShortRead)
+N50 <- {
+  lengths <- sort(Toti_ONT_WGS$sequence_length_template, decreasing = TRUE)
+  cumsum_len <- cumsum(lengths)
+  lengths[which(cumsum_len >= sum(lengths)/2)[1]]
+}
+
+```
+
+
+
+```{r}
+Toti_ONT_WGS_Inv    <- fread('D:/data/Gemini/Toti_WGS/Toti_ONT_WGS/sequencing_summaries/Toti_Invintrogen_sequencing_summary_APK618_b1716c7c_5586255f.txt')
+```
+
+```{r}
+summarize_ont_run(Toti_ONT_WGS_Inv, out_dir="1B-C_Toti_WGS/ONT_QC_Toti_Inv_LSK114", sample_name="Dog_M0 ... Invitrogen")
+```
+
+
+```{r, eval=F}
+Toti_ONT_WGS        <- Toti_ONT_WGS_Inv
+
+# total reads
+n_total <- nrow(Toti_ONT_WGS)
+
+# pass rate
+table(Toti_ONT_WGS$passes_filtering)
+
+# mean read length
+mean(Toti_ONT_WGS$sequence_length_template)
+
+# median read length
+median(Toti_ONT_WGS$sequence_length_template)
+
+# total bases
+sum(Toti_ONT_WGS$sequence_length_template)
+
+# mean Q score
+mean(Toti_ONT_WGS$mean_qscore_template)
+
+# N50
+library(ShortRead)
+N50 <- {
+  lengths <- sort(Toti_ONT_WGS$sequence_length_template, decreasing = TRUE)
+  cumsum_len <- cumsum(lengths)
+  lengths[which(cumsum_len >= sum(lengths)/2)[1]]
+}
+
+```
+
+
+
+### SertePerti MinION V1-V9 Sequencing Summary
+
+
+
+```{r}
+seq_sum <- fread('D:/data/Gemini/Serteperti/sequecing_summary/sequencing_summary.txt')
+
+seq_sum[,.N,run_id]
+
+summarize_ont_run(seq_sum, out_dir='../2_40dogs_ZHMW_vs_ZMB/SERTEPERTI_all', sample_name='SERTEPERTI_all')
+
+```
+
+
+
+
+
+
+```{r}
+
+files   <- list.files('D:/data/Gemini/Serteperti/sequecing_summary', 'SERTE', recursive = T, full.names = T)
+
+i <- 1
+
+mapfun  <- function(i, files) {
+
+  file   <- files[i]
+  sample <- gsub('__basecalli_sequencing_summary.txt', '', gsub('.*/', '', file)  )
+  
+  seq_sum <- fread(file)
+  
+  summarize_ont_run(seq_sum, out_dir=sample, sample_name=sample)
+  
+}
+
+
+purrr::map(1:length(files), mapfun, files)
+
+```
+
+
+
+```{r}
+
+## move files manually to 2_40dogs_ZHMW_vs_ZMB folder
+
+
+files <- list.files('../2_40dogs_ZHMW_vs_ZMB', 'ONT_overall_summary', recursive = T, full.names = T)
+
+i <- 1
+
+file <- files[i]
+
+mapfun <- function(i, files) { 
+  file <- files[i]
+  sample_name <- gsub('/ONT_overall_summary.csv', '', gsub('../2_40dogs_ZHMW_vs_ZMB/', '', file) )
+  dt <- fread(file)
+  dt[, sample := sample_name]
+  return(dt)
+}
+
+all_sum_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
+
+fwrite(all_sum_dt, '../2_40dogs_ZHMW_vs_ZMB/SERTEPERTI_all/all_samples_sum.tsv', sep = '\t')
+
+```
+
+```{r}
+
+files   <- list.files('D:/data/Gemini/Serteperti/sequecing_summary', 'SERTE', recursive = T, full.names = T)
+
+i <- 1
+
+file <- files[i]
+
+mapfun <- function(i, files) { 
+  file <- files[i]
+  sample_name <- gsub('__basecalli_sequencing_summary.txt', '', gsub('.*/', '', file)  )
+  dt <- fread(file)
+  dt[, sample := sample_name]
+  return(dt)
+}
+
+all_seq_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
+
+all_seq_dt[,.N,barcode_front_id]
+
+all_seq_dt[,.N,barcode_rear_id]
+
+barcode_dt <- unique(all_seq_dt[, .N, by = .(barcode_front_id, barcode_rear_id, sample)] ) # passes_filtering
+
+barcode_dt[, barcode_front := gsub('_FWD', '', barcode_front_id)]
+barcode_dt[, barcode_rear  := gsub('_REV', '', barcode_rear_id )]
+
+barcode_dt[ barcode_front != barcode_rear, ]
+
+
+fwrite(barcode_dt, '../2_40dogs_ZHMW_vs_ZMB/SERTEPERTI_all/all_samples_barcodes.tsv', sep = '\t')
+
+```
+
+
+
