@@ -272,9 +272,9 @@ gc()
 
 ```{r}
 # Marginal density plot of x (top panel) and y (right panel)
-xplot <- ggdensity(dt_plot, "length", fill = "instrument_platform",
-                   palette = "npg") +
-  ggpubr::rotate()
+xplot <- ggdensity(dt_plot, "log_len", fill = "instrument_platform",
+                   palette = "npg") 
+ #+ ggpubr::rotate()
 
 yplot <- ggdensity(dt_plot, "mean_Q", fill = "instrument_platform", 
                    palette = "npg") +
@@ -282,7 +282,7 @@ yplot <- ggdensity(dt_plot, "mean_Q", fill = "instrument_platform",
 
 
 
-sp <- ggplot(dt_plot, aes(length, mean_Q)) +
+sp <- ggplot(dt_plot, aes(log_len, mean_Q)) +
   geom_point_rast(aes(fill = instrument_platform), alpha = 0.8, shape = 21, color = 'black', size = 3) +
   scale_fill_manual(values = my_pal) +
   scale_x_continuous(labels = label_comma()) +
@@ -320,9 +320,9 @@ ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height =
 ```{r}
 
 sp2 <- ggplot(dt_plot,
-             aes(x = log_len, y = mean_qscore_template)
+             aes(x = log_len, y = mean_Q )
              ) +
-  geom_point_rast(aes(fill = sample),
+  geom_point_rast(aes(fill = instrument_platform),
              shape = 21, color = "grey20", #color = "transparent", 
              size = 0.35, alpha = 0.4, stroke = 0.4) +
   scale_fill_npg() +
@@ -330,12 +330,12 @@ sp2 <- ggplot(dt_plot,
 
 
 sp <- sp2 +  
-  geom_vline(data = platform_summary, aes(xintercept = mean_read_length, colour = sample), linewidth = 1) +
-  geom_hline(yintercept = mean(dt_passfail$min_pass_Qscore), colour = 'grey30', linewidth = 1 ) +
-  geom_hline(data = platform_summary, aes(yintercept = mean_q, colour = sample), linewidth = 1) +
+  geom_vline(data = platform_summary, aes(xintercept = mean_read_length, colour = instrument_platform), linewidth = 1) +
+  #geom_hline(yintercept = mean(platform_summary$min_pass_Qscore), colour = 'grey30', linewidth = 1 ) +
+  geom_hline(data = platform_summary, aes(yintercept = mean_q, colour = instrument_platform), linewidth = 1) +
   
-  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean Q = ', round(mean_q, 3)), fill = sample, y = mean_q, x = 1), color = "grey20") +
-  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean read length = ', round(mean_read_length, 3)), fill = sample, y = 18, x = log10(n50_len)), color = "grey20") +
+  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean Q = ', round(mean_q, 3)), fill = instrument_platform, y = mean_q, x = 1), color = "grey20") +
+  #geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean read length = ', round(mean_read_length, 3)), fill = sample, y = 18, x = log10(n50_len)), color = "grey20") +
   
   labs(#title = paste0(sample_name, ": read length distribution (capped)"),
        x = "Read length ( log10(bp) )", y = "Read mean Q-score", fill = NULL) +
@@ -348,14 +348,14 @@ sp <- sp2 +
 
 
 xplot <- ggplot(dt_plot, aes(log_len)) +
-  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  geom_density(aes(fill = instrument_platform), alpha = 0.5, n = 128) +
   #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
   scale_fill_manual(values = my_pal) +
   theme_pubr() 
 
 
 yplot <- ggplot(dt_plot, aes(mean_Q)) +
-  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  geom_density(aes(fill = instrument_platform), alpha = 0.5, n = 128) +
   #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
   scale_fill_manual(values = my_pal) +
   theme_pubr() +
