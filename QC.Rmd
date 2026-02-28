@@ -332,9 +332,9 @@ sp2 <- ggplot(dt_plot,
 sp <- sp2 +  
   geom_vline(data = platform_summary, aes(xintercept = mean_read_length, colour = instrument_platform), linewidth = 1) +
   #geom_hline(yintercept = mean(platform_summary$min_pass_Qscore), colour = 'grey30', linewidth = 1 ) +
-  geom_hline(data = platform_summary, aes(yintercept = mean_q, colour = instrument_platform), linewidth = 1) +
+  geom_hline(data = platform_summary, aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
   
-  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean Q = ', round(mean_q, 3)), fill = instrument_platform, y = mean_q, x = 1), color = "grey20") +
+  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean Q = ', round(mean_Q, 3)), fill = instrument_platform, y = mean_Q, x = 1), color = "grey20") +
   #geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean read length = ', round(mean_read_length, 3)), fill = sample, y = 18, x = log10(n50_len)), color = "grey20") +
   
   labs(#title = paste0(sample_name, ": read length distribution (capped)"),
