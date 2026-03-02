@@ -26,6 +26,7 @@ output:
     }
 ```
 
+# Start Workflow
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, fig.align = 'center', fig.height = 10, fig.width = 30, warning = F, message = F, error = F)
@@ -354,6 +355,166 @@ gg.glom.norm.top.spec.d6300  <- ggtop20
 
 ```
 
+### Detection Metrics 
+```{r}
+
+det.stats <- fread('MCM_D6300_EMU_EMUdb/Detection statistics.tsv')
+det.sum   <- det.stats[statistic %in% c('Precision', 'Recall'), .(mean = mean(value), sd = sd(value)), by = .(statistic, Detection_threshold_percent, Detection_threshold_ratio, level, primer, GS_version)]
+det.sum.d6300 <- det.sum
+
+gs.taxa          <- unique(taxtab.gs[,t])
+
+d6300.dt <- dt.from.ps(ps.all, glom_taxa = T, t = t)
+d6300.dt[,.N,sample]
+
+d6300.dt[, norm_count := count / sum(count), by = sample]
+
+n_distinct(d6300.dt[sample == 'Zymo_6300_ONT' & count > 0, species]) == n_distinct(gs.taxa)
+
+d6300.cast <- dcast.data.table(d6300.dt, species ~ sample, value.var = 'norm_count' )
+
+fwrite(d6300.cast, 'MCM_D6300_EMU_EMUdb/MCM_D6300_EMU_EMUdb.tsv', sep = '\t')
+
+
+```
+
+
+#### Presence/absence Heatmap
+```{r, eval=F}
+library(data.table)
+library(ggplot2)
+
+# ---- load
+dt <- fread("FR_D6323_EMU_EMUdb/FR_D6323_EMU_EMUdb.tsv")  # adjust path if needed
+
+# ---- parameters
+top_n <- 250          # number of dominant reference taxa to show
+detect_thr <- 1e-6   # detection threshold on relative abundance
+
+# ---- identify library columns (everything except 'species')
+lib_cols <- setdiff(names(dt), "species")
+
+# ---- pick top taxa from the "gold/reference" column
+stopifnot("Zymo_6323_ONT" %in% names(dt))
+top_taxa <- dt[order(-Zymo_6323_ONT)][1:top_n, species]
+
+# ---- long format
+long <- melt(
+  dt[species %in% top_taxa],
+  id.vars = "species",
+  measure.vars = lib_cols,
+  variable.name = "library",
+  value.name = "rel_ab"
+)
+
+# ---- detection (binary)
+long[, detected := as.integer(rel_ab >= detect_thr)]
+
+# ---- simple platform annotation from column names
+long[, platform := fifelse(grepl("_PB_", library), "PacBio",
+                    fifelse(grepl("_ONT_", library), "ONT",
+                    fifelse(grepl("_MONT_", library), "ONT (mod/deg)", 
+                    fifelse(library == "Zymo_6323_ONT", "Reference", "Other"))))]
+
+# ---- order columns: Reference first, then groups
+setorder(long, platform, library)
+lib_levels <- unique(long$library)
+long[, library := factor(library, levels = lib_levels)]
+
+# ---- order rows: by reference abundance descending
+tax_levels <- dt[species %in% top_taxa][order(-Zymo_6323_ONT), species]
+long[, species := factor(species, levels = rev(tax_levels))]  # reverse so top at top
+
+# ---- plot
+p <- ggplot(long, aes(x = library, y = species, fill = detected)) +
+  geom_tile(color = "grey90", linewidth = 0.2) +
+  facet_grid(. ~ platform, scales = "free_x", space = "free_x") +
+  scale_fill_gradient(low = "white", high = "black") +
+  theme_classic(base_size = 10) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+    axis.title = element_blank(),
+    legend.position = "right",
+    strip.background = element_blank(),
+    strip.text = element_text(face = "bold")
+  ) +
+  labs(fill = paste0("Detected\n(≥ ", detect_thr, ")"),
+       title = paste0("Mock standard D6323: detection of top ", top_n, " reference taxa across libraries"))
+
+ggsave("D6323_detection_heatmap.pdf", p, width = 220, height = top_n*4, units = "mm", device = cairo_pdf)
+ggsave("D6323_detection_heatmap.png", p, width = 220, height = top_n*4, units = "mm", dpi = 600)
+
+p
+```
+
+#### Recall vs Precision
+```{r, fig.width=22, fig.height=10}
+
+ggplot(det.stats[statistic %in% c('Precision', 'Recall')]) +
+  geom_point(aes(statistic, value, fill = primer), shape = 21, alpha = 0.85, size = 3) +
+  coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~statistic + Detection_threshold_percent + level, scales = 'free', nrow = 2)
+
+
+ggplot(det.stats[statistic %in% c('Precision', 'Recall')]) +
+  geom_col(aes(statistic, value, fill = primer), position = 'dodge2', color = 'black') +
+  scale_fill_npg() +
+  coord_cartesian( ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~statistic + Detection_threshold_percent + level, scales = 'free', nrow = 2)
+```
+
+
+```{r, fig.width=12, fig.height=10}
+prec.rec <- dcast.data.table(det.stats[statistic %in% c('Precision', 'Recall')], ... ~ statistic, value.var = 'value')
+
+ggplot(prec.rec) +
+  geom_point(aes(Precision, Recall, fill = primer), shape = 21, alpha = 0.85, size = 3) +
+  coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~level + Detection_threshold_percent, scales = 'free')
+
+
+prec.rec <- dcast.data.table(det.stats[statistic %in% c('False_negatives', 'False_positives')], ... ~ statistic, value.var = 'value')
+
+ggplot(prec.rec) +
+  geom_point(aes(False_negatives, False_positives, fill = primer), shape = 21, alpha = 0.85, size = 3) +
+  #coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~level + Detection_threshold_percent, scales = 'free')
+
+
+```
+
+#### Fig 3
+```{r, fig.width=14, fig.height=8}
+
+ggp <- ggplot(det.sum,
+       aes(Detection_threshold_ratio, mean, color = primer, shape = statistic, fill = primer)) +
+  geom_point(size = 4, color = 'black') +
+  scale_shape_manual(values = c(
+    Precision = 21,   # filled circle
+    Recall    = 24    # filled triangle
+  )) +
+  geom_line(aes(group = interaction(primer, statistic))) +
+  scale_fill_npg() +
+  scale_color_npg() +
+  scale_x_continuous(labels = scales::label_percent()) +
+  coord_cartesian( ylim = c(0,1)) +
+  labs(y = 'Mean value', x = 'Detection threshold (% of reads') +
+  theme_ipsum() +
+  theme(panel.border = element_rect(linewidth = 0.5)) +
+  facet_wrap(~ level, scales = 'free', nrow = 1)
+
+
+ggp
+
+#ggsave('Article_Figures/FR_D6323_EMU_EMUdb_prec.vs.recall.png', width = 14, height = 8, bg = 'white') 
+```
+
+
+
 
 ## MCM D6331
 ```{r}
@@ -429,6 +590,163 @@ gg.glom.norm.top.spec.d6331  <- ggtop20
 
 ```
 
+### Detection Metrics 
+```{r}
+
+det.stats <- fread('MCM_D6331_EMU_EMUdb/Detection statistics.tsv')
+det.sum   <- det.stats[statistic %in% c('Precision', 'Recall'), .(mean = mean(value), sd = sd(value)), by = .(statistic, Detection_threshold_percent, Detection_threshold_ratio, level, primer, GS_version)]
+det.sum.d6331 <- det.sum
+
+gs.taxa          <- unique(taxtab.gs[,t])
+
+d6331.dt <- dt.from.ps(ps.all, glom_taxa = T, t = t)
+d6331.dt[,.N,sample]
+
+d6331.dt[, norm_count := count / sum(count), by = sample]
+
+n_distinct(d6331.dt[sample == 'Zymo_6331_ONT' & count > 0, species]) == n_distinct(gs.taxa)
+
+d6331.cast <- dcast.data.table(d6331.dt, species ~ sample, value.var = 'norm_count' )
+
+fwrite(d6331.cast, 'MCM_D6331_EMU_EMUdb/MCM_D6331_EMU_EMUdb.tsv', sep = '\t')
+
+
+```
+
+
+#### Presence/absence Heatmap
+```{r, eval=F}
+library(data.table)
+library(ggplot2)
+
+# ---- load
+dt <- fread("FR_D6323_EMU_EMUdb/FR_D6323_EMU_EMUdb.tsv")  # adjust path if needed
+
+# ---- parameters
+top_n <- 250          # number of dominant reference taxa to show
+detect_thr <- 1e-6   # detection threshold on relative abundance
+
+# ---- identify library columns (everything except 'species')
+lib_cols <- setdiff(names(dt), "species")
+
+# ---- pick top taxa from the "gold/reference" column
+stopifnot("Zymo_6323_ONT" %in% names(dt))
+top_taxa <- dt[order(-Zymo_6323_ONT)][1:top_n, species]
+
+# ---- long format
+long <- melt(
+  dt[species %in% top_taxa],
+  id.vars = "species",
+  measure.vars = lib_cols,
+  variable.name = "library",
+  value.name = "rel_ab"
+)
+
+# ---- detection (binary)
+long[, detected := as.integer(rel_ab >= detect_thr)]
+
+# ---- simple platform annotation from column names
+long[, platform := fifelse(grepl("_PB_", library), "PacBio",
+                    fifelse(grepl("_ONT_", library), "ONT",
+                    fifelse(grepl("_MONT_", library), "ONT (mod/deg)", 
+                    fifelse(library == "Zymo_6323_ONT", "Reference", "Other"))))]
+
+# ---- order columns: Reference first, then groups
+setorder(long, platform, library)
+lib_levels <- unique(long$library)
+long[, library := factor(library, levels = lib_levels)]
+
+# ---- order rows: by reference abundance descending
+tax_levels <- dt[species %in% top_taxa][order(-Zymo_6323_ONT), species]
+long[, species := factor(species, levels = rev(tax_levels))]  # reverse so top at top
+
+# ---- plot
+p <- ggplot(long, aes(x = library, y = species, fill = detected)) +
+  geom_tile(color = "grey90", linewidth = 0.2) +
+  facet_grid(. ~ platform, scales = "free_x", space = "free_x") +
+  scale_fill_gradient(low = "white", high = "black") +
+  theme_classic(base_size = 10) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+    axis.title = element_blank(),
+    legend.position = "right",
+    strip.background = element_blank(),
+    strip.text = element_text(face = "bold")
+  ) +
+  labs(fill = paste0("Detected\n(≥ ", detect_thr, ")"),
+       title = paste0("Mock standard D6323: detection of top ", top_n, " reference taxa across libraries"))
+
+ggsave("D6323_detection_heatmap.pdf", p, width = 220, height = top_n*4, units = "mm", device = cairo_pdf)
+ggsave("D6323_detection_heatmap.png", p, width = 220, height = top_n*4, units = "mm", dpi = 600)
+
+p
+```
+
+#### Recall vs Precision
+```{r, fig.width=22, fig.height=10}
+
+ggplot(det.stats[statistic %in% c('Precision', 'Recall')]) +
+  geom_point(aes(statistic, value, fill = primer), shape = 21, alpha = 0.85, size = 3) +
+  coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~statistic + Detection_threshold_percent + level, scales = 'free', nrow = 2)
+
+
+ggplot(det.stats[statistic %in% c('Precision', 'Recall')]) +
+  geom_col(aes(statistic, value, fill = primer), position = 'dodge2', color = 'black') +
+  scale_fill_npg() +
+  coord_cartesian( ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~statistic + Detection_threshold_percent + level, scales = 'free', nrow = 2)
+```
+
+
+```{r, fig.width=12, fig.height=10}
+prec.rec <- dcast.data.table(det.stats[statistic %in% c('Precision', 'Recall')], ... ~ statistic, value.var = 'value')
+
+ggplot(prec.rec) +
+  geom_point(aes(Precision, Recall, fill = primer), shape = 21, alpha = 0.85, size = 3) +
+  coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~level + Detection_threshold_percent, scales = 'free')
+
+
+prec.rec <- dcast.data.table(det.stats[statistic %in% c('False_negatives', 'False_positives')], ... ~ statistic, value.var = 'value')
+
+ggplot(prec.rec) +
+  geom_point(aes(False_negatives, False_positives, fill = primer), shape = 21, alpha = 0.85, size = 3) +
+  #coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~level + Detection_threshold_percent, scales = 'free')
+
+
+```
+
+#### Fig 3
+```{r, fig.width=14, fig.height=8}
+
+ggp <- ggplot(det.sum,
+       aes(Detection_threshold_ratio, mean, color = primer, shape = statistic, fill = primer)) +
+  geom_point(size = 4, color = 'black') +
+  scale_shape_manual(values = c(
+    Precision = 21,   # filled circle
+    Recall    = 24    # filled triangle
+  )) +
+  geom_line(aes(group = interaction(primer, statistic))) +
+  scale_fill_npg() +
+  scale_color_npg() +
+  scale_x_continuous(labels = scales::label_percent()) +
+  coord_cartesian( ylim = c(0,1)) +
+  labs(y = 'Mean value', x = 'Detection threshold (% of reads') +
+  theme_ipsum() +
+  theme(panel.border = element_rect(linewidth = 0.5)) +
+  facet_wrap(~ level, scales = 'free', nrow = 1)
+
+
+ggp
+
+#ggsave('Article_Figures/FR_D6323_EMU_EMUdb_prec.vs.recall.png', width = 14, height = 8, bg = 'white') 
+```
 
 
 ## FR D6323
@@ -507,6 +825,164 @@ ggtop20
 ps.glom.norm.top.spec.d6323  <- ps.glom.norm.top.merged
 gg.glom.norm.top.spec.d6323  <- ggtop20
 
+```
+
+### Detection Metrics 
+```{r}
+
+det.stats <- fread('FR_D6323_EMU_EMUdb/Detection statistics.tsv')
+det.sum   <- det.stats[statistic %in% c('Precision', 'Recall'), .(mean = mean(value), sd = sd(value)), by = .(statistic, Detection_threshold_percent, Detection_threshold_ratio, level, primer, GS_version)]
+det.sum.d6323 <- det.sum
+
+gs.taxa          <- unique(taxtab.gs[,t])
+
+d6323.dt <- dt.from.ps(ps.all, glom_taxa = T, t = t)
+d6323.dt[,.N,sample]
+
+d6323.dt[, norm_count := count / sum(count), by = sample]
+
+n_distinct(d6323.dt[sample == 'Zymo_6323_ONT' & count > 0, species]) == n_distinct(gs.taxa)
+
+d6323.cast <- dcast.data.table(d6323.dt, species ~ sample, value.var = 'norm_count' )
+
+fwrite(d6323.cast, 'FR_D6323_EMU_EMUdb/FR_D6323_EMU_EMUdb.tsv', sep = '\t')
+
+
+```
+
+
+#### Presence/absence Heatmap
+```{r, eval=F}
+library(data.table)
+library(ggplot2)
+
+# ---- load
+dt <- fread("FR_D6323_EMU_EMUdb/FR_D6323_EMU_EMUdb.tsv")  # adjust path if needed
+
+# ---- parameters
+top_n <- 250          # number of dominant reference taxa to show
+detect_thr <- 1e-6   # detection threshold on relative abundance
+
+# ---- identify library columns (everything except 'species')
+lib_cols <- setdiff(names(dt), "species")
+
+# ---- pick top taxa from the "gold/reference" column
+stopifnot("Zymo_6323_ONT" %in% names(dt))
+top_taxa <- dt[order(-Zymo_6323_ONT)][1:top_n, species]
+
+# ---- long format
+long <- melt(
+  dt[species %in% top_taxa],
+  id.vars = "species",
+  measure.vars = lib_cols,
+  variable.name = "library",
+  value.name = "rel_ab"
+)
+
+# ---- detection (binary)
+long[, detected := as.integer(rel_ab >= detect_thr)]
+
+# ---- simple platform annotation from column names
+long[, platform := fifelse(grepl("_PB_", library), "PacBio",
+                    fifelse(grepl("_ONT_", library), "ONT",
+                    fifelse(grepl("_MONT_", library), "ONT (mod/deg)", 
+                    fifelse(library == "Zymo_6323_ONT", "Reference", "Other"))))]
+
+# ---- order columns: Reference first, then groups
+setorder(long, platform, library)
+lib_levels <- unique(long$library)
+long[, library := factor(library, levels = lib_levels)]
+
+# ---- order rows: by reference abundance descending
+tax_levels <- dt[species %in% top_taxa][order(-Zymo_6323_ONT), species]
+long[, species := factor(species, levels = rev(tax_levels))]  # reverse so top at top
+
+# ---- plot
+p <- ggplot(long, aes(x = library, y = species, fill = detected)) +
+  geom_tile(color = "grey90", linewidth = 0.2) +
+  facet_grid(. ~ platform, scales = "free_x", space = "free_x") +
+  scale_fill_gradient(low = "white", high = "black") +
+  theme_classic(base_size = 10) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+    axis.title = element_blank(),
+    legend.position = "right",
+    strip.background = element_blank(),
+    strip.text = element_text(face = "bold")
+  ) +
+  labs(fill = paste0("Detected\n(≥ ", detect_thr, ")"),
+       title = paste0("Mock standard D6323: detection of top ", top_n, " reference taxa across libraries"))
+
+ggsave("D6323_detection_heatmap.pdf", p, width = 220, height = top_n*4, units = "mm", device = cairo_pdf)
+ggsave("D6323_detection_heatmap.png", p, width = 220, height = top_n*4, units = "mm", dpi = 600)
+
+p
+```
+
+#### Recall vs Precision
+```{r, fig.width=22, fig.height=10}
+
+ggplot(det.stats[statistic %in% c('Precision', 'Recall')]) +
+  geom_point(aes(statistic, value, fill = primer), shape = 21, alpha = 0.85, size = 3) +
+  coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~statistic + Detection_threshold_percent + level, scales = 'free', nrow = 2)
+
+
+ggplot(det.stats[statistic %in% c('Precision', 'Recall')]) +
+  geom_col(aes(statistic, value, fill = primer), position = 'dodge2', color = 'black') +
+  scale_fill_npg() +
+  coord_cartesian( ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~statistic + Detection_threshold_percent + level, scales = 'free', nrow = 2)
+```
+
+
+```{r, fig.width=12, fig.height=10}
+prec.rec <- dcast.data.table(det.stats[statistic %in% c('Precision', 'Recall')], ... ~ statistic, value.var = 'value')
+
+ggplot(prec.rec) +
+  geom_point(aes(Precision, Recall, fill = primer), shape = 21, alpha = 0.85, size = 3) +
+  coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~level + Detection_threshold_percent, scales = 'free')
+
+
+prec.rec <- dcast.data.table(det.stats[statistic %in% c('False_negatives', 'False_positives')], ... ~ statistic, value.var = 'value')
+
+ggplot(prec.rec) +
+  geom_point(aes(False_negatives, False_positives, fill = primer), shape = 21, alpha = 0.85, size = 3) +
+  #coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  theme_ipsum() +
+  facet_wrap(~level + Detection_threshold_percent, scales = 'free')
+
+
+```
+
+#### Fig 3
+```{r, fig.width=14, fig.height=8}
+
+ggp <- ggplot(det.sum,
+       aes(Detection_threshold_ratio, mean, color = primer, shape = statistic, fill = primer)) +
+  geom_point(size = 4, color = 'black') +
+  scale_shape_manual(values = c(
+    Precision = 21,   # filled circle
+    Recall    = 24    # filled triangle
+  )) +
+  geom_line(aes(group = interaction(primer, statistic))) +
+  scale_fill_npg() +
+  scale_color_npg() +
+  scale_x_continuous(labels = scales::label_percent()) +
+  coord_cartesian( ylim = c(0,1)) +
+  labs(y = 'Mean value', x = 'Detection threshold (% of reads') +
+  theme_ipsum() +
+  theme(panel.border = element_rect(linewidth = 0.5)) +
+  facet_wrap(~ level, scales = 'free', nrow = 1)
+
+
+ggp
+
+#ggsave('Article_Figures/FR_D6323_EMU_EMUdb_prec.vs.recall.png', width = 14, height = 8, bg = 'white') 
 ```
 
 
@@ -667,6 +1143,126 @@ gg.glom.norm.top.spec.hsapiens <- ggtop20
 
 ```
 
+
+## Figure 3
+
+### Figure 3A
+```{r, fig.width = 18, fig.height = 14}
+det.sum <- rbind(det.sum.d6300,
+                 det.sum.d6331,
+                 det.sum.d6323)
+
+ggp <- ggplot(det.sum,
+       aes(Detection_threshold_ratio, mean, color = primer, shape = statistic, fill = primer)) +
+  geom_point(size = 4, color = 'black') +
+  scale_shape_manual(values = c(
+    Precision = 21,   # filled circle
+    Recall    = 24    # filled triangle
+  )) +
+  geom_line(aes(group = interaction(primer, statistic))) +
+  scale_fill_npg() +
+  scale_color_npg() +
+  scale_x_continuous(labels = scales::label_percent()) +
+  coord_cartesian( ylim = c(0,1)) +
+  labs(y = 'Mean value', x = 'Detection threshold (% of reads') +
+  theme_ipsum() +
+  theme(panel.border = element_rect(linewidth = 0.5)) +
+  facet_wrap(~ level + GS_version, scales = 'free', nrow = 2)
+
+
+ggp
+
+ggsave('Article_Figures/Fig3A_Prec.vs.recall.png', width = 18, height = 14, bg = 'white') 
+
+Fig3A <- ggp
+```
+
+
+### Figure 3B
+```{r}
+library(eulerr)
+library(ComplexUpset)
+```
+
+```{r, fig.height=8, fig.width=12}
+i <- 7
+t <- rank_names(ps.all)[i]
+
+comb.dt <- rbind(dt.from.ps(ps.d6323),
+                 dt.from.ps(ps.hsapiens),
+                 dt.from.ps(ps.clupus),
+                 fill = T)
+
+comb.dt <- comb.dt[count > 0, ]
+
+cols <- c(t, 'source')
+taxa.pres <- comb.dt[, .(count = sum(count)), by = cols]
+
+taxa.pres <- dcast.data.table(taxa.pres, ... ~ source, value.var = 'count')
+
+## 6  Overlap UpSet plot ------------------------------------------------------
+
+up_dt <- copy(taxa.pres)
+up_dt[, (names(up_dt)[-1]) := lapply(.SD, Negate(is.na)),
+          .SDcols = -1]
+intersect <- colnames(up_dt)[-1]
+
+### UpSet
+p1 <- ComplexUpset::upset(up_dt,
+    intersect = intersect,
+    min_size  = 1,
+    sort_sets = FALSE,
+    themes = theme_ipsum(),
+    sort_intersections_by = "cardinality",
+    base_annotations = list("Intersection size" = intersection_size(counts = TRUE)))
+
+p1
+
+ggsave(paste0('Article_Figures/', t, '_overlap_UpSet.png'), p1,
+       width = 12, height = 9)
+#saveRDS(p1, paste0(res.dir, '/', t, '_overlap_UpSet.rds'))
+```
+
+
+```{r, fig.height=6, fig.width=8}
+### Euler
+fit1 <- euler(list(
+    `Fecal Reference`= unique( up_dt[`FR`           == T,  get(t)] ),
+    `Homo sapiens`   = unique( up_dt[`Homo_sapiens` == T,  get(t)] ),
+    `Canis lupus`    = unique( up_dt[`Canis_lupus`  == T,  get(t)] )
+))
+
+p1 <- plot(
+  fit1,
+  quantities = TRUE,
+  fills = list(fill = c("Fecal Reference" = "#1f77b4", "Homo sapiens" = "#ff7f0e", "Canis lupus" = "#005B2A"), alpha=0.6),
+  edges = list(col  = c("Fecal Reference" = "black",   "Homo sapiens" = "black",   "Canis lupus" = "black"  ), lwd = 1)
+)
+
+p1
+
+ggsave(paste0('Article_Figures/', t, '_overlap_Euler.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0('Article_Figures/', t, '_overlap_Euler.rds'))
+
+Fig3B <- p1
+```
+
+
+
+```{r}
+
+library(cowplot)
+
+Fig3 <- plot_grid(Fig3A, Fig3B, nrow = 1, rel_widths = c(2.5,1), labels = c('a', 'b'))
+
+dir.create('Article_Figures')
+ggsave(paste0('Article_Figures', '/', 'Figure3_Final.png'), Fig3, width = 21, height = 12, bg = 'white')
+
+
+Fig3
+
+```
 
 
 ## Figure 6

@@ -94,6 +94,8 @@ theme_pub <- function(base_size = 10) {
     )
 }
 
+source('SeqSum_QC.R')
+
 ```
 
 
@@ -375,6 +377,13 @@ ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height =
 #save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 ```
 
+## Taxonomic Overlap
+```{r}
+
+```
+
+
+
 
 # SertePerti MinION V1-V9 Sequencing Summary
 
@@ -422,11 +431,15 @@ if(nrow(proj_stats_dt) == nrow(PRJEB82097_st)) {
 
 ```
 
-```{r}
+```{r, message=T}
 PRJEB82097_meta <- fread('2_40dogs_ZHMW_vs_ZMB/metadata.tsv')
 PRJEB82097_meta[, sample  := gsub('_rel-abundance.tsv', '', filename)]
 
-PRJEB82097_stats <- merge(PRJEB82097_stats, PRJEB82097_meta, by = 'sample', all.x=T)
+PRJEB82097_st  <- merge(PRJEB82097_stats, PRJEB82097_meta, by.x = 'sample_title', by.y = 'sample', all.x=T)
+
+setnames(PRJEB82097_st, c('sample_title', 'sample'), c('sample', 'biosample'))
+
+PRJEB82097_st[,.N,sample]
 
 # the metadata table contains samples that were not uploaded to ENA!
 
@@ -436,13 +449,18 @@ PRJEB82097_stats <- merge(PRJEB82097_stats, PRJEB82097_meta, by = 'sample', all.
 
 SuppTab_S4 <- fread('2_40dogs_ZHMW_vs_ZMB/Supplementary Table S4.txt')
 
-PRJEB82097_st <- PRJEB82097_stats[sample %in% SuppTab_S4$file_name, ]
+PRJEB82097_st <- PRJEB82097_st[sample %in% SuppTab_S4$file_name, ]
 
 PRJEB82097_st[,.N,sample]
 
 ## ok!
+if(all(is.element(PRJEB82097_st$sample, SuppTab_S4$file_name))) {
+  message('ok! every sample matches with the metadata!')
+  PRJEB82097_stats <- PRJEB82097_st; rm(PRJEB82097_st)
+} else {
+  stop('ERROR! Some samples have not been downloaded and/or imported!')
+}
 
-PRJEB82097_stats <- PRJEB82097_st; rm(PRJEB82097_st)
 
 ```
 
@@ -523,7 +541,7 @@ method_summary
 
 ```
 
-```{r}
+```{r, eval=F}
 # Publication-ready multi-panel QC figure:
 # Compare read length + read quality between ZHMW vs ZMB
 #  (A) group-level distribution of per-sample mean read length
@@ -743,7 +761,7 @@ p_q
 ```
 
 
-```{r}
+```{r, eval=F}
 # Layout: A | B on top, C across bottom
 fig <- cowplot::plot_grid(p_reads, p_q, rel_widths = c(1,1), labels = c('A', 'B'))
 
@@ -1026,13 +1044,12 @@ rm(all_stats_dt, PRJEB85420_stats, PRJEB85714_stats )
 gc()
 
 fwrite(all_stats_uni, 'all_stats_uni.tsv.gz', sep = '\t')
+
+try({ all_stats_uni <- fread('all_stats_uni.tsv.gz') })
 ```
 
 ## Summary
 ```{r}
-library(data.table)
-
-# all_stats_uni <- fread('all_stats_uni.tsv.gz')
 
 # Make sure it's data.table
 setDT(all_stats_uni)
@@ -1092,15 +1109,20 @@ source_summary
 ```
 
 ## Plots
-
 ```{r}
+out_dir <- '3_Primer_comparison'
 dt_plot <- copy(all_stats_uni)
+
+dt_plot[, log_len := log10(length)]
 
 library(ggpubr)
 library(cowplot)
 library(ggrastr)
 
 my_pal <- pal_npg()(10)[-c(1:4)]
+```
+
+```{r}
 
 
 # Marginal density plot of x (top panel) and y (right panel)
@@ -1157,6 +1179,56 @@ p_count_q <- plot_grid(xplot, NULL,
 p_count_q
 
 out_prefix <- "Primer_comparison_QC_Fig3B"
+
+save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
+
+```
+
+```{r}
+
+sp <- ggplot(dt_plot, aes(log_len, mean_Q)) +
+  geom_point_rast(aes(fill = source), alpha = 0.8, shape = 21, color = 'black', size = 3) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(labels = label_comma()) +
+  labs(
+    #title = "Read quality comparison between extraction methods",
+    x = "Read Length (log10(bp))",
+    y = "Mean Q-score"
+  ) +
+  theme_pub()
+
+
+xplot <- ggplot(dt_plot, aes(log_len)) +
+  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot, aes(mean_Q)) +
+  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+
+
+# Cleaning the plots
+sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
+yplot <- yplot + clean_theme() + rremove("legend")
+xplot <- xplot + clean_theme() + rremove("legend")
+
+# Arranging the plot using cowplot
+p_count_q <- plot_grid(xplot, NULL, 
+                       sp, yplot, 
+                       ncol = 2, align = "hv",
+                       rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+p_count_q
+
+out_prefix <- "Primer_comparison_QC_Fig3A"
 
 save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 

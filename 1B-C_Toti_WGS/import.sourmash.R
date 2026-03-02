@@ -10,7 +10,7 @@ sampdat.all = data.frame(#platform=c('MySeq', 'NovaSeq', 'ONT'),
                          method='k31',
                          db='NCBI')
 
-ps  <- import.sourmash.files(indir = 'Toti_sourmash_NCBI', sampdat.all = sampdat.all)
+ps  <- import.sourmash.files(indir = 'Toti_sourmash.k31_NCBI', sampdat.all = sampdat.all)
 
 taxtab  <- data.frame(ps@tax_table)
 otutab  <- data.frame(ps@otu_table)
@@ -53,6 +53,8 @@ ps@sam_data$platform <- fifelse(grepl('NovaSeq', ps@sam_data$sample), 'NovaSeq',
 taxtab  <- data.frame(ps@tax_table)
 otutab  <- data.frame(ps@otu_table)
 sampdat <- data.frame(ps@sam_data)
+
+
 
 
 ## merge different sequencings of the same sample
@@ -124,7 +126,7 @@ sampdat <- data.frame(ps@sam_data)
 
 ps.sourmash <- ps
 
-saveRDS(ps.sourmash, 'Toti_Illumina_WGS_sourmash.k31_NCBI_PS.rds')
+saveRDS(ps.sourmash, 'Toti_all_WGS_sourmash.k31_NCBI_PS.rds')
 
 
 

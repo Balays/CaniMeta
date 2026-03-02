@@ -304,9 +304,9 @@ if (db == 'proGcontigs_2') {
 
 ## Import Exp data
 ```{r, import Experimental Results}
-#### Import Zymo D3600 results
+#### Import 
 
-ps.all <- readRDS("Toti_Illumina_WGS_sourmash.k31_NCBI_PS.rds")
+ps.all <- readRDS("Toti_all_WGS_sourmash.k31_NCBI_PS.rds")
 
 metadata <- data.frame(sample_data(ps.all))
 otutab   <- data.frame(otu_table(ps.all))
@@ -1433,15 +1433,14 @@ ps.glom.spec          <- ps.glom
 
 ```
  
-## Figure 3: *Compare ONT WGS and NovaSeq on Toti sample nr. 2 isolated with Zymo MagBead*
+## Figure 3A: *Compare ONT WGS and NovaSeq on Toti sample nr. 2 isolated with Zymo MagBead*
  
-```{r, Figure 2, fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+```{r, fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
 
-samples.to.keep <- rownames(metadata[ metadata$DNA.Isolation.Kit %in% c('ZMB') &
-                                     (metadata$platform == 'ONT' | metadata$platform == 'NovaSeq')
-                                     , ])
+i  <- 2
+t  <- ranks[i]
+ps <- prune_samples(samples.to.keep, ps.glom.norm.top.phy)
 
-ps <- prune_samples(samples.to.keep, ps.glom.norm.top.spec)
 
 
 my.pal <- colors_for_PS(ps, rank=t, pal.man)
@@ -1452,16 +1451,420 @@ ggtop20    <- plotfun(
   ylim(c(0,1)) + 
   theme(legend.position = 'right',
         panel.grid.major.x = element_blank(),
-        axis.text.x = element_blank()) #+ ggtitle(paste0('Top', top, ' ', t))
+        axis.text.x  = element_blank(),
+        strip.text.x = element_text(size = 16, face = "bold"))  +
+  #+ ggtitle(paste0('Top', top, ' ', t))
+  facet_nested_wrap(~platform, nrow = 1, scales = 'free') 
 
 
-dir.create('Article_Figures')
-ggsave(paste0('Article_Figures', '/', 'Figure_3_sourmash.png'), ggtop20, width = 7, height = 14)
 
+## add "Other"
+
+metadata <- data.frame(sample_data(ps))
+otutab   <- data.frame(otu_table(ps)  )
+taxtab   <- data.frame(tax_table(ps)  )
+
+otutabx  <- rbind(1 - colSums(otutab)); row.names(otutabx)  <- 'other'
+otutab   <- rbind(otutab, otutabx)
+
+taxtabx  <- data.frame(taxon = 'other', row.names = 'other' ); colnames(taxtabx) <- t
+taxtab   <- rbind(taxtab,  taxtabx) 
+
+ps <- phyloseq(tax_table(as.matrix(taxtab)),
+               otu_table(as.matrix(otutab), taxa_are_rows = T),
+               sample_data(metadata) )
+
+## Plot top
+
+my.pal <- colors_for_PS(ps, rank=t, pal.man)
+my.pal['other'] <- 'white'
+
+ps.data <- dt.from.ps(ps); ps.data[, taxon := get(t)]
+ps.data[,taxon := factor(taxon, levels = rev(names(my.pal)))]
+
+ggtop20p   <- ggplot(ps.data, aes(count, platform)) +
+  geom_col(aes( fill = taxon), color = 'black') +
+  scale_fill_manual(values=my.pal) +
+  xlim(c(0,1)) + 
+  guides(fill = guide_legend(direction = "vertical", ncol = 1, title = 'Phylum')) +
+    theme_ipsum() + 
+    theme(legend.position="right", 
+          legend.text = element_text(face = "italic"),
+          panel.spacing.x = unit(1.5, 'mm'),
+          
+          axis.title.x = element_blank(),
+          
+          panel.grid.major.x = element_blank(),
+          axis.text.x  = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y  = element_text(size = 16, face = "bold"),
+          strip.text.x = element_text(size = 16, face = "bold")) 
+  #+ facet_nested_wrap(~platform, nrow = 1, scales = 'free') 
+
+ggtop20p
+
+ggtop20 <- ggtop20p
+
+dir.create(   'Article_Figures')
+ggsave(paste0('Article_Figures', '/', 'Figure_3A_ONT_vs_Illumina_WGS_sourmash_top20_barplot.png'), ggtop20, width = 7, height = 14)
+
+ggtop20 + coord_flip() # ggpubr::rotate()
+
+Fig3A <- ggtop20
 ```
  
 
+# Taxonomic Overlap
+```{r}
+library(eulerr)
+library(ComplexUpset)
+```
 
+## Phylum level
+```{r, fig.height=8, fig.width=12}
+i <- 2
+t <- rank_names(ps.all)[i]
+
+taxa.pres <- dt.from.ps(ps.all, 
+                        glom_taxa    = T, t = t, 
+                        glom_samples = T, summarise.samples = 'platform')
+
+taxa.pres <- taxa.pres[sum_count > 0, ]
+cols <- c(t, 'platform', 'sum_count')
+taxa.pres <- unique(taxa.pres[, ..cols])
+
+taxa.pres <- dcast.data.table(taxa.pres, ... ~ platform, value.var = 'sum_count', fill = NA)
+
+## 6  Overlap UpSet plot ------------------------------------------------------
+
+up_dt <- copy(taxa.pres)
+up_dt[, (names(up_dt)[-1]) := lapply(.SD, Negate(is.na)),
+          .SDcols = -1]
+intersect <- colnames(up_dt)[-1]
+
+### UpSet
+p1 <- ComplexUpset::upset(up_dt,
+    intersect = intersect,
+    min_size  = 1,
+    sort_sets = FALSE,
+    themes = theme_ipsum(),
+    sort_intersections_by = "cardinality",
+    base_annotations = list("Intersection size" = intersection_size(counts = TRUE)))
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_UpSet.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_UpSet.rds'))
+```
+
+
+```{r, fig.height=6, fig.width=8}
+### Euler
+fit1 <- euler(list(
+    `ONT`     = unique( up_dt[`ONT`     == T,  get(t)] ),
+    `NovaSeq` = unique( up_dt[`NovaSeq` == T,  get(t)] )
+))
+
+p1 <- plot(
+  fit1,
+  quantities = TRUE,
+  fills = list(fill = c("ONT"="#1f77b4", "NovaSeq"="#ff7f0e"), alpha=0.6),
+  edges = list(col  = c("ONT"="black",   "NovaSeq"="black"), lwd = 1)
+)
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_Euler.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_Euler.rds'))
+
+```
+
+
+
+## Order level
+```{r, fig.height=8, fig.width=12}
+i <- 4
+t <- rank_names(ps.all)[i]
+
+taxa.pres <- dt.from.ps(ps.all, 
+                        glom_taxa    = T, t = t, 
+                        glom_samples = T, summarise.samples = 'platform')
+
+taxa.pres <- taxa.pres[sum_count > 0, ]
+cols <- c(t, 'platform', 'sum_count')
+taxa.pres <- unique(taxa.pres[, ..cols])
+
+taxa.pres <- dcast.data.table(taxa.pres, ... ~ platform, value.var = 'sum_count')
+
+## 6  Overlap UpSet plot ------------------------------------------------------
+
+up_dt <- copy(taxa.pres)
+up_dt[, (names(up_dt)[-1]) := lapply(.SD, Negate(is.na)),
+          .SDcols = -1]
+intersect <- colnames(up_dt)[-1]
+
+### UpSet
+p1 <- ComplexUpset::upset(up_dt,
+    intersect = intersect,
+    min_size  = 1,
+    sort_sets = FALSE,
+    themes = theme_ipsum(),
+    sort_intersections_by = "cardinality",
+    base_annotations = list("Intersection size" = intersection_size(counts = TRUE)))
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_UpSet.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_UpSet.rds'))
+```
+
+
+```{r, fig.height=6, fig.width=8}
+### Euler
+fit1 <- euler(list(
+    `ONT`     = unique( up_dt[`ONT`     == T,  get(t)] ),
+    `NovaSeq` = unique( up_dt[`NovaSeq` == T,  get(t)] )
+))
+
+p1 <- plot(
+  fit1,
+  quantities = TRUE,
+  fills = list(fill = c("ONT"="#1f77b4", "NovaSeq"="#ff7f0e"), alpha=0.6),
+  edges = list(col  = c("ONT"="black",   "NovaSeq"="black"), lwd = 1)
+)
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_Euler.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_Euler.rds'))
+
+```
+
+
+## Family level
+```{r, fig.height=8, fig.width=12}
+i <- 5
+t <- rank_names(ps.all)[i]
+
+taxa.pres <- dt.from.ps(ps.all, 
+                        glom_taxa    = T, t = t, 
+                        glom_samples = T, summarise.samples = 'platform')
+
+taxa.pres <- taxa.pres[sum_count > 0, ]
+cols <- c(t, 'platform', 'sum_count')
+taxa.pres <- unique(taxa.pres[, ..cols])
+
+taxa.pres <- dcast.data.table(taxa.pres, ... ~ platform, value.var = 'sum_count')
+
+## 6  Overlap UpSet plot ------------------------------------------------------
+
+up_dt <- copy(taxa.pres)
+up_dt[, (names(up_dt)[-1]) := lapply(.SD, Negate(is.na)),
+          .SDcols = -1]
+intersect <- colnames(up_dt)[-1]
+
+### UpSet
+p1 <- ComplexUpset::upset(up_dt,
+    intersect = intersect,
+    min_size  = 1,
+    sort_sets = FALSE,
+    themes = theme_ipsum(),
+    sort_intersections_by = "cardinality",
+    base_annotations = list("Intersection size" = intersection_size(counts = TRUE)))
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_UpSet.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_UpSet.rds'))
+```
+
+
+```{r, fig.height=6, fig.width=8}
+### Euler
+fit1 <- euler(list(
+    `ONT`     = unique( up_dt[`ONT`     == T,  get(t)] ),
+    `NovaSeq` = unique( up_dt[`NovaSeq` == T,  get(t)] )
+))
+
+p1 <- plot(
+  fit1,
+  quantities = TRUE,
+  fills = list(fill = c("ONT"="#1f77b4", "NovaSeq"="#ff7f0e"), alpha=0.6),
+  edges = list(col  = c("ONT"="black",   "NovaSeq"="black"), lwd = 1)
+)
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_Euler.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_Euler.rds'))
+
+```
+
+
+## Genus level
+```{r, fig.height=8, fig.width=12}
+i <- 6
+t <- rank_names(ps.all)[i]
+
+taxa.pres <- dt.from.ps(ps.all, 
+                        glom_taxa    = T, t = t, 
+                        glom_samples = T, summarise.samples = 'platform')
+
+taxa.pres <- taxa.pres[sum_count > 0, ]
+cols <- c(t, 'platform', 'sum_count')
+taxa.pres <- unique(taxa.pres[, ..cols])
+
+taxa.pres <- dcast.data.table(taxa.pres, ... ~ platform, value.var = 'sum_count')
+
+## 6  Overlap UpSet plot ------------------------------------------------------
+
+up_dt <- copy(taxa.pres)
+up_dt[, (names(up_dt)[-1]) := lapply(.SD, Negate(is.na)),
+          .SDcols = -1]
+intersect <- colnames(up_dt)[-1]
+
+### UpSet
+p1 <- ComplexUpset::upset(up_dt,
+    intersect = intersect,
+    min_size  = 1,
+    sort_sets = FALSE,
+    themes = theme_ipsum(),
+    sort_intersections_by = "cardinality",
+    base_annotations = list("Intersection size" = intersection_size(counts = TRUE)))
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_UpSet.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_UpSet.rds'))
+```
+
+
+```{r, fig.height=6, fig.width=8}
+### Euler
+fit1 <- euler(list(
+    `ONT`     = unique( up_dt[`ONT`     == T,  get(t)] ),
+    `NovaSeq` = unique( up_dt[`NovaSeq` == T,  get(t)] )
+))
+
+p1 <- plot(
+  fit1,
+  quantities = TRUE,
+  fills = list(fill = c("ONT"="#1f77b4", "NovaSeq"="#ff7f0e"), alpha=0.6),
+  edges = list(col  = c("ONT"="black",   "NovaSeq"="black"), lwd = 1)
+)
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_Euler.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_Euler.rds'))
+
+```
+
+
+## Species level
+```{r, fig.height=8, fig.width=12}
+i <- 7
+t <- rank_names(ps.all)[i]
+
+taxa.pres <- dt.from.ps(ps.all, 
+                        glom_taxa    = T, t = t, 
+                        glom_samples = T, summarise.samples = 'platform')
+
+taxa.pres <- taxa.pres[sum_count > 0, ]
+cols <- c(t, 'platform', 'sum_count')
+taxa.pres <- unique(taxa.pres[, ..cols])
+
+taxa.pres <- dcast.data.table(taxa.pres, ... ~ platform, value.var = 'sum_count')
+
+## 6  Overlap UpSet plot ------------------------------------------------------
+
+up_dt <- copy(taxa.pres)
+up_dt[, (names(up_dt)[-1]) := lapply(.SD, Negate(is.na)),
+          .SDcols = -1]
+intersect <- colnames(up_dt)[-1]
+
+### UpSet
+p1 <- ComplexUpset::upset(up_dt,
+    intersect = intersect,
+    min_size  = 1,
+    sort_sets = FALSE,
+    themes = theme_ipsum(),
+    sort_intersections_by = "cardinality",
+    base_annotations = list("Intersection size" = intersection_size(counts = TRUE)))
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_UpSet.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_UpSet.rds'))
+```
+
+
+```{r, fig.height=6, fig.width=8}
+### Euler
+fit1 <- euler(list(
+    `ONT`     = unique( up_dt[`ONT`     == T,  get(t)] ),
+    `NovaSeq` = unique( up_dt[`NovaSeq` == T,  get(t)] )
+))
+
+p1 <- plot(
+  fit1,
+  quantities = TRUE,
+  fills = list(fill = c("ONT"="#1f77b4", "NovaSeq"="#ff7f0e"), alpha=0.6),
+  edges = list(col  = c("ONT"="black",   "NovaSeq"="black"), lwd = 1)
+)
+
+p1
+
+ggsave(paste0(res.dir, '/', t, '_overlap_Euler.png'), p1,
+       width = 12, height = 9)
+saveRDS(p1, paste0(res.dir, '/', t, '_overlap_Euler.rds'))
+
+```
+
+
+## Figure 3: *Compare ONT WGS and NovaSeq on Toti sample nr. 2 isolated with Zymo MagBead*
+
+```{r,  fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+
+p1
+
+dir.create('Article_Figures')
+ggsave(paste0('Article_Figures', '/', 'Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.png'), p1, width = 7, height = 14)
+
+Fig3B <- p1
+```
+
+# Figure3
+```{r,  fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
+
+library(cowplot)
+
+Fig3 <- plot_grid(Fig3A, Fig3B, nrow = 1, rel_widths = c(3,1))
+
+dir.create('Article_Figures')
+ggsave(paste0('Article_Figures', '/', 'Figure_3B_Final.png'), Fig3, width = 21, height = 12, bg = 'white')
+
+
+Fig3
+```
+
+
+
+
+
+# END WORKFLOW
+
+
+# Write Outputs
 
 ```{r}
 
