@@ -1229,14 +1229,14 @@ ggsave(paste0('Article_Figures/', t, '_overlap_UpSet.png'), p1,
 fit1 <- euler(list(
     `Fecal Reference`= unique( up_dt[`FR`           == T,  get(t)] ),
     `Homo sapiens`   = unique( up_dt[`Homo_sapiens` == T,  get(t)] ),
-    `Canis lupus`    = unique( up_dt[`Canis_lupus`  == T,  get(t)] )
+    `Canis lupus familiaris`    = unique( up_dt[`Canis_lupus`  == T,  get(t)] )
 ))
 
 p1 <- plot(
   fit1,
   quantities = TRUE,
-  fills = list(fill = c("Fecal Reference" = "#1f77b4", "Homo sapiens" = "#ff7f0e", "Canis lupus" = "#005B2A"), alpha=0.6),
-  edges = list(col  = c("Fecal Reference" = "black",   "Homo sapiens" = "black",   "Canis lupus" = "black"  ), lwd = 1)
+  fills = list(fill = c("Fecal Reference" = "#1f77b4", "Homo sapiens" = "#ff7f0e", "Canis lupus familiaris" = "#005B2A"), alpha=0.6),
+  edges = list(col  = c("Fecal Reference" = "black",   "Homo sapiens" = "black",   "Canis lupus familiaris" = "black"  ), lwd = 1)
 )
 
 p1
