@@ -310,10 +310,12 @@ p_count_q <- plot_grid(xplot, NULL,
 
 
 
-out_prefix <- "Platform_comparison_QC_Fig1"
+out_prefix <- "Platform_comparison_QC_Fig1A"
 
 ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height = 30, bg = 'white')
-#p_count_q
+
+p_count_q
+
 #save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 
 ```
@@ -374,6 +376,8 @@ out_prefix <- "Platform_comparison_QC_Fig1B"
 
 ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height = 30, bg = 'white')
 
+p_count_q
+
 #save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 ```
 
@@ -405,12 +409,12 @@ mapfun <- function(i, files) {
 
 proj_stats_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
 
-fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'PRJEB82097_stats.tsv.gz', sep = '\t')
+fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'ENA/PRJEB82097/PRJEB82097_stats.tsv.gz', sep = '\t')
 ```
 
 
 ```{r, message=T}
-proj_stats_dt <- fread('PRJEB82097_stats.tsv.gz')
+proj_stats_dt <- fread('ENA/PRJEB82097/PRJEB82097_stats.tsv.gz')
 
 proj_stats_dt[, project := 'PRJEB82097']
 
@@ -419,7 +423,7 @@ ena_mt <- fread('ENA/PRJEB82097/filereport_read_run_PRJEB82097.tsv')
 PRJEB82097_st <- merge(proj_stats_dt, 
                        ena_mt[,.(run_accession, study_accession, sample_accession, secondary_sample_accession, sample_title)], 
                        by.x = c('sample', 'project'), by.y = c('run_accession', 'study_accession')
-                       #, all = T
+                       , all.x = T
                        )
 
 if(nrow(proj_stats_dt) == nrow(PRJEB82097_st)) {
@@ -432,36 +436,77 @@ if(nrow(proj_stats_dt) == nrow(PRJEB82097_st)) {
 ```
 
 ```{r, message=T}
-PRJEB82097_meta <- fread('2_40dogs_ZHMW_vs_ZMB/metadata.tsv')
-PRJEB82097_meta[, sample  := gsub('_rel-abundance.tsv', '', filename)]
-
-PRJEB82097_st  <- merge(PRJEB82097_stats, PRJEB82097_meta, by.x = 'sample_title', by.y = 'sample', all.x=T)
-
-setnames(PRJEB82097_st, c('sample_title', 'sample'), c('sample', 'biosample'))
-
-PRJEB82097_st[,.N,sample]
-
-# the metadata table contains samples that were not uploaded to ENA!
-
-# also, the ENA files contain samples that are not published in this article
+# the ENA files contain samples that are not published in this article
 
 # so we filter them to the actual 40 dogs sample
 
 SuppTab_S4 <- fread('2_40dogs_ZHMW_vs_ZMB/Supplementary Table S4.txt')
 
-PRJEB82097_st <- PRJEB82097_st[sample %in% SuppTab_S4$file_name, ]
+SuppTab_S4 <- SuppTab_S4[!is.na(Sample) & Sample != '']
 
-PRJEB82097_st[,.N,sample]
+PRJEB82097_st  <- merge(PRJEB82097_stats, 
+                        SuppTab_S4, 
+                        by.x = 'secondary_sample_accession', 
+                        by.y = 'Accession'
+                        , all=T)
+
+setnames(PRJEB82097_st, c('Sample', 'sample'), c('sample', 'biosample'))
+
+PRJEB82097_meta <- PRJEB82097_st[,.(read_count=.N), by = .(sample, biosample,  DNA_isolation_method, project, sample_accession, secondary_sample_accession, Sex, Date, Sample_name, Dog, `Read count`)]
+
+PRJEB82097_meta[,.N,is.na(sample)]
+
+PRJEB82097_st[!is.na(sample),.N, sample]
+
+PRJEB82097_st  <- PRJEB82097_st[!is.na(sample)]
 
 ## ok!
-if(all(is.element(PRJEB82097_st$sample, SuppTab_S4$file_name))) {
+if(all(is.element(PRJEB82097_st$secondary_sample_accession, SuppTab_S4$Accession))) {
   message('ok! every sample matches with the metadata!')
   PRJEB82097_stats <- PRJEB82097_st; rm(PRJEB82097_st)
 } else {
   stop('ERROR! Some samples have not been downloaded and/or imported!')
 }
 
+PRJEB82097_meta <- PRJEB82097_stats[,.(read_count=.N), by = .(sample, biosample,  DNA_isolation_method, project, sample_accession, secondary_sample_accession, Sex, Date, Sample_name, Dog, `Read count`)]
 
+```
+
+
+```{r, eval=F}
+### Copy these files to another folder for EMU re-run
+
+files   <- list.files('D:/ENA/PRJEB82097/.fastq', recursive = T, full.names = T)
+
+from    <- paste0('D:/ENA/PRJEB82097/.fastq/', PRJEB82097_meta$biosample, '.fastq.gz')
+
+to      <- gsub(".fastq", ".fastq_other", from)
+
+file.copy(from, to)
+
+to2 <- gsub(".fastq_other.gz", ".fastq.gz", to)
+
+file.rename(to, to2 )
+
+
+to      <- list.files('D:/ENA/PRJEB82097/.fastq_emu', recursive = T, full.names = T)
+
+to      <- grep('_rel-abundance.tsv', to, value = T)
+
+to      <- gsub('.*\\/', '', to)
+
+to      <- gsub('_rel-abundance.tsv', '', to)
+
+to3     <- grep(paste0(to, collapse = '|'), to2, value = T)
+
+file.remove(to3)
+
+
+
+from     <- grep(paste0(to, collapse = '|'), files, invert = T, value = T)
+to4      <- gsub('/.fastq/', '/.fastq_other/', from)
+
+file.copy(from, to4)
 ```
 
 
@@ -488,7 +533,7 @@ library(data.table)
 setDT(PRJEB82097_stats)
 
 # Keep only rows with defined isolation method
-dt <- PRJEB82097_stats[!is.na(dna.isolation.methods)]
+dt <- PRJEB82097_stats[!is.na(DNA_isolation_method)]
 
 # Ensure numeric
 dt[, length := as.numeric(length)]
@@ -511,9 +556,11 @@ sample_summary <- dt[, .(
   mean_len = mean(length, na.rm = TRUE),
   median_len = median(length, na.rm = TRUE),
   n50_len = n50(length),
+  max_len = max(length),
+  min_len = min(length),
   mean_Q = mean(mean_Q, na.rm = TRUE),
   median_Q = median(mean_Q, na.rm = TRUE)
-), by = .(sample, dna.isolation.methods)]
+), by = .(sample, DNA_isolation_method)]
 
 # Save
 fwrite(sample_summary, "2_40dogs_ZHMW_vs_ZMB/Serteperti_sample_QC_summary.tsv", sep = '\t')
@@ -530,9 +577,11 @@ method_summary <- sample_summary[, .(
   sd_total_bases = sd(total_bases),
   mean_read_length = mean(mean_len),
   sd_read_length = sd(mean_len),
+  mean_max_read_len = mean(max_len),
+  mean_min_read_len = mean(min_len),
   mean_Q = mean(mean_Q),
   sd_Q = sd(mean_Q)
-), by = dna.isolation.methods]
+), by = DNA_isolation_method]
 
 fwrite(method_summary, "2_40dogs_ZHMW_vs_ZMB/Serteperti_method_QC_summary.tsv", sep = '\t')
 
@@ -678,16 +727,121 @@ fig
 ```
 
 
+
+
+
 ```{r}
-library(data.table)
-library(ggplot2)
+out_dir <- '2_40dogs_ZHMW_vs_ZMB'
+dt_plot <- copy(dt)
+
 library(ggpubr)
+library(cowplot)
+library(ggrastr)
 library(scales)
+
+my_pal <- pal_npg()(10)[-c(1:2)]
+
+dt_plot[, log_len := log10(length)]
+
+dt_plot <- dt_plot[sample(.N)]  # randomize draw order if you keep any point layers
+
+gc()
+```
+
+
+## Number of reads below and above threshold lengths
+```{r, fig.height=25, fig.width=9}
+min_len <- 1000
+max_len <- 2000
+
+#dt_plot[length >= min_len & length <= max_len, .N, by = .(sample)]
+
+dt_summary <- dt_plot[, .N, by = .(
+  sample, DNA_isolation_method,
+  category = fifelse(length < min_len, "below_min",
+              fifelse(length > max_len, "above_max", "normal"))
+)]
+
+dt_summary[, ratio := N / sum(N), by = .(sample, DNA_isolation_method)]
+
+dcast(dt_summary, sample ~ category, value.var = "N", fill = 0)
+
+dcast(dt_summary, sample ~ category, value.var = "ratio", fill = 0)
+
+fwrite(dt_summary, paste0(out_dir, '/', out_dir, '_length_summary.tsv'), sep = '\t')
+```
+
+
+## Plots
+
+### Distribution of Read Lengths (0-2500 bp)
+```{r, fig.width = 18, fig.height = 9}
+
+  
+xplot <- ggplot(dt_plot, aes(length)) +
+  geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(labels = label_comma(), limits = c(0, 2500)) +
+  theme_pubr() # + facet_nested_wrap(~sample_ID, ncol=10)
+
+
+xplot2 <- ggplot(dt_plot, aes(length)) +
+  geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(labels = label_comma()) + #, limits = c(0, 2500)) +
+  theme_pubr() # + facet_nested_wrap(~sample_ID, ncol=10)
+
+
+plots     <- cowplot::plot_grid(xplot, xplot2, align = 'hv', axis = 'tlbr', nrow = 1)
+
+ggsave(paste0(out_dir, '/', out_dir, '_length_distribution.png'), plots, width = 18, height = 9, bg = 'white' )
+
+plots
+
+```
+
+
+```{r, fig.width = 20, fig.height = 15}
+
+plotfun <- function(sample_to_plot, dt_plot) {
+  
+  dt_sub <- dt_plot[Dog == sample_to_plot, ]
+  
+  xplot <- ggplot(dt_sub, aes(length)) +
+    geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
+    #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+    scale_fill_manual(values = my_pal) +
+    scale_x_continuous(labels = label_comma(), limits = c(0, 2500)) +
+    theme_pubr() # + facet_nested_wrap(~sample_ID, ncol=10)
+  
+}
+
+
+
+samples_to_plot <- unique(dt_plot$Dog)
+sample_to_plot  <- samples_to_plot[1]
+
+plot_list <- purrr::map(samples_to_plot[], plotfun, dt_plot)
+
+plots     <- cowplot::plot_grid(plotlist = plot_list, align = 'hv', axis = 'tlbr', ncol = 4)
+
+ggsave(paste0(out_dir, '/', out_dir, '_length_distribution_perDog.png'), plots, width = 24, height = 16, bg = 'white' )
+
+plots
+
+
+```
+
+
+### Distribution of Sample's Values
+```{r}
 
 setDT(sample_summary)
 
 # Create pairing ID
-sample_summary[, method := dna.isolation.methods]
+sample_summary[, method := DNA_isolation_method]
 sample_summary[, pair_id := gsub("_(ZHMW|ZMB)$", "", sample)]
 
 # Keep only fully paired samples
@@ -707,11 +861,11 @@ theme_pub <- function() {
 }
 
 # Plot
-p_reads <- ggplot(ss, aes(x = method, y = n_reads, fill = dna.isolation.methods)) +
+p_reads <- ggplot(ss, aes(x = method, y = n_reads, fill = method)) +
   
   # Violin
   #geom_violin(trim = TRUE, alpha = 0.4, width = 0.85) +
-  scale_fill_manual(values = my_pal[-c(1:2)]) +
+  scale_fill_manual(values = my_pal[]) +
   # Boxplot
   geom_boxplot(width = 0.15, outlier.shape = NA, alpha = 0.5) +
   
@@ -737,10 +891,10 @@ p_reads <- ggplot(ss, aes(x = method, y = n_reads, fill = dna.isolation.methods)
 p_reads
 
 
-p_q <- ggplot(ss, aes(x = method, y = mean_Q, fill = dna.isolation.methods)) +
+p_q <- ggplot(ss, aes(x = method, y = mean_Q, fill = method)) +
   # Violin
   #geom_violin(trim = TRUE, alpha = 0.4, width = 0.85) +
-  scale_fill_manual(values = my_pal[-c(1:2)]) +
+  scale_fill_manual(values = my_pal[]) +
   # Box
   geom_boxplot(width = 0.15, outlier.shape = NA, alpha = 0.5) +
   # Paired lines
@@ -761,7 +915,7 @@ p_q
 ```
 
 
-```{r, eval=F}
+```{r, eval=T}
 # Layout: A | B on top, C across bottom
 fig <- cowplot::plot_grid(p_reads, p_q, rel_widths = c(1,1), labels = c('A', 'B'))
 
@@ -777,30 +931,9 @@ fig
 
 
 
-## Plots
 ```{r}
-dt_plot <- copy(dt)
-
-library(ggpubr)
-library(cowplot)
-library(ggrastr)
-
-my_pal <- pal_npg()(10)
-
-
-# Marginal density plot of x (top panel) and y (right panel)
-xplot <- ggdensity(sample_summary, "n_reads", fill = "dna.isolation.methods",
-                   palette = "npg") +
-  ggpubr::rotate()
-
-yplot <- ggdensity(dt_plot, "mean_Q", fill = "dna.isolation.methods", 
-                   palette = "npg") +
-  ggpubr::rotate()
-
-
-
 sp <- ggplot(sample_summary, aes(n_reads, mean_Q)) +
-  geom_point(aes(fill = dna.isolation.methods), alpha = 0.8, shape = 21, color = 'black', size = 3) +
+  geom_point(aes(fill = DNA_isolation_method), alpha = 0.8, shape = 21, color = 'black', size = 3) +
   scale_fill_manual(values = my_pal[-c(1:2)]) +
   scale_x_continuous(labels = label_comma()) +
   labs(
@@ -812,14 +945,14 @@ sp <- ggplot(sample_summary, aes(n_reads, mean_Q)) +
 
 
 xplot <- ggplot(sample_summary, aes(n_reads)) +
-  geom_density(aes(fill = dna.isolation.methods), alpha = 0.5, n = 128) +
+  geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
   #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
   scale_fill_manual(values = my_pal[-c(1:2)]) +
   theme_pubr() 
 
 
 yplot <- ggplot(dt_plot, aes(mean_Q)) +
-  geom_density(aes(fill = dna.isolation.methods), alpha = 0.5, n = 128) +
+  geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
   #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
   scale_fill_manual(values = my_pal[-c(1:2)]) +
   theme_pubr() +
@@ -866,13 +999,185 @@ p_count_q <- plot_grid(xplot, NULL,
 
 p_count_q
 
-out_prefix <- "Serteperti_ZHMW_vs_ZMB_QC_Fig2"
+out_prefix <- "Serteperti_ZHMW_vs_ZMB_QC_Fig2A"
 
 save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 
 ```
 
+### Distribution of all reads
+```{r}
 
+sp <- ggplot(dt_plot, aes(length, mean_Q)) +
+  geom_point_rast(aes(fill = DNA_isolation_method), alpha = 0.8, shape = 21, color = 'black', size = 1) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+  labs(
+    #title = "Read quality comparison between extraction methods",
+    x = "Read Length (bp)",
+    y = "Mean Q-score"
+  ) +
+  theme_pub()
+
+
+xplot <- ggplot(dt_plot, aes(length)) +
+  geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot, aes(mean_Q)) +
+  geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+
+
+# Cleaning the plots
+sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
+yplot <- yplot + clean_theme() + rremove("legend")
+xplot <- xplot + clean_theme() + rremove("legend")
+
+# Arranging the plot using cowplot
+p_count_q <- plot_grid(xplot, NULL, 
+                       sp, yplot, 
+                       ncol = 2, align = "hv",
+                       rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+p_count_q
+
+out_prefix <- "2_40dogs_ZHMW_vs_ZMB_QC_Fig2B"
+
+save_plot(p_count_q, out_dir, out_prefix, w = 900, h = 600, bg = 'white')
+
+```
+```{r}
+
+sp <- ggplot(dt_plot, aes(length, mean_Q)) +
+  geom_point_rast(aes(fill = DNA_isolation_method), alpha = 0.8, shape = 21, color = 'black', size = 1) +
+  scale_fill_manual(values = my_pal) +
+  #scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+  labs(
+    #title = "Read quality comparison between extraction methods",
+    x = "Read Length (bp)",
+    y = "Mean Q-score"
+  ) +
+  theme_pub()
+
+
+xplot <- ggplot(dt_plot, aes(length)) +
+  geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  #scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot, aes(mean_Q)) +
+  geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+
+
+# Cleaning the plots
+sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
+yplot <- yplot + clean_theme() + rremove("legend")
+xplot <- xplot + clean_theme() + rremove("legend")
+
+# Arranging the plot using cowplot
+p_count_q <- plot_grid(xplot, NULL, 
+                       sp, yplot, 
+                       ncol = 2, align = "hv",
+                       rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+p_count_q
+
+out_prefix <- "2_40dogs_ZHMW_vs_ZMB_QC_Fig2D"
+
+save_plot(p_count_q, out_dir, out_prefix, w = 900, h = 600, bg = 'white')
+
+```
+
+
+### Distribution of all reads faceted
+```{r, fig.height = 40, fig.width = 40}
+dir.create('2_40dogs_ZHMW_vs_ZMB/Article Figures/suppfig')
+
+sample_to_plot <- 'M1_210317'
+
+plotfun <- function(sample_to_plot, dt_plot) {
+    
+  dt_sub <- dt_plot[Sample_name == sample_to_plot, ]
+  
+  sp <- ggplot(dt_sub, aes(length, mean_Q)) +
+    geom_point_rast(aes(fill = DNA_isolation_method), alpha = 0.8, shape = 21, color = 'black', size = 1) +
+    scale_fill_manual(values = my_pal) +
+    scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+    labs(
+      #title = "Read quality comparison between extraction methods",
+      x = "Read Length (bp)",
+      y = "Mean Q-score"
+    ) +
+    theme_pub()
+  
+  
+  xplot <- ggplot(dt_sub, aes(length)) +
+    geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
+    #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+    scale_fill_manual(values = my_pal) +
+    scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+    theme_pubr() 
+  
+  
+  yplot <- ggplot(dt_sub, aes(mean_Q)) +
+    geom_density(aes(fill = DNA_isolation_method), alpha = 0.5, n = 128) +
+    #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+    scale_fill_manual(values = my_pal) +
+    theme_pubr() +
+    ggpubr::rotate()
+  
+  
+  
+  # Cleaning the plots
+  sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
+  yplot <- yplot + clean_theme() + rremove("legend")
+  xplot <- xplot + clean_theme() + rremove("legend")
+  
+  # Arranging the plot using cowplot
+  p_count_q <- plot_grid(xplot, NULL, 
+                         sp, yplot, 
+                         ncol = 2, align = "hv",
+                         rel_widths = c(2, 1), rel_heights = c(1, 2))
+  
+  ggsave(paste0('2_40dogs_ZHMW_vs_ZMB/Article Figures/suppfig/', sample_to_plot, '.png'),
+         p_count_q, width = 9, height = 6, bg = 'white')
+  
+  return(p_count_q)
+  
+  
+}
+
+samples_to_plot <- unique(PRJEB82097_meta$Sample_name)
+
+plot_list <- purrr::map(samples_to_plot[], plotfun, dt_plot, .progress = T)
+
+plots <- cowplot::plot_grid(plotlist = plot_list, align = 'hv', axis = 'tlbr', ncol = 8)
+
+out_prefix <- "2_40dogs_ZHMW_vs_ZMB_QC_Fig2C"
+
+save_plot(plots, out_dir, out_prefix, w = 1500, h = 1800, bg = 'white')
+
+plots
+```
 
 
 
@@ -1044,13 +1349,17 @@ rm(all_stats_dt, PRJEB85420_stats, PRJEB85714_stats )
 gc()
 
 fwrite(all_stats_uni, 'all_stats_uni.tsv.gz', sep = '\t')
+```
 
+
+```{r}
 try({ all_stats_uni <- fread('all_stats_uni.tsv.gz') })
+
+proj_meta <- unique(all_stats_uni[,.(sample, source, primer, rep, name, project)])
 ```
 
 ## Summary
 ```{r}
-
 # Make sure it's data.table
 setDT(all_stats_uni)
 
@@ -1078,12 +1387,12 @@ sample_summary <- dt[, .(
   mean_len = mean(length, na.rm = TRUE),
   median_len = median(length, na.rm = TRUE),
   n50_len = n50(length),
+  max_len = max(length),
+  min_len = min(length),
   mean_Q = mean(mean_Q, na.rm = TRUE),
   median_Q = median(mean_Q, na.rm = TRUE)
 ), by = .(sample, source, primer)]
 
-# Save
-fwrite(sample_summary, "3_Primer_comparison/Primer_sample_QC_summary.tsv", sep = '\t')
 
 # =========================
 # 2️⃣ Per-source summary (across samples)
@@ -1097,43 +1406,199 @@ source_summary <- sample_summary[, .(
   sd_total_bases = sd(total_bases),
   mean_read_length = mean(mean_len),
   sd_read_length = sd(mean_len),
+  mean_max_read_len = mean(max_len),
+  mean_min_read_len = mean(min_len),
   mean_Q = mean(mean_Q),
   sd_Q = sd(mean_Q)
 ), by = .(source, primer)]
 
-fwrite(method_summary, "3_Primer_comparison/Primer_source_QC_summary.tsv", sep = '\t')
+# =========================
+# 3️⃣ Per-length and sample summay
+# =========================
+
+length_summary <- dt[, .(
+  n_reads = .N
+), by = .(length ,sample, source, primer)]
+
+# Save
+fwrite(sample_summary, "3_Primer_comparison/Primer_sample_QC_summary.tsv", sep = '\t')
+
+fwrite(source_summary, "3_Primer_comparison/Primer_source_QC_summary.tsv", sep = '\t')
+
+fwrite(length_summary, "3_Primer_comparison/Primer_length_QC_summary.tsv", sep = '\t')
+
 
 sample_summary
 source_summary
+length_summary
+```
+
+### Finding the valley for length filtering
+
+EMU filters for 0-2000 bp by default, so the reads around the lower peak (~900 bp ) are *not filtered out*  
+-->> we must change the EMU's parameter or *filter manually*
+
+```{r}
+min_search <- 1200
+max_search <- 1550
+
+min_len_by_sample <- length_summary[
+  length >= min_search & length <= max_search,
+  .SD[which.min(n_reads)],
+  by = sample
+][, .(sample, best_min_len = length, reads_at_valley = n_reads)]
+
+min(min_len_by_sample$best_min_len)
+max(min_len_by_sample$best_min_len)
+mean(min_len_by_sample$best_min_len)
+
+min_search <- 1700
+max_search <- 2000
+
+max_len_by_sample <- length_summary[
+  length >= min_search & length <= max_search,
+  .SD[which.min(n_reads)],
+  by = sample
+][, .(sample, best_min_len = length, reads_at_valley = n_reads)]
+
+min( max_len_by_sample$best_min_len)
+max( max_len_by_sample$best_min_len)
+mean(max_len_by_sample$best_min_len)
+
 
 ```
 
-## Plots
+Filtering : 1500 - 1800 bp
+
+
 ```{r}
 out_dir <- '3_Primer_comparison'
 dt_plot <- copy(all_stats_uni)
 
 dt_plot[, log_len := log10(length)]
 
+dt_plot <- dt_plot[sample(.N)]  # randomize draw order if you keep any point layers
+
 library(ggpubr)
 library(cowplot)
 library(ggrastr)
+library(scales)
 
 my_pal <- pal_npg()(10)[-c(1:4)]
+gc()
+
 ```
 
+
+## Number of reads below and above threshold lengths
+```{r, fig.height=25, fig.width=9}
+min_len <- 1000
+max_len <- 2000
+
+#dt_plot[length >= min_len & length <= max_len, .N, by = .(sample)]
+
+dt_summary <- dt_plot[, .N, by = .(
+  sample,
+  category = fifelse(length < min_len, "below_min",
+              fifelse(length > max_len, "above_max", "normal"))
+)]
+
+dt_summary[, ratio := N / sum(N), by = sample]
+
+dcast(dt_summary, sample ~ category, value.var = "N", fill = 0)
+
+dcast(dt_summary, sample ~ category, value.var = "ratio", fill = 0)
+
+fwrite(dt_summary, paste0(out_dir, '/', out_dir, '_length_summary.tsv'), sep = '\t')
+```
+
+
+
+
+## Plots
+
+```{r, fig.height=25, fig.width=12}
+ggp <- cowplot::plot_grid(
+  ggplot(dt_summary, aes(x = sample, y = N, fill = category)) +
+    geom_col(position = 'identity', color = 'black') +
+    coord_flip() +
+    scale_fill_npg() +
+    theme_ipsum() +
+    theme(legend.position = 'bottom')
+  ,
+  ggplot(dt_summary, aes(x = sample, y = ratio, fill = category)) +
+    geom_col(position = 'identity', color = 'black') +
+    coord_flip() +
+    scale_fill_npg() +
+    theme_ipsum() +
+    theme(legend.position = 'bottom')
+  ,
+  nrow = 1, align = 'vh', axis = 'tlbr'
+)
+
+ggsave(paste0(out_dir, '/', out_dir, '_length_thresholds.png'), ggp, width = 20, height = 15, bg = 'white' )
+
+ggp
+```
+
+
+### Distribution of Read Lengths (0-2500 bp)
+```{r, fig.width = 20, fig.height = 15}
+
+plotfun <- function(sample_to_plot, dt_plot) {
+  
+  dt_sub <- dt_plot[source == sample_to_plot, ]
+  
+  xplot <- ggplot(dt_sub, aes(length)) +
+    geom_density(aes(fill = primer), alpha = 0.5, n = 128) +
+    #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+    scale_fill_manual(values = my_pal) +
+    scale_x_continuous(labels = label_comma(), limits = c(0, 2500)) +
+    theme_pubr() + # + facet_nested_wrap(~sample_ID, ncol=10)
+    ggtitle(sample_to_plot)
+}
+
+
+
+samples_to_plot <- unique(dt_plot$source)
+sample_to_plot  <- samples_to_plot[1]
+
+plot_list <- purrr::map(samples_to_plot[], plotfun, dt_plot)
+
+plots     <- cowplot::plot_grid(plotlist = plot_list, align = 'hv', axis = 'tlbr', ncol = 3)
+
+ggsave(paste0(out_dir, '/', out_dir, '_length_distribution_source.png'), plots, width = 20, height = 15, bg = 'white' )
+
+plots
+
+
+```
+
+
+```{r, fig.width = 30, fig.height = 25}
+
+
+
+xplot <- ggplot(dt_plot, aes(length)) +
+  geom_density(aes(fill = primer), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(labels = label_comma(), limits = c(0, 2500)) +
+  theme_pubr() + #
+  facet_nested(rows = vars(source), cols = vars(primer, rep))
+
+
+ggsave(paste0(out_dir, '/', out_dir, '_length_distribution_sample.png'), xplot, width = 30, height = 25, bg = 'white' )
+
+xplot
+
+
+```
+
+
+
+### Distribution of all reads
 ```{r}
-
-
-# Marginal density plot of x (top panel) and y (right panel)
-xplot <- ggdensity(sample_summary, "n_reads", fill = "source",
-                   palette = "npg") +
-  ggpubr::rotate()
-
-yplot <- ggdensity(dt_plot, "mean_Q", fill = "source", 
-                   palette = "npg") +
-  ggpubr::rotate()
-
 
 
 sp <- ggplot(sample_summary, aes(n_reads, mean_Q)) +
@@ -1178,30 +1643,32 @@ p_count_q <- plot_grid(xplot, NULL,
 
 p_count_q
 
-out_prefix <- "Primer_comparison_QC_Fig3B"
+out_prefix <- "Primer_comparison_QC_Fig3A"
 
 save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 
 ```
 
+
 ```{r}
 
-sp <- ggplot(dt_plot, aes(log_len, mean_Q)) +
-  geom_point_rast(aes(fill = source), alpha = 0.8, shape = 21, color = 'black', size = 3) +
+sp <- ggplot(dt_plot, aes(length, mean_Q)) +
+  geom_point_rast(aes(fill = source), alpha = 0.8, shape = 21, color = 'black', size = 1) +
   scale_fill_manual(values = my_pal) +
-  scale_x_continuous(labels = label_comma()) +
+  scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
   labs(
     #title = "Read quality comparison between extraction methods",
-    x = "Read Length (log10(bp))",
+    x = "Read Length (bp)",
     y = "Mean Q-score"
   ) +
   theme_pub()
 
 
-xplot <- ggplot(dt_plot, aes(log_len)) +
+xplot <- ggplot(dt_plot, aes(length)) +
   geom_density(aes(fill = source), alpha = 0.5, n = 128) +
   #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
   scale_fill_manual(values = my_pal) +
+  scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
   theme_pubr() 
 
 
@@ -1228,9 +1695,140 @@ p_count_q <- plot_grid(xplot, NULL,
 
 p_count_q
 
-out_prefix <- "Primer_comparison_QC_Fig3A"
+out_prefix <- "Primer_comparison_QC_Fig3B"
 
-save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
+save_plot(p_count_q, out_dir, out_prefix, w = 900, h = 600, bg = 'white')
 
 ```
+
+
+```{r}
+
+sp <- ggplot(dt_plot, aes(length, mean_Q)) +
+  geom_point_rast(aes(fill = source), alpha = 0.8, shape = 21, color = 'black', size = 1) +
+  scale_fill_manual(values = my_pal) +
+  #scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+  labs(
+    #title = "Read quality comparison between extraction methods",
+    x = "Read Length (bp)",
+    y = "Mean Q-score"
+  ) +
+  theme_pub()
+
+
+xplot <- ggplot(dt_plot, aes(length)) +
+  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  #scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot, aes(mean_Q)) +
+  geom_density(aes(fill = source), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+
+
+# Cleaning the plots
+sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
+yplot <- yplot + clean_theme() + rremove("legend")
+xplot <- xplot + clean_theme() + rremove("legend")
+
+# Arranging the plot using cowplot
+p_count_q <- plot_grid(xplot, NULL, 
+                       sp, yplot, 
+                       ncol = 2, align = "hv",
+                       rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+p_count_q
+
+out_prefix <- "Primer_comparison_QC_Fig3D"
+
+save_plot(p_count_q, out_dir, out_prefix, w = 900, h = 600, bg = 'white')
+
+```
+
+
+
+### Distribution of all reads faceted
+```{r}
+dir.create('3_Primer_comparison/Article Figures/suppfig')
+
+plotfun <- function(sample_to_plot, dt_plot) {
+    
+  dt_sub <- dt_plot[source == sample_to_plot, ]
+  
+  sp <- ggplot(dt_sub, aes(length, mean_Q)) +
+    geom_point_rast(aes(fill = primer), alpha = 0.8, shape = 21, color = 'black', size = 1) +
+    scale_fill_manual(values = my_pal) +
+    scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+    labs(
+      #title = "Read quality comparison between extraction methods",
+      x = "Read Length (bp)",
+      y = "Mean Q-score"
+    ) +
+    theme_pub()
+  
+  
+  xplot <- ggplot(dt_sub, aes(length)) +
+    geom_density(aes(fill = primer), alpha = 0.5, n = 128) +
+    #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+    scale_fill_manual(values = my_pal) +
+    scale_x_continuous(labels = label_comma(), limits = c(0,2000)) +
+    theme_pubr() 
+  
+  
+  yplot <- ggplot(dt_sub, aes(mean_Q)) +
+    geom_density(aes(fill = primer), alpha = 0.5, n = 128) +
+    #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+    scale_fill_manual(values = my_pal) +
+    theme_pubr() +
+    ggpubr::rotate()
+  
+  
+  
+  # Cleaning the plots
+  sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
+  yplot <- yplot + clean_theme() + rremove("legend")
+  xplot <- xplot + clean_theme() + rremove("legend")
+  
+  # Arranging the plot using cowplot
+  p_count_q <- plot_grid(xplot, NULL, 
+                         sp, yplot, 
+                         ncol = 2, align = "hv",
+                         rel_widths = c(2, 1), rel_heights = c(1, 2))
+  
+  ggsave(paste0('3_Primer_comparison/Article Figures/suppfig/', sample_to_plot, '.png'),
+         p_count_q, width = 9, height = 6, bg = 'white')
+  
+   return(p_count_q)
+
+}
+
+samples_to_plot <- unique(proj_meta$source)
+
+plot_list <- purrr::map(samples_to_plot, plotfun, dt_plot)
+
+plots     <- cowplot::plot_grid(plotlist = plot_list, align = 'hv', axis = 'tlbr', ncol = 5)
+
+out_prefix <- "Primer_comparison_QC_Fig3C"
+
+save_plot(plots, out_dir, out_prefix, w = 1000, h = 300, bg = 'white')
+
+plots
+```
+
+
+
+
+
+
+
+
+
 

@@ -17,10 +17,10 @@ theme_pub <- function(base_size = 10) {
     theme(plot.title = element_text(face = "bold"))
 }
 
-save_plot <- function(p, out_dir, name, w = 170, h = 120, dpi = 300, ...) {
+save_plot <- function(p, out_dir, name, w = 170, h = 120, dpi = 300,  ...) {
   dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
-  ggsave(file.path(out_dir, paste0(name, ".pdf")), p, width = w, height = h, units = "mm", device = cairo_pdf)
-  ggsave(file.path(out_dir, paste0(name, ".png")), p, width = w, height = h, units = "mm", dpi = dpi, ...)
+  ggsave(file.path(out_dir, paste0(name, ".pdf")), p, width = w, height = h, units = "mm", limitsize = FALSE, device = cairo_pdf)
+  ggsave(file.path(out_dir, paste0(name, ".png")), p, width = w, height = h, units = "mm", limitsize = FALSE, dpi = dpi, ...)
 }
 
 summarize_ont_run <- function(dt,

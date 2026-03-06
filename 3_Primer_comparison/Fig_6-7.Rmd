@@ -1302,8 +1302,16 @@ ggsave(file.path(res.dir, 'Figure_7.png'), gg.glom.norm.top.spec.all, height = 2
 ```
 
 
+# End Worfklkow
+
+
+# Write out
 
 ```{r}
+
+
+fwrite(taxa.pres, 'FR_H.sapiens_C.lupus_taxa.presence.tsv',    sep ='\t')
+
 
 fwrite(df.from.ps(ps.glom.norm.top.spec.d6300, comb=F),    'd6300.norm.top.spec.tsv',    sep ='\t')
 fwrite(df.from.ps(ps.glom.norm.top.spec.d6331, comb=F),    'd6331.norm.top.spec.tsv',    sep ='\t')
