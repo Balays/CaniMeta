@@ -120,7 +120,7 @@ out_dir <- '1B-C_Toti_WGS'
 
 
 ## Comb
-```{r, message=T}
+```{r, message=T, eval=F}
 files   <- list.files('D:/ENA/PRJEB75753/.fastq_read_stats', recursive = T, full.names = T)
 
 i <- 1
@@ -137,12 +137,12 @@ mapfun <- function(i, files) {
 
 proj_stats_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
 
-fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'PRJEB75753_stats.tsv.gz', sep = '\t')
+fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'ENA/PRJEB75753/PRJEB75753_stats.tsv.gz', sep = '\t')
 ```
 
 
-```{r, message=T}
-proj_stats_dt <- fread('PRJEB75753_stats.tsv.gz')
+```{r, message=T, eval=F}
+proj_stats_dt <- fread('ENA/PRJEB75753/PRJEB75753_stats.tsv.gz')
 
 proj_stats_dt[, project := 'PRJEB75753']
 
@@ -162,31 +162,50 @@ if(nrow(proj_stats_dt) == nrow(PRJEB75753_st)) {
 }
 
 PRJEB75753_stats[,.N, sample_title]
+
+
+all_stats_uni  <- PRJEB75753_stats[,.(sample, read_id, length, mean_Q)]
+proj_meta      <- unique(PRJEB75753_stats[,.(sample, sample_title, project, secondary_sample_accession, instrument_platform)])
+
+
+
+
+fwrite(proj_meta, '1B-C_Toti_WGS/proj_meta.tsv.gz', sep = '\t')
+
+fwrite(all_stats_uni, '1B-C_Toti_WGS/all_stats_uni.tsv.gz', sep = '\t')
+
 ```
+
 
 ```{r, eval=F}
-PRJEB82097_meta <- fread('2_40dogs_ZHMW_vs_ZMB/metadata.tsv')
-PRJEB82097_meta[, sample  := gsub('_rel-abundance.tsv', '', filename)]
+cmd <- 'split -b 95M 1B-C_Toti_WGS/all_stats_uni.tsv.gz 1B-C_Toti_WGS/all_stats_uni.tsv.gz.part_'
+system(cmd)
 
-PRJEB82097_stats <- merge(PRJEB82097_stats, PRJEB82097_meta, by = 'sample', all.x=T)
-
-# the metadata table contains samples that were not uploaded to ENA!
-
-# also, the ENA files contain samples that are not published in this article
-
-# so we filter them to the actual 40 dogs sample
-
-SuppTab_S4 <- fread('2_40dogs_ZHMW_vs_ZMB/Supplementary Table S4.txt')
-
-PRJEB82097_st <- PRJEB82097_stats[sample %in% SuppTab_S4$file_name, ]
-
-PRJEB82097_st[,.N,sample]
-
-## ok!
-
-PRJEB82097_stats <- PRJEB82097_st; rm(PRJEB82097_st)
+cmd <- 'rm 1B-C_Toti_WGS/all_stats_uni.tsv.gz'
+system(cmd)
 
 ```
+
+```{bash}
+#cmd <- '
+cat 1B-C_Toti_WGS/all_stats_uni.tsv.gz.part_* > 1B-C_Toti_WGS/all_stats_uni.tsv.gz
+#'
+#system(cmd)
+
+
+```
+
+```{r}
+try({ all_stats_uni <- fread('1B-C_Toti_WGS/all_stats_uni.tsv.gz') })
+
+
+proj_meta <- fread('1B-C_Toti_WGS/proj_meta.tsv.gz')
+
+
+all_stats_uni <- merge(all_stats_uni, proj_meta, by = 'sample')
+```
+
+
 
 
 ## Summary
@@ -392,7 +411,7 @@ p_count_q
 # SertePerti MinION V1-V9 Sequencing Summary
 
 ## Import Data
-```{r, message=T}
+```{r, message=T, eval=F}
 files   <- list.files('ENA/PRJEB82097/.fastq_read_stats', recursive = T, full.names = T)
 
 i <- 1
@@ -413,7 +432,7 @@ fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'ENA/PRJEB82097/PRJEB
 ```
 
 
-```{r, message=T}
+```{r, message=T, eval=F}
 proj_stats_dt <- fread('ENA/PRJEB82097/PRJEB82097_stats.tsv.gz')
 
 proj_stats_dt[, project := 'PRJEB82097']
@@ -435,7 +454,7 @@ if(nrow(proj_stats_dt) == nrow(PRJEB82097_st)) {
 
 ```
 
-```{r, message=T}
+```{r, message=T, eval=F}
 # the ENA files contain samples that are not published in this article
 
 # so we filter them to the actual 40 dogs sample
@@ -524,6 +543,34 @@ fwrite(cmd, eol = '\n', col.names = F,
        sep = ' ')
 
 ```
+
+
+```{r}
+PRJEB82097_stats_uni <- PRJEB82097_stats[,.(sample, read_id, length, mean_Q)]
+
+fwrite(PRJEB82097_meta, '2_40dogs_ZHMW_vs_ZMB/PRJEB82097_meta.tsv', sep = '\t')
+
+fwrite(PRJEB82097_stats_uni, '2_40dogs_ZHMW_vs_ZMB/PRJEB82097_stats_uni.tsv.gz', sep = '\t')
+```
+
+
+```{r}
+
+PRJEB82097_meta      <- fread('2_40dogs_ZHMW_vs_ZMB/PRJEB82097_meta.tsv')
+
+PRJEB82097_stats_uni <- fread('2_40dogs_ZHMW_vs_ZMB/PRJEB82097_stats_uni.tsv.gz')
+
+
+PRJEB82097_stats <- merge(PRJEB82097_stats_uni, PRJEB82097_meta, by = 'sample')
+
+if(nrow(PRJEB82097_stats) == nrow(PRJEB82097_stats_uni)) {
+  rm(PRJEB82097_stats_uni)
+} else {
+  stop()
+}
+```
+
+
 
 ## Summary
 ```{r}
@@ -1204,12 +1251,12 @@ mapfun <- function(i, files) {
 
 proj_stats_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
 
-fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'PRJEB85714_stats.tsv.gz', sep = '\t')
+fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'ENA/PRJEB85714/PRJEB85714_stats.tsv.gz', sep = '\t')
 ```
 
 
 ```{r, message=T}
-proj_stats_dt <- fread('PRJEB85714_stats.tsv.gz')
+proj_stats_dt <- fread('ENA/PRJEB85714/PRJEB85714_stats.tsv.gz')
 
 proj_stats_dt[, project := 'PRJEB85714']
 
@@ -1279,12 +1326,12 @@ mapfun <- function(i, files) {
 
 proj_stats_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
 
-fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'PRJEB85420_stats.tsv.gz', sep = '\t')
+fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'ENA/PRJEB85420/PRJEB85420_stats.tsv.gz', sep = '\t')
 ```
 
 
 ```{r, message=T}
-proj_stats_dt <- fread('PRJEB85420_stats.tsv.gz')
+proj_stats_dt <- fread('ENA/PRJEB85420/PRJEB85420_stats.tsv.gz')
 
 proj_stats_dt[, project := 'PRJEB85420']
 
@@ -1348,15 +1395,49 @@ rm(all_stats_dt, PRJEB85420_stats, PRJEB85714_stats )
 
 gc()
 
-fwrite(all_stats_uni, 'all_stats_uni.tsv.gz', sep = '\t')
-```
-
-
-```{r}
-try({ all_stats_uni <- fread('all_stats_uni.tsv.gz') })
 
 proj_meta <- unique(all_stats_uni[,.(sample, source, primer, rep, name, project)])
+
+all_stats_uni <- all_stats_uni[,.(sample, read_id, length, mean_Q)]
+
+fwrite(proj_meta, '3_Primer_comparison/proj_meta.tsv.gz', sep = '\t')
+
+fwrite(all_stats_uni, '3_Primer_comparison/all_stats_uni.tsv.gz', sep = '\t')
+
 ```
+
+
+
+
+```{r, eval=F}
+cmd <- 'split -b 95M 3_Primer_comparison/all_stats_uni.tsv.gz 3_Primer_comparison/all_stats_uni.tsv.gz.part_'
+system(cmd)
+
+cmd <- 'rm 3_Primer_comparison/all_stats_uni.tsv.gz'
+system(cmd)
+
+```
+
+```{bash}
+#cmd <- '
+cat 3_Primer_comparison/all_stats_uni.tsv.gz.part_* > 3_Primer_comparison/all_stats_uni.tsv.gz
+#'
+#system(cmd)
+
+
+```
+
+```{r}
+try({ all_stats_uni <- fread('3_Primer_comparison/all_stats_uni.tsv.gz') })
+
+
+proj_meta <- fread('3_Primer_comparison/proj_meta.tsv.gz')
+
+
+all_stats_uni <- merge(all_stats_uni, proj_meta, by = 'sample')
+```
+
+
 
 ## Summary
 ```{r}
