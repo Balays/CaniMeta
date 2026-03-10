@@ -1043,6 +1043,56 @@ ps.glom.phy          <- ps.glom
 
 ```
 
+### paired
+```{r}
+dt.phy <- dt.from.ps(ps.all, glom_taxa = T, t = 'phylum', summarise.samples = c('sample', 'source', 'dna.isolation.methods', 'name'), glom_samples = T)
+
+dt.phy[, sum_count  := round(sum_count, 0)]
+
+setnames(dt.phy, 'sum_count', 'count')
+
+dt.phy[, sum_count  := sum(count), by = sample]
+
+dt.phy[, norm_count := count / sum_count, by = sample]
+
+dt.phy[, ':=' (sd_count = NULL, mean_count = NULL)]
+
+fwrite(dt.phy, 'EMU_phylum_abundance.tsv', sep = '\t')
+```
+
+
+```{r}
+top_phyla <- dt.phy[
+  , .(mean_abund = mean(norm_count)), by = phylum
+][order(-mean_abund)][1:6, phylum]
+```
+
+
+```{r}
+ggplot(
+  dt.phy[phylum %in% top_phyla],
+  aes(dna.isolation.methods, norm_count, group = name)
+  ) +
+  geom_line(alpha = 0.3, color = "grey50") +
+  geom_point(aes(color = source), size = 2) +
+  facet_wrap(~phylum, scales = "free_y") +
+  labs(
+    x = "Extraction method",
+    y = "Relative abundance"
+    # ,title = "Paired comparison of phylum-level abundances between extraction methods"
+  ) +
+  theme_ipsum() +
+  theme(strip.text = element_text(face = 'italic'))
+
+ggsave('Article Figures/Figure_X.png', width = 15, height = 9, bg = 'white')
+
+
+```
+
+
+
+
+
 ## Class level
 
 ```{r, Glom taxa at Class-level}
