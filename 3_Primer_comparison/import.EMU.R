@@ -40,9 +40,15 @@ make_phylo <- function(emu_dt,
                        unassigned = c('mapped_filtered', 'mapped_unclassified', 'unmapped') ) {
   
   # Set these to 'unassigned'
-  emu_unassigned <- emu_dt[lineage %in% unassigned, ]
-  emu_unassigned <- emu_unassigned[,.(counts = sum(counts)), by = .(sample, lineage)]
-  
+  if( !is.null(unassigned) ) {
+    
+    emu_unassigned <- emu_dt[lineage %in% unassigned, ]
+    emu_unassigned[,lineage := 'unassigned']
+    emu_unassigned <- emu_unassigned[,.(`estimated counts` = sum(`estimated counts`)), by = .(sample, lineage)]
+    
+    emu_dt  <- emu_dt[!lineage %in% unassigned, ]
+    emu_dt  <- rbind(emu_dt, emu_unassigned, fill = T)
+  }
   cols   <- c('lineage', ranks)
   taxtab <- unique(emu_dt[,..cols])
   #taxtab[,"tax_id" := NULL]
