@@ -202,7 +202,7 @@ try({ all_stats_uni <- fread('1B-C_Toti_WGS/all_stats_uni.tsv.gz') })
 proj_meta <- fread('1B-C_Toti_WGS/proj_meta.tsv.gz')
 
 
-all_stats_uni <- merge(all_stats_uni, proj_meta, by = 'sample')
+PRJEB75753_stats <- merge(all_stats_uni, proj_meta, by = 'sample')
 ```
 
 
@@ -339,7 +339,7 @@ p_count_q
 
 ```
 
-
+### Fig 1B
 ```{r}
 
 sp2 <- ggplot(dt_plot,
@@ -386,7 +386,8 @@ yplot <- ggplot(dt_plot, aes(mean_Q)) +
 
 # Arranging the plot using cowplot
 p_count_q <- plot_grid(xplot, NULL, 
-                       sp, yplot, 
+                       sp, 
+                       yplot, 
                        ncol = 2, align = "hv",
                        rel_widths = c(2, 1), rel_heights = c(1, 2))
 
@@ -400,17 +401,146 @@ p_count_q
 #save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 ```
 
-## Taxonomic Overlap
+
+### Fig 1C
 ```{r}
+
+sp2 <- ggplot(dt_plot,
+             aes(x = log_len, y = mean_Q )
+             ) +
+  geom_point_rast(aes(fill = instrument_platform),
+             shape = 21, color = "grey20", #color = "transparent", 
+             size = 0.35, alpha = 0.4, stroke = 0.4) +
+  scale_fill_npg() +
+  theme_pubr()
+
+
+sp <- sp2 +  
+  geom_vline(data = platform_summary, aes(xintercept = mean_read_length, colour = instrument_platform), linewidth = 1) +
+  #geom_hline(yintercept = mean(platform_summary$min_pass_Qscore), colour = 'grey30', linewidth = 1 ) +
+  geom_hline(data = platform_summary, aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
+  
+  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean Q = ', round(mean_Q, 3)), fill = instrument_platform, y = mean_Q, x = 1), color = "grey20") +
+  #geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean read length = ', round(mean_read_length, 3)), fill = sample, y = 18, x = log10(n50_len)), color = "grey20") +
+  
+  labs(#title = paste0(sample_name, ": read length distribution (capped)"),
+       x = "Read length ( log10(bp) )", y = "Read mean Q-score", fill = NULL) +
+  
+  guides(colour = "none") +
+  
+  theme(legend.position = 'bottom') +
+  
+  ggpubr::border()                                       
+
+
+xplot <- ggplot(dt_plot, aes(log_len)) +
+  geom_density(aes(fill = instrument_platform), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot, aes(mean_Q)) +
+  geom_density(aes(fill = instrument_platform), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+# Arranging the plot using cowplot
+p_count_q <- plot_grid(xplot, NULL, 
+                       #sp, 
+                       yplot, 
+                       ncol = 2, align = "hv",
+                       rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+out_prefix <- "Platform_comparison_QC_Fig1C"
+
+ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height = 30, bg = 'white')
+
+p_count_q
+
+#save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
+```
+
+### Fig 1D
+```{r}
+length_dist <- dt_plot[,.N,by=.(instrument_platform, length)]
+
+length_dist <- merge(length_dist, 
+                     data.table(length=1:max(length_dist$length), instrument_platform = c('OXFORD_NANOPORE', 'ILLUMINA')),
+                     by = c('length', 'instrument_platform'), all = T
+                     )
+
+length_dist[is.na(N), N := 0]
+
+oplot <- ggplot(length_dist[
+  instrument_platform == 'OXFORD_NANOPORE'
+  ], aes(length, N)) +
+  #geom_col(aes(fill = instrument_platform), alpha = 0.5, position = 'dodge') +
+  geom_smooth(aes(color = instrument_platform, group = instrument_platform), alpha = 0.5) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(limits = c(0, 5000)) +
+  theme_pubr() 
+
+
+iplot <- ggplot(length_dist[
+  instrument_platform == 'ILLUMINA'
+  ], aes(length, N)) +
+  #geom_col(aes(fill = instrument_platform), alpha = 0.5, position = 'dodge') +
+  geom_smooth(aes(color = instrument_platform, group = instrument_platform), alpha = 0.5) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(limits = c(0, 250)) +
+  theme_pubr() 
+
+
+xplot <- cowplot::plot_grid(oplot, iplot, ncol = 2)
+xplot
+```
+
+### Fig 1E
+```{r}
+
+oplot <- ggplot(dt_plot[
+  instrument_platform == 'OXFORD_NANOPORE'
+  ], aes(length)) +
+  #geom_col(aes(fill = instrument_platform), alpha = 0.5, position = 'dodge') +
+  geom_density(aes(fill = instrument_platform), alpha = 0.5) +
+  #geom_smooth(aes(color = instrument_platform, group = instrument_platform), alpha = 0.5) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal[-1]) +
+  scale_x_continuous(limits = c(0, 5000)) +
+  theme_pubr() 
+
+
+iplot <- ggplot(dt_plot[
+  instrument_platform == 'ILLUMINA'
+  ], aes(length)) +
+  #geom_col(aes(fill = instrument_platform), alpha = 0.5, position = 'dodge') +
+  geom_density(aes(fill = instrument_platform), alpha = 0.5) +
+  #geom_smooth(aes(color = instrument_platform, group = instrument_platform), alpha = 0.5) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(limits = c(100, 250)) +
+  theme_pubr() 
+
+
+xplot <- cowplot::plot_grid(oplot, iplot, ncol = 2)
+xplot
+
+
+out_prefix <- "Platform_comparison_QC_Fig1E"
+
+ggsave(paste0(out_dir, '/', out_prefix, '.png'), xplot, width = 20, height = 12, bg = 'white')
 
 ```
 
-
-
-
 # SertePerti MinION V1-V9 Sequencing Summary
 
-## Import Data
+## Import and Process Data
 ```{r, message=T, eval=F}
 files   <- list.files('ENA/PRJEB82097/.fastq_read_stats', recursive = T, full.names = T)
 
@@ -494,9 +624,15 @@ PRJEB82097_meta <- PRJEB82097_stats[,.(read_count=.N), by = .(sample, biosample,
 
 ```{r, eval=F}
 ### Copy these files to another folder for EMU re-run
+dir.create('D:/ENA/PRJEB82097/.fastq_other')
 
 files   <- list.files('D:/ENA/PRJEB82097/.fastq', recursive = T, full.names = T)
 
+## v1
+# from    <- grep(paste0(PRJEB82097_meta$biosample, collapse = '|'), files, value = T, invert = T)
+
+
+## v2
 from    <- paste0('D:/ENA/PRJEB82097/.fastq/', PRJEB82097_meta$biosample, '.fastq.gz')
 
 to      <- gsub(".fastq", ".fastq_other", from)
@@ -507,7 +643,11 @@ to2 <- gsub(".fastq_other.gz", ".fastq.gz", to)
 
 file.rename(to, to2 )
 
+file.rename('D:/ENA/PRJEB82097/.fastq_other', 'D:/ENA/PRJEB82097/.fastq_keep')
 
+
+
+##
 to      <- list.files('D:/ENA/PRJEB82097/.fastq_emu', recursive = T, full.names = T)
 
 to      <- grep('_rel-abundance.tsv', to, value = T)
@@ -553,7 +693,7 @@ fwrite(PRJEB82097_meta, '2_40dogs_ZHMW_vs_ZMB/PRJEB82097_meta.tsv', sep = '\t')
 fwrite(PRJEB82097_stats_uni, '2_40dogs_ZHMW_vs_ZMB/PRJEB82097_stats_uni.tsv.gz', sep = '\t')
 ```
 
-
+## Import Prepared Data
 ```{r}
 
 PRJEB82097_meta      <- fread('2_40dogs_ZHMW_vs_ZMB/PRJEB82097_meta.tsv')
@@ -790,7 +930,7 @@ my_pal <- pal_npg()(10)[-c(1:2)]
 
 dt_plot[, log_len := log10(length)]
 
-dt_plot <- dt_plot[sample(.N)]  # randomize draw order if you keep any point layers
+dt_plot <- dt_plot[sample(.N)]  # randomize draw order
 
 gc()
 ```
@@ -928,7 +1068,7 @@ p_reads <- ggplot(ss, aes(x = method, y = n_reads, fill = method)) +
   scale_y_continuous(labels = label_comma()) +
   
   labs(
-    title = "Read count comparison between extraction methods",
+    #title = "Read count comparison between extraction methods",
     x = NULL,
     y = "Read count per sample"
   ) +
@@ -952,7 +1092,7 @@ p_q <- ggplot(ss, aes(x = method, y = mean_Q, fill = method)) +
   # Points
   geom_point(size = 2.5, shape=21, color = 'grey20') +
   labs(
-    title = "Read quality comparison between extraction methods",
+    #title = "Read quality comparison between extraction methods",
     x = NULL,
     y = "Mean Q-score per sample"
   ) +
@@ -974,6 +1114,7 @@ save_plot(fig, out_dir, out_prefix, w = 350, h = 250)
 # Print to viewer
 fig
 
+saveRDS(fig, '2_40dogs_ZHMW_vs_ZMB/Article Figures/Figure_2A-B.rds')
 ```
 
 
@@ -1905,11 +2046,13 @@ plots
 ```
 
 
+# TO-DO:
+
+## Find out wether the *WGS* peak's taxaonomic distribution is the same as the amplicons ( did the PCR caused bias in the taxonomy )
 
 
 
-
-
+# END WORKFLOW
 
 
 

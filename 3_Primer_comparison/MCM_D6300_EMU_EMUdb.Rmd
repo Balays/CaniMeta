@@ -291,11 +291,13 @@ if (db == 'proGcontigs_2') {
 ```
 
 
+
+
 ## Import Exp data
 ```{r, import Experimental Results}
 #### Import Zymo D3600 results
 
-ps.all <- readRDS("EMU/ps/unfiltered/primer.exp.all.PS.rds")
+ps.all <- readRDS("EMU/ps/min1500.max1800_emu/primer.exp.all.PS.rds")
 
 metadata <- data.frame(sample_data(ps.all))
 
@@ -582,7 +584,9 @@ if (!is.na(abund.threshold)) {
 ## Taxon IDs
 ```{r, message=TRUE}
 ### Check if species names are unique
-if( n_distinct(ps.all@tax_table[,'species']) == nrow(ps.all@tax_table[,]) ) {
+if( 
+  n_distinct(ps.all@tax_table[,'species']) == nrow(ps.all@tax_table[,]) 
+    ) {
   
   message('using species as taxon identifier')
   
@@ -611,7 +615,7 @@ if( n_distinct(ps.all@tax_table[,'species']) == nrow(ps.all@tax_table[,]) ) {
 } else {
   
   ### Otherwise get rid of tax.identity OR lineage from taxtab if so
-  
+  dup(ps.all@tax_table[,'species'])
   
   rank_names(ps.all)
   

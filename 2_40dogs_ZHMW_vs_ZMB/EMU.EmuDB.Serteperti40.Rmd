@@ -50,6 +50,7 @@ library(viridis)
 library(vegan)
 library(networkD3)
 library(Maaslin2)
+library(ggpubr)
 
 ## Own functions -->> SET PATH !!!
 misc.dir    <- 'C:/GitHub/Rlyeh/R'
@@ -790,6 +791,116 @@ metadata <- data.frame(sample_data(ps.all))
 ```
 
 
+# Paired Comparison
+
+## Pylum level
+```{r}
+dt.phy <- dt.from.ps(ps.all, glom_taxa = T, t = 'phylum', summarise.samples = c('sample', 'source', 'dna.isolation.methods', 'name'), glom_samples = T)
+
+dt.phy[, sum_count  := round(sum_count, 0)]
+
+setnames(dt.phy, 'sum_count', 'count')
+
+dt.phy[, sum_count  := sum(count), by = sample]
+
+dt.phy[, norm_count := count / sum_count, by = sample]
+
+dt.phy[, ':=' (sd_count = NULL, mean_count = NULL)]
+
+fwrite(dt.phy, 'EMU_phylum_abundance.tsv', sep = '\t')
+```
+
+
+```{r}
+top_phyla <- dt.phy[
+  , .(mean_abund = mean(norm_count)), by = phylum
+][order(-mean_abund)][1:5, phylum]
+```
+
+
+```{r}
+ggp <- ggplot(
+  dt.phy[phylum %in% top_phyla],
+  aes(dna.isolation.methods, norm_count, group = name)
+  ) +
+  geom_line(alpha = 0.3, color = "grey50") +
+  geom_point(aes(fill = source), color = 'black', shape = 21, size = 2) +
+  scale_fill_ipsum() +
+  facet_wrap(~phylum, scales = "free_y") +
+  labs(
+    fill = 'Host (Dog)',
+    x = "Extraction method",
+    y = "Relative abundance"
+    # ,title = "Paired comparison of phylum-level abundances between extraction methods"
+  ) +
+  theme_ipsum() +
+  theme(strip.text = element_text(face = 'italic'))
+
+
+ggp
+
+ggsave('Article Figures/Figure_2C.png', ggp, width = 15, height = 9, bg = 'white')
+
+
+```
+
+```{r}
+
+dt_pair <- dcast(
+  dt.phy,
+  name + phylum ~ dna.isolation.methods,
+  value.var = "norm_count",
+  fill = 0
+)
+
+pcor <- round(cor(dt_pair$ZHMW, dt_pair$ZMB, method = "pearson"), 3)
+
+ggc <- ggplot(dt_pair, aes(ZHMW, ZMB)) +
+  geom_point(aes(fill = phylum), size = 3, alpha = 0.8, color = 'black', shape = 21) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  scale_fill_primer() +
+  geom_label(aes(x = 0.4, y = 0.55, label = paste0("Pearson's r = ", pcor)), linetype = "dashed") +
+  scale_x_continuous(trans = "log10") +
+  scale_y_continuous(trans = "log10") +
+  labs(
+    fill = 'Phylum',
+    x = "Relative abundance (ZHMW extraction)",
+    y = "Relative abundance (ZMB extraction)"
+    #, title = "Phylum-level abundance concordance between extraction methods"
+  ) +
+  theme_ipsum() +
+  theme(legend.text = element_text(face = 'italic'))
+
+
+ggc
+
+ggsave('Article Figures/Figure_2D.png', ggc, width = 12, height = 9, bg = 'white')
+
+```
+
+
+
+```{r}
+library(cowplot)
+ggf <- plot_grid(ggp, ggc, labels = c('C', 'D'), rel_widths = c(1.2, 1))
+
+
+ggsave('Article Figures/Figure_2C-D.png', ggf, width = 24, height = 9, bg = 'white')
+
+
+##
+fig2ab <- readRDS('Article Figures/Figure_2A-B.rds')
+
+
+##
+ggf2 <- plot_grid(fig2ab, ggf, nrow = 2)
+
+
+ggsave('Article Figures/Figure_2A-B-C-D.png', ggf2, width = 24, height = 15, bg = 'white')
+
+```
+
+
 
 #  Relative abundance of taxa at each taxonomic level
 
@@ -1042,55 +1153,6 @@ ps.glom.phy          <- ps.glom
 
 
 ```
-
-### paired
-```{r}
-dt.phy <- dt.from.ps(ps.all, glom_taxa = T, t = 'phylum', summarise.samples = c('sample', 'source', 'dna.isolation.methods', 'name'), glom_samples = T)
-
-dt.phy[, sum_count  := round(sum_count, 0)]
-
-setnames(dt.phy, 'sum_count', 'count')
-
-dt.phy[, sum_count  := sum(count), by = sample]
-
-dt.phy[, norm_count := count / sum_count, by = sample]
-
-dt.phy[, ':=' (sd_count = NULL, mean_count = NULL)]
-
-fwrite(dt.phy, 'EMU_phylum_abundance.tsv', sep = '\t')
-```
-
-
-```{r}
-top_phyla <- dt.phy[
-  , .(mean_abund = mean(norm_count)), by = phylum
-][order(-mean_abund)][1:6, phylum]
-```
-
-
-```{r}
-ggplot(
-  dt.phy[phylum %in% top_phyla],
-  aes(dna.isolation.methods, norm_count, group = name)
-  ) +
-  geom_line(alpha = 0.3, color = "grey50") +
-  geom_point(aes(color = source), size = 2) +
-  facet_wrap(~phylum, scales = "free_y") +
-  labs(
-    x = "Extraction method",
-    y = "Relative abundance"
-    # ,title = "Paired comparison of phylum-level abundances between extraction methods"
-  ) +
-  theme_ipsum() +
-  theme(strip.text = element_text(face = 'italic'))
-
-ggsave('Article Figures/Figure_X.png', width = 15, height = 9, bg = 'white')
-
-
-```
-
-
-
 
 
 ## Class level
