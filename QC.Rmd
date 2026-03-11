@@ -241,12 +241,12 @@ sample_summary <- dt[, .(
   mean_len = mean(length, na.rm = TRUE),
   median_len = median(length, na.rm = TRUE),
   n50_len = n50(length),
-  mean_Q = mean(mean_Q, na.rm = TRUE),
-  median_Q = median(mean_Q, na.rm = TRUE)
+  mean_Q   = mean(mean_Q, na.rm = TRUE),
+  median_Q = median(mean_Q, na.rm = TRUE),
+  max_Q    = max(mean_Q, na.rm = TRUE),
+  min_Q    = min(mean_Q, na.rm = TRUE)
 ), by = .(sample, instrument_platform)]
 
-# Save
-fwrite(sample_summary, "1B-C_Toti_WGS/Toti_sample_QC_summary.tsv", sep = '\t')
 
 # =========================
 # 2️⃣ Per-source summary (across samples)
@@ -264,6 +264,10 @@ platform_summary <- sample_summary[, .(
   sd_Q = sd(mean_Q)
 ), by = .(instrument_platform)]
 
+
+
+# Save
+fwrite(sample_summary,   "1B-C_Toti_WGS/Toti_sample_QC_summary.tsv", sep = '\t')
 fwrite(platform_summary, "1B-C_Toti_WGS/Toti_platform_QC_summary.tsv", sep = '\t')
 
 sample_summary
@@ -275,6 +279,8 @@ platform_summary
 ## Plots
 
 ```{r}
+out_dir <- '1B-C_Toti_WGS'
+
 dt_plot <- copy(PRJEB75753_stats)
 
 dt_plot[,log_len := log10(length)]
@@ -290,6 +296,7 @@ my_pal <- pal_npg()(10)[]
 gc()
 ```
 
+### Fig 1A
 
 ```{r}
 # Marginal density plot of x (top panel) and y (right panel)
@@ -338,6 +345,7 @@ p_count_q
 #save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 
 ```
+
 
 ### Fig 1B
 ```{r}
@@ -449,7 +457,7 @@ yplot <- ggplot(dt_plot, aes(mean_Q)) +
 
 # Arranging the plot using cowplot
 p_count_q <- plot_grid(xplot, NULL, 
-                       #sp, 
+                       sp, 
                        yplot, 
                        ncol = 2, align = "hv",
                        rel_widths = c(2, 1), rel_heights = c(1, 2))
@@ -463,6 +471,7 @@ p_count_q
 
 #save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 ```
+
 
 ### Fig 1D
 ```{r}
@@ -537,6 +546,11 @@ out_prefix <- "Platform_comparison_QC_Fig1E"
 ggsave(paste0(out_dir, '/', out_prefix, '.png'), xplot, width = 20, height = 12, bg = 'white')
 
 ```
+
+
+
+
+
 
 # SertePerti MinION V1-V9 Sequencing Summary
 
@@ -1104,7 +1118,7 @@ p_q
 
 ```{r, eval=T}
 # Layout: A | B on top, C across bottom
-fig <- cowplot::plot_grid(p_reads, p_q, rel_widths = c(1,1), labels = c('A', 'B'))
+fig <- cowplot::plot_grid(p_reads, p_q, rel_widths = c(1,1), labels = c('a', 'b'))
 
 out_dir    <- "2_40dogs_ZHMW_vs_ZMB"
 out_prefix <- "Serteperti_ZHMW_vs_ZMB_QC_Fig"

@@ -1152,6 +1152,8 @@ det.sum <- rbind(det.sum.d6300,
                  det.sum.d6331,
                  det.sum.d6323)
 
+fwrite(det.sum, 'detection_metrics.tsv', sep = '\t')
+
 ggp <- ggplot(det.sum,
        aes(Detection_threshold_ratio, mean, color = primer, shape = statistic, fill = primer)) +
   geom_point(size = 4, color = 'black') +

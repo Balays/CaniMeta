@@ -1848,7 +1848,7 @@ Fig3B <- p1
 
 library(cowplot)
 
-Fig3 <- plot_grid(Fig3A, Fig3B, nrow = 1, rel_widths = c(3,1))
+Fig3 <- plot_grid(Fig3A, Fig3B, nrow = 1, rel_widths = c(3,1), labels = c('a', 'b'))
 
 dir.create('Article_Figures')
 ggsave(paste0('Article_Figures', '/', 'Figure_3B_Final.png'), Fig3, width = 21, height = 12, bg = 'white')
