@@ -414,7 +414,7 @@ p_count_q
 ```{r}
 
 sp2 <- ggplot(dt_plot,
-             aes(x = log_len, y = mean_Q )
+             aes(x = length, y = mean_Q )
              ) +
   geom_point_rast(aes(fill = instrument_platform),
              shape = 21, color = "grey20", #color = "transparent", 
@@ -441,8 +441,8 @@ sp <- sp2 +
   ggpubr::border()                                       
 
 
-xplot <- ggplot(dt_plot, aes(log_len)) +
-  geom_density(aes(fill = instrument_platform), alpha = 0.5, n = 128) +
+xplot <- ggplot(dt_plot, aes(length)) +
+  geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
   #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
   scale_fill_manual(values = my_pal) +
   theme_pubr() 
@@ -470,6 +470,7 @@ ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height =
 p_count_q
 
 #save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
+# xplot
 ```
 
 
