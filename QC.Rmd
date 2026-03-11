@@ -420,6 +420,7 @@ sp2 <- ggplot(dt_plot,
              shape = 21, color = "grey20", #color = "transparent", 
              size = 0.35, alpha = 0.4, stroke = 0.4) +
   scale_fill_npg() +
+  scale_x_continuous(limits = c(0, 2000)) +
   theme_pubr()
 
 
@@ -445,11 +446,12 @@ xplot <- ggplot(dt_plot, aes(length)) +
   geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
   #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
   scale_fill_manual(values = my_pal) +
+  scale_x_continuous(limits = c(0, 2000)) +
   theme_pubr() 
 
 
 yplot <- ggplot(dt_plot, aes(mean_Q)) +
-  geom_density(aes(fill = instrument_platform), alpha = 0.5, n = 128) +
+  geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
   #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
   scale_fill_manual(values = my_pal) +
   theme_pubr() +
