@@ -893,10 +893,10 @@ fig2ab <- readRDS('Article Figures/Figure_2A-B.rds')
 
 
 ##
-ggf2 <- plot_grid(fig2ab, ggf, nrow = 2)
+ggf2 <- plot_grid(fig2ab, ggf, nrow = 2, rel_heights = c(1, 1.2))
 
 
-ggsave('Article Figures/Figure_2A-B-C-D.png', ggf2, width = 24, height = 15, bg = 'white')
+ggsave('Article Figures/Figure_2A-B-C-D.png', ggf2, width = 26, height = 15, bg = 'white')
 
 ```
 
