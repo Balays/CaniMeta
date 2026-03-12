@@ -1795,7 +1795,7 @@ pn2
 
 correl_vars <- c('name', 'dna.isolation.methods') #colnames(sampdat)
 
-group_vars    <- c('name', 'date', 'source', 'sex')
+group_vars  <- c('name', 'date', 'source', 'sex')
 
 
 # Function to subset data to a given group and calculate R²
@@ -1881,7 +1881,7 @@ otutab  <- data.frame(otu_table  (ps))
 
 group_sampdat <- unique.data.frame(sampdat[,group_vars])
 
-correl_data <- melt(data.frame(taxon=rownames(otutab), otutab), value.name = 'abundance', variable.name='sample')
+correl_data <- data.frame(melt(data.table(data.frame(taxon=rownames(otutab), otutab)), value.name = 'abundance', variable.name='sample'))
 correl_data <- merge(correl_data, sampdat, by='sample')
 
 correl_data <- correl_data[,c('sample', correl_vars, 'taxon', 'abundance')]
@@ -2102,7 +2102,7 @@ otutab  <- data.frame(otu_table  (ps))
 
 group_sampdat <- unique.data.frame(sampdat[,group_vars])
 
-correl_data <- melt(data.frame(taxon=rownames(otutab), otutab), value.name = 'abundance', variable.name='sample')
+correl_data <- data.frame(melt(data.table(data.frame(taxon=rownames(otutab), otutab)), value.name = 'abundance', variable.name='sample'))
 correl_data <- merge(correl_data, sampdat, by='sample')
 
 correl_data <- correl_data[,c('sample', correl_vars, 'taxon', 'abundance')]
@@ -2324,7 +2324,7 @@ otutab  <- data.frame(otu_table  (ps))
 
 group_sampdat <- unique.data.frame(sampdat[,group_vars])
 
-correl_data <- melt(data.frame(taxon=rownames(otutab), otutab), value.name = 'abundance', variable.name='sample')
+correl_data <- data.frame(melt(data.table(data.frame(taxon=rownames(otutab), otutab)), value.name = 'abundance', variable.name='sample'))
 correl_data <- merge(correl_data, sampdat, by='sample')
 
 correl_data <- correl_data[,c('sample', correl_vars, 'taxon', 'abundance')]
@@ -2545,7 +2545,7 @@ otutab  <- data.frame(otu_table  (ps))
 
 group_sampdat <- unique.data.frame(sampdat[,group_vars])
 
-correl_data <- melt(data.frame(taxon=rownames(otutab), otutab), value.name = 'abundance', variable.name='sample')
+correl_data <- data.frame(melt(data.table(data.frame(taxon=rownames(otutab), otutab)), value.name = 'abundance', variable.name='sample'))
 correl_data <- merge(correl_data, sampdat, by='sample')
 
 correl_data <- correl_data[,c('sample', correl_vars, 'taxon', 'abundance')]
