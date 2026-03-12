@@ -425,15 +425,19 @@ sp2 <- ggplot(dt_plot,
 
 
 sp <- sp2 +  
-  geom_vline(data = platform_summary, aes(xintercept = mean_read_length, colour = instrument_platform), linewidth = 1) +
-  #geom_hline(yintercept = mean(platform_summary$min_pass_Qscore), colour = 'grey30', linewidth = 1 ) +
-  geom_hline(data = platform_summary, aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
   
-  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean Q = ', round(mean_Q, 3)), fill = instrument_platform, y = mean_Q, x = 1), color = "grey20") +
-  #geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean read length = ', round(mean_read_length, 3)), fill = sample, y = 18, x = log10(n50_len)), color = "grey20") +
+  ## Mean length lines and labels
+  geom_vline(data = platform_summary, aes(xintercept = mean_read_length, colour = instrument_platform), linewidth = 1) +
+  geom_label_repel(data = platform_summary, 
+                   aes(label = paste0('Mean read length = ', round(mean_read_length, 0)), fill = instrument_platform, y = 38, x = mean_read_length), color = "black") +
+  
+  ## Mean Q lines and labels
+  geom_hline(data = platform_summary, aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
+  geom_label_repel(data = platform_summary, 
+                   aes(label = paste0('Overall mean Q = ', round(mean_Q, 3)), fill = instrument_platform, y = mean_Q, x = 1800), color = "black") +
   
   labs(#title = paste0(sample_name, ": read length distribution (capped)"),
-       x = "Read length ( log10(bp) )", y = "Read mean Q-score", fill = NULL) +
+       x = "Read length (bp)", y = "Read mean Q-score", fill = NULL) +
   
   guides(colour = "none") +
   
@@ -471,49 +475,33 @@ ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height =
 
 p_count_q
 
+saveRDS(p_count_q, paste0(out_dir, '/', out_prefix, '.rds'))
+
 #save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 # xplot
 ```
 
 
-### Fig 1D
+### Fig 1 Final
 ```{r}
-length_dist <- dt_plot[,.N,by=.(instrument_platform, length)]
+Fig1B <- readRDS(paste0('Article_Figures', '/', 'Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.rds') )
 
-length_dist <- merge(length_dist, 
-                     data.table(length=1:max(length_dist$length), instrument_platform = c('OXFORD_NANOPORE', 'ILLUMINA')),
-                     by = c('length', 'instrument_platform'), all = T
-                     )
+# Arranging the plot using cowplot
+Fig1 <- plot_grid(xplot, Fig1B, 
+                  sp, 
+                  yplot, 
+                  ncol = 2, align = "hv",
+                  rel_widths = c(2, 1), rel_heights = c(1, 2),
+                  labels = c('a', 'b', '', ''))
 
-length_dist[is.na(N), N := 0]
+ggsave(ppaste0('Article_Figures', '/', 'Figure_1_Final.png'), Fig1, width = 30, height = 30, bg = 'white')
 
-oplot <- ggplot(length_dist[
-  instrument_platform == 'OXFORD_NANOPORE'
-  ], aes(length, N)) +
-  #geom_col(aes(fill = instrument_platform), alpha = 0.5, position = 'dodge') +
-  geom_smooth(aes(color = instrument_platform, group = instrument_platform), alpha = 0.5) +
-  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
-  scale_fill_manual(values = my_pal) +
-  scale_x_continuous(limits = c(0, 5000)) +
-  theme_pubr() 
-
-
-iplot <- ggplot(length_dist[
-  instrument_platform == 'ILLUMINA'
-  ], aes(length, N)) +
-  #geom_col(aes(fill = instrument_platform), alpha = 0.5, position = 'dodge') +
-  geom_smooth(aes(color = instrument_platform, group = instrument_platform), alpha = 0.5) +
-  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
-  scale_fill_manual(values = my_pal) +
-  scale_x_continuous(limits = c(0, 250)) +
-  theme_pubr() 
-
-
-xplot <- cowplot::plot_grid(oplot, iplot, ncol = 2)
-xplot
 ```
 
-### Fig 1E
+
+
+### Fig 1D
+
 ```{r}
 
 oplot <- ggplot(dt_plot[
@@ -549,9 +537,6 @@ out_prefix <- "Platform_comparison_QC_Fig1E"
 ggsave(paste0(out_dir, '/', out_prefix, '.png'), xplot, width = 20, height = 12, bg = 'white')
 
 ```
-
-
-
 
 
 

@@ -1835,12 +1835,13 @@ saveRDS(p1, paste0(res.dir, '/', t, '_overlap_Euler.rds'))
 
 ```{r,  fig.height = fig.height.vr, fig.width = fig.width.vr, eval=multiV[2]}
 
-p1
+Fig3B <- p1
 
 dir.create('Article_Figures')
-ggsave(paste0('Article_Figures', '/', 'Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.png'), p1, width = 7, height = 14)
+ggsave(paste0('Article_Figures', '/', 'Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.png'), Fig3B, width = 7, height = 14)
+saveRDS(Fig3B, paste0('Article_Figures', '/', 'Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.rds') )
 
-Fig3B <- p1
+Fig3B
 ```
 
 # Figure3

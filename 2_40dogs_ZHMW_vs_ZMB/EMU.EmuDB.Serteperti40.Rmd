@@ -273,7 +273,7 @@ if (db == 'proGcontigs_2') {
 ```{r, import Experimental Results}
 #### Import Zymo D3600 results
 
-ps.all <- readRDS("EMU/ps/unfiltered/serteperti.exp.all.PS.rds")
+ps.all <- readRDS("EMU/ps/min1500.max1800/serteperti.exp.all.PS.rds")
 
 metadata <- data.frame(sample_data(ps.all))
 #setnames(metadata, 'filename', 'sample')
