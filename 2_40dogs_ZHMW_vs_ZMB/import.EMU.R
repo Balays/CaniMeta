@@ -3,6 +3,7 @@ library(stringi)
 
 metadata  <- fread('PRJEB82097_meta.tsv')
 metadata[, sample := biosample]
+metadata[, kennel := 'Serteperti']
 setnames(metadata, c('Sample_name', 'Sex', 'Date'), c('name', 'sex', 'date'))
 metadata <- data.frame(metadata, row.names = metadata$sample)
 

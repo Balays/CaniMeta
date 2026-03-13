@@ -475,7 +475,7 @@ ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 30, height =
 
 p_count_q
 
-saveRDS(p_count_q, paste0(out_dir, '/', out_prefix, '.rds'))
+#saveRDS(p_count_q, paste0(out_dir, '/', out_prefix, '.rds'))
 
 #save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
 # xplot
@@ -484,7 +484,7 @@ saveRDS(p_count_q, paste0(out_dir, '/', out_prefix, '.rds'))
 
 ### Fig 1 Final
 ```{r}
-Fig1B <- readRDS(paste0('Article_Figures', '/', 'Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.rds') )
+Fig1B <- readRDS(paste0('1B-C_Toti_WGS/Article_Figures/Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.rds') )
 
 # Arranging the plot using cowplot
 Fig1 <- plot_grid(xplot, Fig1B, 
@@ -494,7 +494,7 @@ Fig1 <- plot_grid(xplot, Fig1B,
                   rel_widths = c(2, 1), rel_heights = c(1, 2),
                   labels = c('a', 'b', '', ''))
 
-ggsave(ppaste0('Article_Figures', '/', 'Figure_1_Final.png'), Fig1, width = 30, height = 30, bg = 'white')
+ggsave(paste0(out_dir, '/', 'Article_Figures', '/', 'Figure_1_Final.png'), Fig1, width = 30, height = 30, bg = 'white')
 
 ```
 
@@ -1117,6 +1117,8 @@ save_plot(fig, out_dir, out_prefix, w = 350, h = 250)
 fig
 
 saveRDS(fig, '2_40dogs_ZHMW_vs_ZMB/Article Figures/Figure_2A-B.rds')
+
+Fig2_AB <- fig
 ```
 
 
@@ -1246,6 +1248,8 @@ out_prefix <- "2_40dogs_ZHMW_vs_ZMB_QC_Fig2B"
 save_plot(p_count_q, out_dir, out_prefix, w = 900, h = 600, bg = 'white')
 
 ```
+
+
 ```{r}
 
 sp <- ggplot(dt_plot, aes(length, mean_Q)) +
@@ -1295,6 +1299,14 @@ out_prefix <- "2_40dogs_ZHMW_vs_ZMB_QC_Fig2D"
 
 save_plot(p_count_q, out_dir, out_prefix, w = 900, h = 600, bg = 'white')
 
+Fig2_C <- p_count_q
+```
+
+
+```{r}
+Fig2 <- plot_grid(Fig2_AB, Fig2_C, rel_widths = c(1.6, 1), nrow = 1, labels = c('', 'c'), align = "hv")
+
+ggsave(paste0(out_dir, '/Article_Figures/Figure_2_A-B-C_final.png'), Fig2, width = 35, height = 12, bg = 'white')
 ```
 
 
@@ -1373,8 +1385,9 @@ plots
 
 # Primeres 
 
+## Import and Process Data
 
-## PRJEB85714 (human samples)
+### PRJEB85714 (human samples)
 
 ```{r}
 
@@ -1449,7 +1462,7 @@ setnames(PRJEB85714_stats, c('sample_title', 'sample'), c('sample', 'biosample')
 
 
 
-## PRJEB85420 (synthetic and canine samples) 
+### PRJEB85420 (synthetic and canine samples) 
 
 ```{r}
 
@@ -1525,7 +1538,7 @@ setnames(PRJEB85420_stats, c('sample_title', 'sample'), c('sample', 'biosample')
 ```
 
 
-## Combine
+### Combine
 
 ```{r}
 all_stats_dt <- rbind( PRJEB85420_stats, PRJEB85714_stats )
@@ -1570,6 +1583,8 @@ cat 3_Primer_comparison/all_stats_uni.tsv.gz.part_* > 3_Primer_comparison/all_st
 
 ```
 
+
+## Import Prepared Data
 ```{r}
 try({ all_stats_uni <- fread('3_Primer_comparison/all_stats_uni.tsv.gz') })
 
@@ -1657,42 +1672,6 @@ source_summary
 length_summary
 ```
 
-### Finding the valley for length filtering
-
-EMU filters for 0-2000 bp by default, so the reads around the lower peak (~900 bp ) are *not filtered out*  
--->> we must change the EMU's parameter or *filter manually*
-
-```{r}
-min_search <- 1200
-max_search <- 1550
-
-min_len_by_sample <- length_summary[
-  length >= min_search & length <= max_search,
-  .SD[which.min(n_reads)],
-  by = sample
-][, .(sample, best_min_len = length, reads_at_valley = n_reads)]
-
-min(min_len_by_sample$best_min_len)
-max(min_len_by_sample$best_min_len)
-mean(min_len_by_sample$best_min_len)
-
-min_search <- 1700
-max_search <- 2000
-
-max_len_by_sample <- length_summary[
-  length >= min_search & length <= max_search,
-  .SD[which.min(n_reads)],
-  by = sample
-][, .(sample, best_min_len = length, reads_at_valley = n_reads)]
-
-min( max_len_by_sample$best_min_len)
-max( max_len_by_sample$best_min_len)
-mean(max_len_by_sample$best_min_len)
-
-
-```
-
-Filtering : 1500 - 1800 bp
 
 
 ```{r}
@@ -1735,6 +1714,44 @@ dcast(dt_summary, sample ~ category, value.var = "ratio", fill = 0)
 
 fwrite(dt_summary, paste0(out_dir, '/', out_dir, '_length_summary.tsv'), sep = '\t')
 ```
+
+
+## Finding the valley for length filtering
+
+EMU filters for 0-2000 bp by default, so the reads around the lower peak (~900 bp ) are *not filtered out*  
+-->> we must change the EMU's parameter or *filter manually*
+
+```{r}
+min_search <- 1200
+max_search <- 1550
+
+min_len_by_sample <- length_summary[
+  length >= min_search & length <= max_search,
+  .SD[which.min(n_reads)],
+  by = sample
+][, .(sample, best_min_len = length, reads_at_valley = n_reads)]
+
+min(min_len_by_sample$best_min_len)
+max(min_len_by_sample$best_min_len)
+mean(min_len_by_sample$best_min_len)
+
+min_search <- 1700
+max_search <- 2000
+
+max_len_by_sample <- length_summary[
+  length >= min_search & length <= max_search,
+  .SD[which.min(n_reads)],
+  by = sample
+][, .(sample, best_min_len = length, reads_at_valley = n_reads)]
+
+min( max_len_by_sample$best_min_len)
+max( max_len_by_sample$best_min_len)
+mean(max_len_by_sample$best_min_len)
+
+
+```
+
+Filtering : 1500 - 1800 bp
 
 
 
@@ -2038,13 +2055,21 @@ samples_to_plot <- unique(proj_meta$source)
 
 plot_list <- purrr::map(samples_to_plot, plotfun, dt_plot)
 
-plots     <- cowplot::plot_grid(plotlist = plot_list, align = 'hv', axis = 'tlbr', ncol = 5)
+plots     <- cowplot::plot_grid(plotlist = plot_list, align = 'hv', axis = 'tlbr', ncol = 5, labels = letters)
 
+
+```
+
+
+```{r}
 out_prefix <- "Primer_comparison_QC_Fig3C"
 
-save_plot(plots, out_dir, out_prefix, w = 1000, h = 300, bg = 'white')
+ggsave('3_Primer_comparison/Article_Figures/SuppFig_S2.png', width = 40, height = 9, bg = 'white')
 
-plots
+
+#save_plot(plots, out_dir, out_prefix, w = 1000, h = 300, bg = 'white')
+
+#plots
 ```
 
 
