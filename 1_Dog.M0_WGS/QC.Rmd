@@ -99,7 +99,7 @@ out_dir <- '1B-C_Toti_WGS'
 ### QC Script
 ```{r}
 
-source('SeqSum_QC.R')
+source('../SeqSum_QC.R')
 
 ```
 
@@ -224,7 +224,7 @@ dt_plot[,.N,sample]
 p_len_q <- ggplot(dt_plot[is.finite(len_plot) & len_plot > 0
                       & is.finite(mean_qscore_template)], 
                 aes(x = log10(len_plot), y = mean_qscore_template, color = sample)) +
-  geom_point(alpha = 0.4, size = 1) +
+  geom_point_rast(alpha = 0.4, size = 1) +
   scale_x_continuous(labels = label_comma()) +
   scale_y_continuous(labels = label_comma()) +
   labs(#title = paste0(sample_name, ": read length distribution (capped)"),
@@ -319,6 +319,8 @@ p_len_q <- plot_grid(xplot, NULL, sp, yplot, ncol = 2, align = "hv",
 
 p_len_q
 
+
+sample_name <- 'Dog_M0 MinION WGS (LSK114)'
 save_plot(p_len_q, out_dir, paste0(sample_name, "_read_length_vs_meanQ_comb"), w = 350, h = 250)
 
 ```

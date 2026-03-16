@@ -51,6 +51,7 @@ library(UpSetR)
 library(ComplexHeatmap)
 library(genefilter)
 library(viridis)
+library(openxlsx)
 
 ## Own functions <<- SET PATH !!!
 misc.dir    <- 'C:/GitHub/Rlyeh/R'
@@ -99,10 +100,10 @@ source('SeqSum_QC.R')
 ```
 
 
-# Toti 
+# Dog.M0 
 
 ```{r}
-out_dir <- '1B-C_Toti_WGS'
+out_dir <- '1_Dog.M0_WGS'
 ```
 
 ## Illumina WGS
@@ -113,13 +114,13 @@ out_dir <- '1B-C_Toti_WGS'
 
 
 
-## ONT WGS : Toti MinION LSK-114 WGS (Zymo)
+## ONT WGS : Dog.M0 MinION LSK-114 WGS (Zymo)
 ```{r}
 
 ```
 
 
-## Comb
+## PRJEB75753 (Comb)
 ```{r, message=T, eval=F}
 files   <- list.files('D:/ENA/PRJEB75753/.fastq_read_stats', recursive = T, full.names = T)
 
@@ -170,25 +171,25 @@ proj_meta      <- unique(PRJEB75753_stats[,.(sample, sample_title, project, seco
 
 
 
-fwrite(proj_meta, '1B-C_Toti_WGS/proj_meta.tsv.gz', sep = '\t')
+fwrite(proj_meta, '1_Dog.M0_WGS/proj_meta.tsv.gz', sep = '\t')
 
-fwrite(all_stats_uni, '1B-C_Toti_WGS/all_stats_uni.tsv.gz', sep = '\t')
+fwrite(all_stats_uni, '1_Dog.M0_WGS/all_stats_uni.tsv.gz', sep = '\t')
 
 ```
 
 
 ```{r, eval=F}
-cmd <- 'split -b 95M 1B-C_Toti_WGS/all_stats_uni.tsv.gz 1B-C_Toti_WGS/all_stats_uni.tsv.gz.part_'
+cmd <- 'split -b 95M 1_Dog.M0_WGS/all_stats_uni.tsv.gz Dog.M0_WGS/all_stats_uni.tsv.gz.part_'
 system(cmd)
 
-cmd <- 'rm 1B-C_Toti_WGS/all_stats_uni.tsv.gz'
+cmd <- 'rm 1_Dog.M0_WGS/all_stats_uni.tsv.gz'
 system(cmd)
 
 ```
 
 ```{bash}
 #cmd <- '
-cat 1B-C_Toti_WGS/all_stats_uni.tsv.gz.part_* > 1B-C_Toti_WGS/all_stats_uni.tsv.gz
+cat 1_Dog.M0_WGS/all_stats_uni.tsv.gz.part_* > 1_Dog.M0_WGS/all_stats_uni.tsv.gz
 #'
 #system(cmd)
 
@@ -196,10 +197,10 @@ cat 1B-C_Toti_WGS/all_stats_uni.tsv.gz.part_* > 1B-C_Toti_WGS/all_stats_uni.tsv.
 ```
 
 ```{r}
-try({ all_stats_uni <- fread('1B-C_Toti_WGS/all_stats_uni.tsv.gz') })
+try({ all_stats_uni <- fread('1_Dog.M0_WGS/all_stats_uni.tsv.gz') })
 
 
-proj_meta <- fread('1B-C_Toti_WGS/proj_meta.tsv.gz')
+proj_meta <- fread('1_Dog.M0_WGS/proj_meta.tsv.gz')
 
 
 PRJEB75753_stats <- merge(all_stats_uni, proj_meta, by = 'sample')
@@ -236,50 +237,60 @@ n50 <- function(x) {
 # =========================
 
 sample_summary <- dt[, .(
-  n_reads = .N,
+  n_reads     = .N,
   total_bases = sum(length, na.rm = TRUE),
-  mean_len = mean(length, na.rm = TRUE),
-  median_len = median(length, na.rm = TRUE),
-  n50_len = n50(length),
-  mean_Q   = mean(mean_Q, na.rm = TRUE),
-  median_Q = median(mean_Q, na.rm = TRUE),
-  max_Q    = max(mean_Q, na.rm = TRUE),
-  min_Q    = min(mean_Q, na.rm = TRUE)
+  mean_len    = mean(length, na.rm = TRUE),
+  median_len  = median(length, na.rm = TRUE),
+  n50_len     = n50(length),
+  mean_Q      = mean(mean_Q, na.rm = TRUE),
+  median_Q    = median(mean_Q, na.rm = TRUE),
+  max_Q       = max(mean_Q, na.rm = TRUE),
+  min_Q       = min(mean_Q, na.rm = TRUE)
 ), by = .(sample, instrument_platform)]
 
 
 # =========================
-# 2️⃣ Per-source summary (across samples)
+# 2️⃣ Per-Platform summary (across samples)
 # =========================
 
-platform_summary <- sample_summary[, .(
-  n_samples = .N,
-  mean_reads = mean(n_reads),
-  sd_reads = sd(n_reads),
-  mean_total_bases = mean(total_bases),
-  sd_total_bases = sd(total_bases),
-  mean_read_length = mean(mean_len),
-  sd_read_length = sd(mean_len),
-  mean_Q = mean(mean_Q),
-  sd_Q = sd(mean_Q)
-), by = .(instrument_platform)]
-
+platform_summary <- dt[, .(
+  n_reads     = .N,
+  total_bases = sum(length, na.rm = TRUE),
+  mean_len    = mean(length, na.rm = TRUE),
+  median_len  = median(length, na.rm = TRUE),
+  n50_len     = n50(length),
+  mean_Q      = mean(mean_Q, na.rm = TRUE),
+  median_Q    = median(mean_Q, na.rm = TRUE),
+  max_Q       = max(mean_Q, na.rm = TRUE),
+  min_Q       = min(mean_Q, na.rm = TRUE)
+), by = .(instrument_platform) ]
 
 
 # Save
-fwrite(sample_summary,   "1B-C_Toti_WGS/Toti_sample_QC_summary.tsv", sep = '\t')
-fwrite(platform_summary, "1B-C_Toti_WGS/Toti_platform_QC_summary.tsv", sep = '\t')
+fwrite(sample_summary,   "1_Dog.M0_WGS/Dog.M0_sample_QC_summary.tsv", sep = '\t')
+fwrite(platform_summary, "1_Dog.M0_WGS/Dog.M0_platform_QC_summary.tsv", sep = '\t')
 
 sample_summary
 platform_summary
+```
 
+## Supp Table S1
+```{r}
+## Export to excel
+
+hs <- createStyle(
+  textDecoration = "BOLD", fontColour = "#FFFFFF", fontSize = 12,
+  fontName = "Arial Narrow", fgFill = "#4F80BD"
+)
+write.xlsx(platform_summary, 
+       "1_Dog.M0_WGS/Article_Figures/Supp Table S1.xlsx", headerStyle = hs)
 ```
 
 
 ## Plots
 
 ```{r}
-out_dir <- '1B-C_Toti_WGS'
+out_dir <- '1_Dog.M0_WGS'
 
 dt_plot <- copy(PRJEB75753_stats)
 
@@ -482,9 +493,144 @@ p_count_q
 ```
 
 
+
+### Fig 1D
+```{r}
+
+### OXFORD_NANOPORE
+sp2 <- ggplot(dt_plot[instrument_platform == 'OXFORD_NANOPORE'],
+             aes(x = length, y = mean_Q )
+             ) +
+  geom_point_rast(aes(fill = instrument_platform),
+             shape = 21, color = "grey20", #color = "transparent", 
+             size = 0.35, alpha = 0.4, stroke = 0.4) +
+  scale_fill_npg() +
+  scale_x_continuous(limits = c(0, 2000)) +
+  theme_pubr()
+
+
+sp <- sp2 +  
+  
+  ## Mean length lines and labels
+  geom_vline(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], aes(xintercept = mean_len , colour = instrument_platform), linewidth = 1) +
+  geom_label_repel(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], 
+                   aes(label = paste0('Mean read length = ', round(mean_len , 0)), fill = instrument_platform, y = 38, x = mean_len ), color = "black") +
+  
+  ## Mean Q lines and labels
+  geom_hline(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
+  geom_label_repel(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], 
+                   aes(label = paste0('Overall mean Q = ', round(mean_Q, 1)), fill = instrument_platform, y = mean_Q, x = 1800), color = "black") +
+  
+  labs(#title = paste0(sample_name, ": read length distribution (capped)"),
+       x = "Read length (bp)", y = "Read mean Q-score", fill = NULL) +
+  
+  guides(colour = "none") +
+  
+  theme(legend.position = 'bottom') +
+  
+  ggpubr::border()                                       
+
+
+xplot <- ggplot(dt_plot[instrument_platform == 'OXFORD_NANOPORE'], aes(length)) +
+  geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(limits = c(0, 2000)) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot[instrument_platform == 'OXFORD_NANOPORE'], aes(mean_Q)) +
+  geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+# Arranging the plot using cowplot
+p_count_q_ont <- plot_grid(NULL, xplot,  
+                           yplot, 
+                           sp, 
+                           ncol = 2, align = "hv",
+                           rel_widths = c(1, 2), rel_heights = c(1, 2))
+
+
+### ILLUMINA
+sp2 <- ggplot(dt_plot[instrument_platform == 'ILLUMINA'],
+             aes(x = length, y = mean_Q )
+             ) +
+  geom_point_rast(aes(fill = instrument_platform),
+             shape = 21, color = "grey20", #color = "transparent", 
+             size = 0.35, alpha = 0.4, stroke = 0.4) +
+  scale_fill_npg() +
+  scale_x_continuous(limits = c(0, 2000)) +
+  theme_pubr()
+
+
+sp <- sp2 +  
+  
+  ## Mean length lines and labels
+  geom_vline(data = platform_summary[instrument_platform == 'ILLUMINA'], aes(xintercept = mean_len , colour = instrument_platform), linewidth = 1) +
+  geom_label_repel(data = platform_summary[instrument_platform == 'ILLUMINA'], 
+                   aes(label = paste0('Mean read length = ', round(mean_len , 0)), fill = instrument_platform, y = 38, x = mean_len ), color = "black") +
+  
+  ## Mean Q lines and labels
+  geom_hline(data = platform_summary[instrument_platform == 'ILLUMINA'], aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
+  geom_label_repel(data = platform_summary[instrument_platform == 'ILLUMINA'], 
+                   aes(label = paste0('Overall mean Q = ', round(mean_Q, 1)), fill = instrument_platform, y = mean_Q, x = 1800), color = "black") +
+  
+  labs(#title = paste0(sample_name, ": read length distribution (capped)"),
+       x = "Read length (bp)", y = "Read mean Q-score", fill = NULL) +
+  
+  guides(colour = "none") +
+  
+  theme(legend.position = 'bottom') +
+  
+  ggpubr::border()                                       
+
+
+xplot <- ggplot(dt_plot[instrument_platform == 'ILLUMINA'], aes(length)) +
+  geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(limits = c(0, 2000)) +
+  theme_pubr() 
+
+
+yplot <- ggplot(dt_plot[instrument_platform == 'ILLUMINA'], aes(mean_Q)) +
+  geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
+  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  scale_fill_manual(values = my_pal) +
+  theme_pubr() +
+  ggpubr::rotate()
+
+# Arranging the plot using cowplot
+p_count_q_ill <- plot_grid(xplot, NULL, 
+                           sp, 
+                           yplot, 
+                           ncol = 2, align = "hv",
+                           rel_widths = c(2, 1), rel_heights = c(1, 2))
+
+
+
+
+p_count_q <- plot_grid(p_count_q_ont, p_count_q_ill, nrow = 1, align = "hv",)
+
+
+out_prefix <- "Platform_comparison_QC_Fig1D"
+
+ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 50, height = 30, bg = 'white')
+
+p_count_q
+
+#saveRDS(p_count_q, paste0(out_dir, '/', out_prefix, '.rds'))
+
+#save_plot(p_count_q, out_dir, out_prefix, w = 300, h = 300, bg = 'white')
+# xplot
+```
+
 ### Fig 1 Final
 ```{r}
-Fig1B <- readRDS(paste0('1B-C_Toti_WGS/Article_Figures/Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.rds') )
+Fig1B <- readRDS(paste0('1_Dog.M0_WGS/Article_Figures/Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.rds') )
 
 # Arranging the plot using cowplot
 Fig1 <- plot_grid(xplot, Fig1B, 
@@ -498,45 +644,6 @@ ggsave(paste0(out_dir, '/', 'Article_Figures', '/', 'Figure_1_Final.png'), Fig1,
 
 ```
 
-
-
-### Fig 1D
-
-```{r}
-
-oplot <- ggplot(dt_plot[
-  instrument_platform == 'OXFORD_NANOPORE'
-  ], aes(length)) +
-  #geom_col(aes(fill = instrument_platform), alpha = 0.5, position = 'dodge') +
-  geom_density(aes(fill = instrument_platform), alpha = 0.5) +
-  #geom_smooth(aes(color = instrument_platform, group = instrument_platform), alpha = 0.5) +
-  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
-  scale_fill_manual(values = my_pal[-1]) +
-  scale_x_continuous(limits = c(0, 5000)) +
-  theme_pubr() 
-
-
-iplot <- ggplot(dt_plot[
-  instrument_platform == 'ILLUMINA'
-  ], aes(length)) +
-  #geom_col(aes(fill = instrument_platform), alpha = 0.5, position = 'dodge') +
-  geom_density(aes(fill = instrument_platform), alpha = 0.5) +
-  #geom_smooth(aes(color = instrument_platform, group = instrument_platform), alpha = 0.5) +
-  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
-  scale_fill_manual(values = my_pal) +
-  scale_x_continuous(limits = c(100, 250)) +
-  theme_pubr() 
-
-
-xplot <- cowplot::plot_grid(oplot, iplot, ncol = 2)
-xplot
-
-
-out_prefix <- "Platform_comparison_QC_Fig1E"
-
-ggsave(paste0(out_dir, '/', out_prefix, '.png'), xplot, width = 20, height = 12, bg = 'white')
-
-```
 
 
 

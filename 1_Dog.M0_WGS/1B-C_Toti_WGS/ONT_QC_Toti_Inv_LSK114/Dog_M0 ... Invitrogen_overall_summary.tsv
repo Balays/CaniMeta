@@ -1,0 +1,2 @@
+sample	n_reads	n_pass	n_fail	pass_rate	total_bases	mean_len	median_len	n50_len	p90_len	mean_q	median_q
+TOTI_INVITRO_LSK114	278700	130652	148048	0.468790814495874	308067860	1105.37445281665	526	2122	2521	7.47015104738428	7.8447835

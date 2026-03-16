@@ -1,0 +1,2 @@
+sample	n_reads	n_pass	n_fail	pass_rate	total_bases	mean_len	median_len	n50_len	p90_len	mean_q	median_q
+TOTI_ZYMO_LSK114	318314	228596	89718	0.718146232964934	280448798	881.04449694327	511	1192	1649	8.58448366183706	8.858955
