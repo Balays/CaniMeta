@@ -80,8 +80,83 @@ nproc <- 32
 
 
 # Toti 
+
+
 ```{r}
 out_dir <- '1B-C_Toti_WGS'
+```
+
+
+## Unknown sample
+```{r}
+Toti_ONT_WGS_unk <- fread('D:/data/CanMAG/TOTI_ONT_WGS/dorado_super_accurate_readstats/')
+
+
+```
+
+### Summary
+```{r}
+library(data.table)
+
+# all_stats_uni <- fread('all_stats_uni.tsv.gz')
+
+# Make sure it's data.table
+setDT(Toti_ONT_WGS_unk)
+
+# Keep only rows with defined isolation method
+dt <- Toti_ONT_WGS_unk
+
+# Ensure numeric
+dt[, length := as.numeric(length)]
+dt[, mean_Q := as.numeric(mean_Q)]
+
+# ---- N50 function
+n50 <- function(x) {
+  x <- x[is.finite(x) & x > 0]
+  x <- sort(x, decreasing = TRUE)
+  x[which(cumsum(x) >= sum(x)/2)[1]]
+}
+
+# =========================
+# 1️⃣ Per-sample summary
+# =========================
+
+sample_summary <- dt[, .(
+  n_reads     = .N,
+  total_bases = sum(length, na.rm = TRUE),
+  mean_len    = mean(length, na.rm = TRUE),
+  median_len  = median(length, na.rm = TRUE),
+  n50_len     = n50(length),
+  mean_Q      = mean(mean_Q, na.rm = TRUE),
+  median_Q    = median(mean_Q, na.rm = TRUE),
+  max_Q       = max(mean_Q, na.rm = TRUE),
+  min_Q       = min(mean_Q, na.rm = TRUE)
+), by = .(sample)]
+
+
+# =========================
+# 2️⃣ Per-Platform summary (across samples)
+# =========================
+
+platform_summary <- dt[, .(
+  n_reads     = .N,
+  total_bases = sum(length, na.rm = TRUE),
+  mean_len    = mean(length, na.rm = TRUE),
+  median_len  = median(length, na.rm = TRUE),
+  n50_len     = n50(length),
+  mean_Q      = mean(mean_Q, na.rm = TRUE),
+  median_Q    = median(mean_Q, na.rm = TRUE),
+  max_Q       = max(mean_Q, na.rm = TRUE),
+  min_Q       = min(mean_Q, na.rm = TRUE)
+), by = .(sample) ]
+
+
+# Save
+# fwrite(sample_summary,   "1_Dog.M0_WGS/Dog.M0_sample_QC_summary.tsv", sep = '\t')
+# fwrite(platform_summary, "1_Dog.M0_WGS/Dog.M0_platform_QC_summary.tsv", sep = '\t')
+
+sample_summary
+platform_summary
 ```
 
 ## Illumina WGS

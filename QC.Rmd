@@ -274,7 +274,7 @@ sample_summary
 platform_summary
 ```
 
-## Supp Table S1
+## Supp Table S2
 ```{r}
 ## Export to excel
 
@@ -283,7 +283,7 @@ hs <- createStyle(
   fontName = "Arial Narrow", fgFill = "#4F80BD"
 )
 write.xlsx(platform_summary, 
-       "1_Dog.M0_WGS/Article_Figures/Supp Table S1.xlsx", headerStyle = hs)
+       "1_Dog.M0_WGS/Article_Figures/Supplementary Table S2.xlsx", headerStyle = hs)
 ```
 
 
@@ -372,11 +372,11 @@ sp2 <- ggplot(dt_plot,
 
 
 sp <- sp2 +  
-  geom_vline(data = platform_summary, aes(xintercept = mean_read_length, colour = instrument_platform), linewidth = 1) +
+  geom_vline(data = platform_summary, aes(xintercept = n50_len, colour = instrument_platform), linewidth = 1) +
   #geom_hline(yintercept = mean(platform_summary$min_pass_Qscore), colour = 'grey30', linewidth = 1 ) +
   geom_hline(data = platform_summary, aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
   
-  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean Q = ', round(mean_Q, 3)), fill = instrument_platform, y = mean_Q, x = 1), color = "grey20") +
+  geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean Q = ', round(mean_Q, 1)), fill = instrument_platform, y = mean_Q, x = 1), color = "grey20") +
   #geom_label_repel(data = platform_summary, aes(label = paste0('Overall mean read length = ', round(mean_read_length, 3)), fill = sample, y = 18, x = log10(n50_len)), color = "grey20") +
   
   labs(#title = paste0(sample_name, ": read length distribution (capped)"),
@@ -438,14 +438,14 @@ sp2 <- ggplot(dt_plot,
 sp <- sp2 +  
   
   ## Mean length lines and labels
-  geom_vline(data = platform_summary, aes(xintercept = mean_read_length, colour = instrument_platform), linewidth = 1) +
+  geom_vline(data = platform_summary, aes(xintercept = n50_len, colour = instrument_platform), linewidth = 1) +
   geom_label_repel(data = platform_summary, 
-                   aes(label = paste0('Mean read length = ', round(mean_read_length, 0)), fill = instrument_platform, y = 38, x = mean_read_length), color = "black") +
+                   aes(label = paste0('N50 read length = ', round(n50_len, 0)), fill = instrument_platform, y = 38, x = n50_len), color = "black") +
   
   ## Mean Q lines and labels
   geom_hline(data = platform_summary, aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
   geom_label_repel(data = platform_summary, 
-                   aes(label = paste0('Overall mean Q = ', round(mean_Q, 3)), fill = instrument_platform, y = mean_Q, x = 1800), color = "black") +
+                   aes(label = paste0('Overall mean Q = ', round(mean_Q, 1)), fill = instrument_platform, y = mean_Q, x = 1800), color = "black") +
   
   labs(#title = paste0(sample_name, ": read length distribution (capped)"),
        x = "Read length (bp)", y = "Read mean Q-score", fill = NULL) +
@@ -497,6 +497,9 @@ p_count_q
 ### Fig 1D
 ```{r}
 
+my_pal <- pal_npg()(10)
+my_pal <- c(OXFORD_NANOPORE=my_pal[1], ILLUMINA=my_pal[2])
+
 ### OXFORD_NANOPORE
 sp2 <- ggplot(dt_plot[instrument_platform == 'OXFORD_NANOPORE'],
              aes(x = length, y = mean_Q )
@@ -504,22 +507,26 @@ sp2 <- ggplot(dt_plot[instrument_platform == 'OXFORD_NANOPORE'],
   geom_point_rast(aes(fill = instrument_platform),
              shape = 21, color = "grey20", #color = "transparent", 
              size = 0.35, alpha = 0.4, stroke = 0.4) +
-  scale_fill_npg() +
-  scale_x_continuous(limits = c(0, 2000)) +
+  scale_fill_manual(values = my_pal) +
+  scale_x_continuous(limits = c(0, 2500)) +
   theme_pubr()
 
 
 sp <- sp2 +  
   
   ## Mean length lines and labels
-  geom_vline(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], aes(xintercept = mean_len , colour = instrument_platform), linewidth = 1) +
+  geom_vline(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], 
+             aes(xintercept = n50_len , colour = instrument_platform), linewidth = 1) +
   geom_label_repel(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], 
-                   aes(label = paste0('Mean read length = ', round(mean_len , 0)), fill = instrument_platform, y = 38, x = mean_len ), color = "black") +
+                   aes(label = paste0('N50 read length = ', round(n50_len , 0)),
+                       fill = instrument_platform, y = 38, x = mean_len ), color = "black") +
   
   ## Mean Q lines and labels
-  geom_hline(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
+  geom_hline(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], 
+             aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
   geom_label_repel(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], 
-                   aes(label = paste0('Overall mean Q = ', round(mean_Q, 1)), fill = instrument_platform, y = mean_Q, x = 1800), color = "black") +
+                   aes(label = paste0('Overall mean Q = ', round(mean_Q, 1)), 
+                       fill = instrument_platform, y = mean_Q, x = 1800), color = "black") +
   
   labs(#title = paste0(sample_name, ": read length distribution (capped)"),
        x = "Read length (bp)", y = "Read mean Q-score", fill = NULL) +
@@ -533,15 +540,19 @@ sp <- sp2 +
 
 xplot <- ggplot(dt_plot[instrument_platform == 'OXFORD_NANOPORE'], aes(length)) +
   geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
-  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  geom_vline(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], 
+             aes(xintercept = n50_len , colour = instrument_platform), linewidth = 1) +
+  scale_color_manual(values = my_pal) +
   scale_fill_manual(values = my_pal) +
-  scale_x_continuous(limits = c(0, 2000)) +
+  scale_x_continuous(limits = c(0, 2500)) +
   theme_pubr() 
 
 
 yplot <- ggplot(dt_plot[instrument_platform == 'OXFORD_NANOPORE'], aes(mean_Q)) +
   geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
-  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  geom_vline(data = platform_summary[instrument_platform == 'OXFORD_NANOPORE'], 
+             aes(xintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
+  scale_color_manual(values = my_pal) +
   scale_fill_manual(values = my_pal) +
   theme_pubr() +
   ggpubr::rotate()
@@ -561,44 +572,54 @@ sp2 <- ggplot(dt_plot[instrument_platform == 'ILLUMINA'],
   geom_point_rast(aes(fill = instrument_platform),
              shape = 21, color = "grey20", #color = "transparent", 
              size = 0.35, alpha = 0.4, stroke = 0.4) +
-  scale_fill_npg() +
-  scale_x_continuous(limits = c(0, 2000)) +
+  scale_fill_manual(values = my_pal) +
+  scale_color_manual(values = my_pal) +
+  scale_x_continuous(limits = c(0, 500)) +
   theme_pubr()
 
 
 sp <- sp2 +  
   
   ## Mean length lines and labels
-  geom_vline(data = platform_summary[instrument_platform == 'ILLUMINA'], aes(xintercept = mean_len , colour = instrument_platform), linewidth = 1) +
+  geom_vline(data = platform_summary[instrument_platform == 'ILLUMINA'], 
+             aes(xintercept = n50_len , colour = instrument_platform), linewidth = 1) +
   geom_label_repel(data = platform_summary[instrument_platform == 'ILLUMINA'], 
-                   aes(label = paste0('Mean read length = ', round(mean_len , 0)), fill = instrument_platform, y = 38, x = mean_len ), color = "black") +
+                   aes(label = paste0('N50 read length = ', round(n50_len , 0)), 
+                       fill = instrument_platform, y = 38, x = mean_len ), color = "black") +
   
   ## Mean Q lines and labels
-  geom_hline(data = platform_summary[instrument_platform == 'ILLUMINA'], aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
+  geom_hline(data = platform_summary[instrument_platform == 'ILLUMINA'], 
+             aes(yintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
   geom_label_repel(data = platform_summary[instrument_platform == 'ILLUMINA'], 
-                   aes(label = paste0('Overall mean Q = ', round(mean_Q, 1)), fill = instrument_platform, y = mean_Q, x = 1800), color = "black") +
+                   aes(label = paste0('Overall mean Q = ', round(mean_Q, 1)), 
+                       fill = instrument_platform, y = mean_Q, x = 400), color = "black") +
   
   labs(#title = paste0(sample_name, ": read length distribution (capped)"),
        x = "Read length (bp)", y = "Read mean Q-score", fill = NULL) +
-  
   guides(colour = "none") +
-  
   theme(legend.position = 'bottom') +
-  
   ggpubr::border()                                       
 
 
 xplot <- ggplot(dt_plot[instrument_platform == 'ILLUMINA'], aes(length)) +
   geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
-  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  
+  ## Mean length lines
+  geom_vline(data = platform_summary[instrument_platform == 'ILLUMINA'], 
+             aes(xintercept = n50_len, colour = instrument_platform), linewidth = 1) +
+  scale_color_manual(values = my_pal) +
   scale_fill_manual(values = my_pal) +
-  scale_x_continuous(limits = c(0, 2000)) +
+  scale_x_continuous(limits = c(0, 500)) +
   theme_pubr() 
 
 
 yplot <- ggplot(dt_plot[instrument_platform == 'ILLUMINA'], aes(mean_Q)) +
   geom_density(aes(fill = instrument_platform, y = after_stat(scaled)), alpha = 0.5, n = 128) +
-  #geom_histogram(aes(fill = dna.isolation.methods), alpha = 0.5, bins = 100) +
+  
+  ## Mean Q lines
+  geom_vline(data = platform_summary[instrument_platform == 'ILLUMINA'], 
+             aes(xintercept = mean_Q, colour = instrument_platform), linewidth = 1) +
+  scale_color_manual(values = my_pal) +
   scale_fill_manual(values = my_pal) +
   theme_pubr() +
   ggpubr::rotate()
@@ -613,12 +634,12 @@ p_count_q_ill <- plot_grid(xplot, NULL,
 
 
 
-p_count_q <- plot_grid(p_count_q_ont, p_count_q_ill, nrow = 1, align = "hv",)
+p_count_q <- plot_grid(p_count_q_ont, p_count_q_ill, nrow = 1, align = "hv", labels = c('a', 'b'))
 
 
 out_prefix <- "Platform_comparison_QC_Fig1D"
 
-ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 50, height = 30, bg = 'white')
+ggsave(paste0(out_dir, '/', out_prefix, '.png'), p_count_q, width = 50, height = 30, bg = 'white',limitsize = FALSE)
 
 p_count_q
 
@@ -628,19 +649,29 @@ p_count_q
 # xplot
 ```
 
-### Fig 1 Final
+### Fig 1 and Supp Fig 1 Final
 ```{r}
 Fig1B <- readRDS(paste0('1_Dog.M0_WGS/Article_Figures/Figure_3B_ONT_vs_Illumina_WGS_sourmash_Euler.rds') )
 
 # Arranging the plot using cowplot
-Fig1 <- plot_grid(xplot, Fig1B, 
-                  sp, 
-                  yplot, 
-                  ncol = 2, align = "hv",
-                  rel_widths = c(2, 1), rel_heights = c(1, 2),
-                  labels = c('a', 'b', '', ''))
+#Fig1 <- plot_grid(xplot, Fig1B, 
+#                  sp, 
+#                  yplot, 
+#                  ncol = 2, align = "hv",
+#                  rel_widths = c(2, 1), rel_heights = c(1, 2),
+#                  labels = c('a', 'b', '', ''))
 
-ggsave(paste0(out_dir, '/', 'Article_Figures', '/', 'Figure_1_Final.png'), Fig1, width = 30, height = 30, bg = 'white')
+
+
+#ggsave(paste0(out_dir, '/', 'Article_Figures', '/', 'Figure_1_Final.png'), Fig1, width = 30, height = 30, bg = 'white')
+
+Fig1 <- p_count_q
+
+SuppFig1 <- Fig1B
+
+ggsave(paste0(out_dir, '/', 'Article_Figures', '/', 'Figure_1_Final.png'), Fig1, width = 50, height = 30, bg = 'white',limitsize = FALSE)
+
+ggsave(paste0(out_dir, '/', 'Article_Figures', '/', 'SuppFig1_Final.png'), SuppFig1, width = 12, height = 9, bg = 'white',limitsize = FALSE)
 
 ```
 
@@ -650,6 +681,8 @@ ggsave(paste0(out_dir, '/', 'Article_Figures', '/', 'Figure_1_Final.png'), Fig1,
 # SertePerti MinION V1-V9 Sequencing Summary
 
 ## Import and Process Data
+
+### Analyse .fastq read stats
 ```{r, message=T, eval=F}
 files   <- list.files('ENA/PRJEB82097/.fastq_read_stats', recursive = T, full.names = T)
 
@@ -670,7 +703,7 @@ proj_stats_dt <- rbindlist( purrr::map(1:length(files), mapfun, files) )
 fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'ENA/PRJEB82097/PRJEB82097_stats.tsv.gz', sep = '\t')
 ```
 
-
+### Import combined statistics
 ```{r, message=T, eval=F}
 proj_stats_dt <- fread('ENA/PRJEB82097/PRJEB82097_stats.tsv.gz')
 
@@ -693,6 +726,7 @@ if(nrow(proj_stats_dt) == nrow(PRJEB82097_st)) {
 
 ```
 
+### Merge with metadata
 ```{r, message=T, eval=F}
 # the ENA files contain samples that are not published in this article
 
@@ -728,9 +762,18 @@ if(all(is.element(PRJEB82097_st$secondary_sample_accession, SuppTab_S4$Accession
 
 PRJEB82097_meta <- PRJEB82097_stats[,.(read_count=.N), by = .(sample, biosample,  DNA_isolation_method, project, sample_accession, secondary_sample_accession, Sex, Date, Sample_name, Dog, `Read count`)]
 
+
+## ok!?
+if(all(PRJEB82097_meta$read_count == PRJEB82097_meta$`Read count`)) {
+  message('OK! The read counts match in every sample!')
+  PRJEB82097_meta[,read_count := NULL]
+} else {
+  stop("ERROR! he read counts DON'T match in some of the samples!")
+}
+
 ```
 
-
+## reRUN EMU
 ```{r, eval=F}
 ### Copy these files to another folder for EMU re-run
 dir.create('D:/ENA/PRJEB82097/.fastq_other')
@@ -793,14 +836,27 @@ fwrite(cmd, eol = '\n', col.names = F,
 
 ```
 
-
-```{r}
+## Export Data
+```{r, eval=F}
 PRJEB82097_stats_uni <- PRJEB82097_stats[,.(sample, read_id, length, mean_Q)]
 
 fwrite(PRJEB82097_meta, '2_40dogs_ZHMW_vs_ZMB/PRJEB82097_meta.tsv', sep = '\t')
 
 fwrite(PRJEB82097_stats_uni, '2_40dogs_ZHMW_vs_ZMB/PRJEB82097_stats_uni.tsv.gz', sep = '\t')
 ```
+
+### Supp Table S3
+```{r}
+
+hs <- createStyle(
+  textDecoration = "BOLD", fontColour = "#FFFFFF", fontSize = 12,
+  fontName = "Arial Narrow", fgFill = "#4F80BD"
+)
+write.xlsx(PRJEB82097_meta, 
+       "2_40dogs_ZHMW_vs_ZMB/Article Figures/Supplementary Table S3.xlsx", headerStyle = hs)
+
+```
+
 
 ## Import Prepared Data
 ```{r}
@@ -1496,7 +1552,7 @@ plots
 
 ### PRJEB85714 (human samples)
 
-```{r}
+```{r, eval=F}
 
 files   <- list.files('ENA/PRJEB85714/.fastq_read_stats', recursive = T, full.names = T)
 
@@ -1518,7 +1574,7 @@ fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'ENA/PRJEB85714/PRJEB
 ```
 
 
-```{r, message=T}
+```{r, eval=F, message=T}
 proj_stats_dt <- fread('ENA/PRJEB85714/PRJEB85714_stats.tsv.gz')
 
 proj_stats_dt[, project := 'PRJEB85714']
@@ -1540,7 +1596,7 @@ if(nrow(proj_stats_dt) == nrow(PRJEB85714_st)) {
 
 ```
 
-```{r, message=T}
+```{r, eval=F, message=T}
 PRJEB85714_meta <- fread('3_Primer_comparison/metadata.tsv')
 
 ## trim off date and barcode
@@ -1571,7 +1627,7 @@ setnames(PRJEB85714_stats, c('sample_title', 'sample'), c('sample', 'biosample')
 
 ### PRJEB85420 (synthetic and canine samples) 
 
-```{r}
+```{r, message=T, eval=F}
 
 files   <- list.files('ENA/PRJEB85420/.fastq_read_stats', recursive = T, full.names = T)
 
@@ -1593,7 +1649,7 @@ fwrite(proj_stats_dt[,.(sample, read_id, length, mean_Q)], 'ENA/PRJEB85420/PRJEB
 ```
 
 
-```{r, message=T}
+```{r, eval=F, message=T}
 proj_stats_dt <- fread('ENA/PRJEB85420/PRJEB85420_stats.tsv.gz')
 
 proj_stats_dt[, project := 'PRJEB85420']
@@ -1615,7 +1671,7 @@ if(nrow(proj_stats_dt) == nrow(PRJEB85420_st)) {
 
 ```
 
-```{r, message=T}
+```{r, eval=F, message=T}
 PRJEB85420_meta <- fread('3_Primer_comparison/metadata.tsv')
 
 ## trim off date and barcode
@@ -1648,24 +1704,26 @@ setnames(PRJEB85420_stats, c('sample_title', 'sample'), c('sample', 'biosample')
 ### Combine
 
 ```{r}
-all_stats_dt <- rbind( PRJEB85420_stats, PRJEB85714_stats )
+all_stats_dt <- rbind( PRJEB85420_stats, 
+                       PRJEB85714_stats )
 
 all_stats_dt[,.N, project]
 
-all_stats_uni <- all_stats_dt[,.(sample, source, primer, rep, name, project, read_id, length, mean_Q)]
+all_stats_uni <- all_stats_dt[,.(sample, read_id, length, mean_Q)]
 
-rm(all_stats_dt, PRJEB85420_stats, PRJEB85714_stats )
+proj_meta <- unique(all_stats_dt[, # .(read_count = .N, total_bases = sum(length)), by = 
+                                   .(sample, biosample, project, sample_accession, secondary_sample_accession, source, primer, rep, name)])
 
-gc()
 
-
-proj_meta <- unique(all_stats_uni[,.(sample, source, primer, rep, name, project)])
-
-all_stats_uni <- all_stats_uni[,.(sample, read_id, length, mean_Q)]
 
 fwrite(proj_meta, '3_Primer_comparison/proj_meta.tsv.gz', sep = '\t')
 
 fwrite(all_stats_uni, '3_Primer_comparison/all_stats_uni.tsv.gz', sep = '\t')
+
+
+rm(all_stats_dt, PRJEB85420_stats, PRJEB85714_stats )
+
+gc()
 
 ```
 
@@ -1699,7 +1757,7 @@ try({ all_stats_uni <- fread('3_Primer_comparison/all_stats_uni.tsv.gz') })
 proj_meta <- fread('3_Primer_comparison/proj_meta.tsv.gz')
 
 
-all_stats_uni <- merge(all_stats_uni, proj_meta, by = 'sample')
+all_stats_dt <- merge(all_stats_uni, proj_meta, by = 'sample')
 ```
 
 
@@ -1707,10 +1765,10 @@ all_stats_uni <- merge(all_stats_uni, proj_meta, by = 'sample')
 ## Summary
 ```{r}
 # Make sure it's data.table
-setDT(all_stats_uni)
+setDT(all_stats_dt)
 
 # Keep only rows with defined isolation method
-dt <- all_stats_uni[!is.na(source) & !is.na(primer)]
+dt <- all_stats_dt[!is.na(source) & !is.na(primer)]
 
 # Ensure numeric
 dt[, length := as.numeric(length)]
@@ -1779,6 +1837,23 @@ source_summary
 length_summary
 ```
 
+### Supp Table S4
+```{r}
+
+PRJEB85420_meta <- merge(
+  sample_summary, 
+  proj_meta
+  , by = c('sample', 'primer', 'source')
+  )
+
+hs <- createStyle(
+  textDecoration = "BOLD", fontColour = "#FFFFFF", fontSize = 12,
+  fontName = "Arial Narrow", fgFill = "#4F80BD"
+)
+write.xlsx(PRJEB82097_meta, 
+       "3_Primer_comparison/Article Figures/Supplementary Table S4.xlsx", headerStyle = hs)
+
+```
 
 
 ```{r}
@@ -2188,5 +2263,14 @@ ggsave('3_Primer_comparison/Article_Figures/SuppFig_S2.png', width = 40, height 
 
 # END WORKFLOW
 
+```{r}
+
+citation('data.table')
+citation('ggplot2')
+citation('ggpubr')
+citation('eulerr')
+citation('phyloseq')
+
+```
 
 
