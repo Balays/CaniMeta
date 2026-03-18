@@ -1,0 +1,12 @@
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/094/ERR13110294/ERR13110294.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/093/ERR13110293/ERR13110293.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/092/ERR13110292/ERR13110292.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/095/ERR13110295/ERR13110295.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/096/ERR13110296/ERR13110296.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/091/ERR13110291/ERR13110291.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/089/ERR13110289/ERR13110289.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/090/ERR13110290/ERR13110290.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/097/ERR13110297/ERR13110297.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/098/ERR13110298/ERR13110298.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR131/066/ERR13109766/ERR13109766.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR142/010/ERR14242610/ERR14242610.fastq.gz

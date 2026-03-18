@@ -1,7 +1,8 @@
 ---
-title: "Zymo FR D6323 V1-V9 ONT EMU on EMU database"
+title: "Ultra-deep Multi-platform Sequencing Dataset of Canine Fecal Microbiomes Across Extraction Protocols and Library Preparations"
+subtitle: "Scientifc Data Repository"
 author: "Balázs Kakuk"
-date: "2024-10-20"
+date: "2026-03-01"
 output:
   html_document:
     df_print: paged
@@ -52,7 +53,10 @@ library(ComplexHeatmap)
 library(genefilter)
 library(viridis)
 library(openxlsx)
+```
 
+
+```{r, eval=FALSE}
 ## Own functions <<- SET PATH !!!
 misc.dir    <- 'C:/GitHub/Rlyeh/R'
 minitax.dir <- 'C:/GitHub/minitax/R'
@@ -79,6 +83,13 @@ nproc <- 32
 
 ```
 
+
+
+# Notes
+
+Some of the chunks are eval="FALSE" by default. Upon first running, these should be set to "TRUE". These include the download and preprocessing the files, which have to be done only once.
+
+
 # Settings
 ```{r}
 # -----------------------------
@@ -95,9 +106,13 @@ theme_pub <- function(base_size = 10) {
     )
 }
 
-source('SeqSum_QC.R')
+source('scripts/SeqSum_QC.R')
 
 ```
+
+
+
+
 
 
 # Dog.M0 
@@ -113,16 +128,38 @@ out_dir <- '1_Dog.M0_WGS'
 ```
 
 
-
 ## ONT WGS : Dog.M0 MinION LSK-114 WGS (Zymo)
 ```{r}
 
 ```
 
 
+
+## Download the FASTQ files from ENA 
+```{bash, eval=F}
+./scripts/ena-file-download-read_run-PRJEB75753-fastq_ftp-20260226-1347.sh
+
+## move them to the ENA/PRJEB75753/.fastq folder
+
+mv ./scripts/*.fastq.gz ENA/PRJEB75753/.fastq
+```
+
+
+## Run .fastq read stat
+```{bash, eval=F}
+./scripts/fastq_read_stats.sh -i ENA/PRJEB75753/.fastq -o ENA/PRJEB75753/.fastq_read_stats
+
+
+## compress
+./scripts/compress_children.sh -i ENA/PRJEB75753/.fastq_read_stats
+```
+
+
+
+
 ## PRJEB75753 (Comb)
 ```{r, message=T, eval=F}
-files   <- list.files('D:/ENA/PRJEB75753/.fastq_read_stats', recursive = T, full.names = T)
+files   <- list.files('./ENA/PRJEB75753/.fastq_read_stats', recursive = T, full.names = T)
 
 i <- 1
 
@@ -130,7 +167,7 @@ file <- files[i]
 
 mapfun <- function(i, files) { 
   file <- files[i]
-  sample_name <- gsub('.meanQ.tsv', '', gsub('D:/ENA/PRJEB75753/.fastq_read_stats/', '', file) )
+  sample_name <- gsub('.meanQ.tsv.gz', '', gsub('./ENA/PRJEB75753/.fastq_read_stats/', '', file) )
   dt <- fread(file)
   dt[, sample := sample_name]
   return(dt)
@@ -680,6 +717,31 @@ ggsave(paste0(out_dir, '/', 'Article_Figures', '/', 'SuppFig1_Final.png'), SuppF
 
 # SertePerti MinION V1-V9 Sequencing Summary
 
+
+## Download the FASTQ files from ENA 
+```{bash, eval=F}
+
+## download
+./scripts/ena-file-download-read_run-PRJEB82097-fastq_ftp-20260224-1621.sh
+
+## move 
+mv ./scripts/*.fastq.gz ENA/PRJEB82097/.fastq
+
+```
+
+
+## Run .fastq read stat
+```{bash, eval=F}
+
+## run script
+./scripts/fastq_read_stats.sh -i ENA/PRJEB82097/.fastq -o ENA/PRJEB82097/.fastq_read_stats
+
+## compress
+./scripts/compress_children.sh -i ENA/PRJEB82097/.fastq_read_stats
+
+```
+
+
 ## Import and Process Data
 
 ### Analyse .fastq read stats
@@ -692,7 +754,7 @@ file <- files[i]
 
 mapfun <- function(i, files) { 
   file <- files[i]
-  sample_name <- gsub('.meanQ.tsv', '', gsub('ENA/PRJEB82097/.fastq_read_stats/', '', file) )
+  sample_name <- gsub('.meanQ.tsv.gz', '', gsub('ENA/PRJEB82097/.fastq_read_stats/', '', file) )
   dt <- fread(file)
   dt[, sample := sample_name]
   return(dt)
@@ -845,18 +907,6 @@ fwrite(PRJEB82097_meta, '2_40dogs_ZHMW_vs_ZMB/PRJEB82097_meta.tsv', sep = '\t')
 fwrite(PRJEB82097_stats_uni, '2_40dogs_ZHMW_vs_ZMB/PRJEB82097_stats_uni.tsv.gz', sep = '\t')
 ```
 
-### Supp Table S3
-```{r}
-
-hs <- createStyle(
-  textDecoration = "BOLD", fontColour = "#FFFFFF", fontSize = 12,
-  fontName = "Arial Narrow", fgFill = "#4F80BD"
-)
-write.xlsx(PRJEB82097_meta, 
-       "2_40dogs_ZHMW_vs_ZMB/Article Figures/Supplementary Table S3.xlsx", headerStyle = hs)
-
-```
-
 
 ## Import Prepared Data
 ```{r}
@@ -873,6 +923,19 @@ if(nrow(PRJEB82097_stats) == nrow(PRJEB82097_stats_uni)) {
 } else {
   stop()
 }
+```
+
+### Supp Table S3
+```{r}
+
+hs <- createStyle(
+  textDecoration = "BOLD", fontColour = "#FFFFFF", fontSize = 12,
+  fontName = "Arial Narrow", fgFill = "#4F80BD"
+)
+write.xlsx(PRJEB82097_meta, 
+       "2_40dogs_ZHMW_vs_ZMB/Article Figures/Supplementary Table S3.xlsx", 
+       headerStyle = hs)
+
 ```
 
 
@@ -1469,7 +1532,7 @@ Fig2_C <- p_count_q
 ```{r}
 Fig2 <- plot_grid(Fig2_AB, Fig2_C, rel_widths = c(1.6, 1), nrow = 1, labels = c('', 'c'), align = "hv")
 
-ggsave(paste0(out_dir, '/Article_Figures/Figure_2_A-B-C_final.png'), Fig2, width = 35, height = 12, bg = 'white')
+ggsave(paste0(out_dir, '/Article Figures/Figure_2_A-B-C_final.png'), Fig2, width = 35, height = 12, bg = 'white')
 ```
 
 
@@ -1548,6 +1611,50 @@ plots
 
 # Primeres 
 
+
+## Download the FASTQ files from ENA 
+```{bash, eval=F}
+
+# PRJEB85420
+## download
+./scripts/ena-file-download-read_run-PRJEB85420-fastq_ftp-20260224-1420.sh
+
+## move 
+mv ./scripts/*.fastq.gz ENA/PRJEB85420/.fastq
+
+
+
+# PRJEB85714
+## download
+./scripts/ena-file-download-read_run-PRJEB85714-fastq_ftp-20260224-1416.sh
+
+## move 
+mv ./scripts/*.fastq.gz ENA/PRJEB85714/.fastq
+
+```
+
+
+## Run .fastq read stat
+```{bash, eval=F}
+
+# PRJEB85420
+## run stat script
+./scripts/fastq_read_stats.sh -i ENA/PRJEB85420/.fastq -o ENA/PRJEB85420/.fastq_read_stats
+
+## compress
+./scripts/compress_children.sh -i ENA/PRJEB85420/.fastq_read_stats
+
+
+# PRJEB85714
+## run stat script
+./scripts/fastq_read_stats.sh -i ENA/PRJEB85714/.fastq -o ENA/PRJEB85714/.fastq_read_stats
+
+## compress
+./scripts/compress_children.sh -i ENA/PRJEB85714/.fastq_read_stats
+
+```
+
+
 ## Import and Process Data
 
 ### PRJEB85714 (human samples)
@@ -1562,7 +1669,7 @@ file <- files[i]
 
 mapfun <- function(i, files) { 
   file <- files[i]
-  sample_name <- gsub('.meanQ.tsv', '', gsub('ENA/PRJEB85714/.fastq_read_stats/', '', file) )
+  sample_name <- gsub('.meanQ.tsv.gz', '', gsub('ENA/PRJEB85714/.fastq_read_stats/', '', file) )
   dt <- fread(file)
   dt[, sample := sample_name]
   return(dt)
@@ -1637,7 +1744,7 @@ file <- files[i]
 
 mapfun <- function(i, files) { 
   file <- files[i]
-  sample_name <- gsub('.meanQ.tsv', '', gsub('ENA/PRJEB85420/.fastq_read_stats/', '', file) )
+  sample_name <- gsub('.meanQ.tsv.gz', '', gsub('ENA/PRJEB85420/.fastq_read_stats/', '', file) )
   dt <- fread(file)
   dt[, sample := sample_name]
   return(dt)
