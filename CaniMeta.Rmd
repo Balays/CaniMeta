@@ -1965,7 +1965,7 @@ write.xlsx(PRJEB82097_meta,
 
 ```{r}
 out_dir <- '3_Primer_comparison'
-dt_plot <- copy(all_stats_uni)
+dt_plot <- copy(all_stats_dt)
 
 dt_plot[, log_len := log10(length)]
 
