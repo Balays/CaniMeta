@@ -1810,7 +1810,7 @@ setnames(PRJEB85420_stats, c('sample_title', 'sample'), c('sample', 'biosample')
 
 ### Combine
 
-```{r}
+```{r, eval=F}
 all_stats_dt <- rbind( PRJEB85420_stats, 
                        PRJEB85714_stats )
 
@@ -1846,7 +1846,7 @@ system(cmd)
 
 ```
 
-```{bash}
+```{bash, eval=F}
 #cmd <- '
 cat 3_Primer_comparison/all_stats_uni.tsv.gz.part_* > 3_Primer_comparison/all_stats_uni.tsv.gz
 #'
