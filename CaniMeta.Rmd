@@ -127,7 +127,6 @@ out_dir <- '1_Dog.M0_WGS'
 
 ```
 
-
 ## ONT WGS : Dog.M0 MinION LSK-114 WGS (Zymo)
 ```{r}
 
@@ -241,6 +240,8 @@ proj_meta <- fread('1_Dog.M0_WGS/proj_meta.tsv.gz')
 
 
 PRJEB75753_stats <- merge(all_stats_uni, proj_meta, by = 'sample')
+
+PRJEB75753_stats[,.N, by=.(instrument_platform, sample_title)]
 ```
 
 
@@ -320,7 +321,7 @@ hs <- createStyle(
   fontName = "Arial Narrow", fgFill = "#4F80BD"
 )
 write.xlsx(platform_summary, 
-       "1_Dog.M0_WGS/Article_Figures/Supplementary Table S2.xlsx", headerStyle = hs)
+       "1_Dog.M0_WGS/Article_Figures/Supplementary Table S2b.xlsx", headerStyle = hs)
 ```
 
 
@@ -1577,14 +1578,15 @@ plotfun <- function(sample_to_plot, dt_plot) {
   
   # Cleaning the plots
   sp <- sp + theme(legend.position = 'bottom') #+ rremove("legend")
-  yplot <- yplot + clean_theme() + rremove("legend")
-  xplot <- xplot + clean_theme() + rremove("legend")
+  yplot <- yplot + clean_theme() + rremove("legend") 
+  xplot <- xplot + clean_theme() + rremove("legend") + ggtitle(sample_to_plot)
   
   # Arranging the plot using cowplot
   p_count_q <- plot_grid(xplot, NULL, 
                          sp, yplot, 
                          ncol = 2, align = "hv",
                          rel_widths = c(2, 1), rel_heights = c(1, 2))
+  
   
   ggsave(paste0('2_40dogs_ZHMW_vs_ZMB/Article Figures/suppfig/', sample_to_plot, '.png'),
          p_count_q, width = 9, height = 6, bg = 'white')
@@ -1598,15 +1600,24 @@ samples_to_plot <- unique(PRJEB82097_meta$Sample_name)
 
 plot_list <- purrr::map(samples_to_plot[], plotfun, dt_plot, .progress = T)
 
+```
+
+## Supplementary Figure S3
+```{r}
 plots <- cowplot::plot_grid(plotlist = plot_list, align = 'hv', axis = 'tlbr', ncol = 8)
 
 out_prefix <- "2_40dogs_ZHMW_vs_ZMB_QC_Fig2C"
 
-save_plot(plots, out_dir, out_prefix, w = 1500, h = 1800, bg = 'white')
+save_plot(plots, out_dir, out_prefix, w = 1000, h = 1200, bg = 'white')
+
+
+
+
+file.copy('2_40dogs_ZHMW_vs_ZMB/2_40dogs_ZHMW_vs_ZMB_QC_Fig2C.pdf', '2_40dogs_ZHMW_vs_ZMB/Article Figures/Supplementary Figure S3.pdf', overwrite = T)
 
 plots
-```
 
+```
 
 
 # Primeres 
@@ -1957,7 +1968,7 @@ hs <- createStyle(
   textDecoration = "BOLD", fontColour = "#FFFFFF", fontSize = 12,
   fontName = "Arial Narrow", fgFill = "#4F80BD"
 )
-write.xlsx(PRJEB82097_meta, 
+write.xlsx(PRJEB85420_meta, 
        "3_Primer_comparison/Article Figures/Supplementary Table S4.xlsx", headerStyle = hs)
 
 ```
@@ -2350,21 +2361,53 @@ plots     <- cowplot::plot_grid(plotlist = plot_list, align = 'hv', axis = 'tlbr
 ```
 
 
+## Supplementary Figure S4
 ```{r}
 out_prefix <- "Primer_comparison_QC_Fig3C"
 
-ggsave('3_Primer_comparison/Article_Figures/SuppFig_S2.png', width = 40, height = 9, bg = 'white')
+#ggsave('3_Primer_comparison/Article_Figures/SuppFig_S3.png', width = 40, height = 9, bg = 'white')
 
 
-#save_plot(plots, out_dir, out_prefix, w = 1000, h = 300, bg = 'white')
+save_plot(plots, out_dir, out_prefix, w = 1000, h = 300, bg = 'white')
 
-#plots
+file.copy('3_Primer_comparison/Primer_comparison_QC_Fig3C.pdf', '3_Primer_comparison/Article Figures/Supplementary Figure S4.pdf', overwrite = T)
+
+plots
 ```
 
 
 # TO-DO:
 
 ## Find out wether the *WGS* peak's taxaonomic distribution is the same as the amplicons ( did the PCR caused bias in the taxonomy )
+
+
+# Copy and rename figures and tables to final location
+```{r}
+
+
+file.copy("C:/GitHub/CaniMeta/1_Dog.M0_WGS/Article_Figures/Figure_1_Final.png", "C:/GitHub/DOGMASeq/SciData_Article/review/Figures and Tables/Figure2.png")
+
+file.copy("C:/GitHub/CaniMeta/2_40dogs_ZHMW_vs_ZMB/Article Figures/Figure_2_A-B-C_final.png", "C:/GitHub/DOGMASeq/SciData_Article/review/Figures and Tables/Figure3.png")
+
+file.copy("C:/GitHub/CaniMeta/3_Primer_comparison/Article_Figures/Figure3_Final.png", "C:/GitHub/DOGMASeq/SciData_Article/review/Figures and Tables/Figure4.png")
+
+
+
+
+file.copy("C:/GitHub/CaniMeta/1_Dog.M0_WGS/Article_Figures/SuppFig1_Final.png", "C:/GitHub/DOGMASeq/SciData_Article/review/Figures and Tables/SuppFig_S2.png")
+
+file.copy("C:/GitHub/CaniMeta/2_40dogs_ZHMW_vs_ZMB/Article Figures/Supplementary Figure S3.pdf", "C:/GitHub/DOGMASeq/SciData_Article/review/Figures and Tables/SuppFig_S3.pdf")
+
+file.copy("C:/GitHub/CaniMeta/3_Primer_comparison/Article Figures/Supplementary Figure S4.pdf", "C:/GitHub/DOGMASeq/SciData_Article/review/Figures and Tables/SuppFig_S4.pdf")
+
+
+file.copy("C:/GitHub/CaniMeta/1_Dog.M0_WGS/Article_Figures/Supplementary Table S2.xlsx", "C:/GitHub/DOGMASeq/SciData_Article/review/Figures and Tables/SuppTable_S2.xlsx")
+
+file.copy("C:/GitHub/CaniMeta/2_40dogs_ZHMW_vs_ZMB/Article Figures/Supplementary Table S3.xlsx", "C:/GitHub/DOGMASeq/SciData_Article/review/Figures and Tables/SuppTable_S3.xlsx")
+
+file.copy("C:/GitHub/CaniMeta/3_Primer_comparison/Article Figures/Supplementary Table S4.xlsx", "C:/GitHub/DOGMASeq/SciData_Article/review/Figures and Tables/SuppTable_S4.xlsx")
+
+```
 
 
 
